@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="CoffeeShop.ShellWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CoffeeShop"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <NavigationView x:Name="NavView" PaneTitle="StreamPOS" IsBackButtonVisible="Collapsed" SelectionChanged="NavView_SelectionChanged">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Home" Icon="Home" Tag="home"/>
+            <NavigationViewItem Content="Products Management" Icon="Manage" Tag="products"/>
+            <NavigationViewItem Content="Settings" Icon="Setting" Tag="settings"/>
+        </NavigationView.MenuItems>
+        <Frame Name="content"/>
+    </NavigationView>
+</Window>

@@ -1,3 +1,4 @@
+using CoffeeShop.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,11 +27,11 @@ namespace CoffeeShop
         public MainWindow()
         {
             this.InitializeComponent();
+            var screen = new ShellWindow(typeof(DashboardPage));
+            screen.Activate();
+
+            //this.Close();
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
-        {
-            myButton.Content = "Clicked";
-        }
     }
 }
