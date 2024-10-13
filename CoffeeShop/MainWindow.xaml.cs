@@ -27,11 +27,26 @@ namespace CoffeeShop
         public MainWindow()
         {
             this.InitializeComponent();
-            var screen = new ShellWindow(typeof(DashboardPage));
-            screen.Activate();
+            this.dashboard.Tag = typeof(DashboardPage);
+            this.products.Tag = typeof(ProductsManagementPage);
+            this.settings.Tag = typeof(SettingsPage);
 
-            //this.Close();
+            NavView.SelectedItem = NavView.MenuItems[0];
         }
 
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            var selectedItem = (NavigationViewItem)args.SelectedItem;
+            switch (selectedItem.Name.ToString())
+            {
+                case "dashboard":
+                case "products":
+                case "settings":
+                    var type = (Type)(selectedItem).Tag;
+
+                    content.Navigate(type);
+                    break;
+            }
+        }
     }
 }

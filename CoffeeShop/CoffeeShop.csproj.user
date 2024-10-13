@@ -20,8 +20,5 @@
     <Page Update="Views\DashboardPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="ShellWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
 </Project>

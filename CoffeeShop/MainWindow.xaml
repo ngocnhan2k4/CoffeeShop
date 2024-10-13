@@ -8,7 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="main windows"/>
-    </StackPanel>
+    <NavigationView x:Name="NavView" PaneTitle="StreamPOS" IsBackButtonVisible="Collapsed" SelectionChanged="NavView_SelectionChanged">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Dashboard" Icon="Home" Name="dashboard"/>
+            <NavigationViewItem Content="Products Management" Icon="Manage" Name="products"/>
+            <NavigationViewItem Content="Settings" Icon="Setting" Name="settings"/>
+        </NavigationView.MenuItems>
+        <Frame Name="content"/>
+    </NavigationView>
 </Window>
