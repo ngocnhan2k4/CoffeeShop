@@ -17,6 +17,11 @@
     <None Remove="Views\DashboardPage.xaml" />
     <None Remove="Views\ProductsManagementPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
+    <None Remove="Views\Settings\AboutUsPage.xaml" />
+    <None Remove="Views\Settings\AppearancePage.xaml" />
+    <None Remove="Views\Settings\HelpDeskPage.xaml" />
+    <None Remove="Views\Settings\PaymentSettingsPage.xaml" />
+    <None Remove="Views\Settings\ProductsManagementPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +49,26 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\Settings\HelpDeskPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Settings\AboutUsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Settings\PaymentSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SettingsPage\ProductsManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\ProductsManagementPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -55,6 +80,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\DashboardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SettingsPage\ThemePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace CoffeeShop.Models
 {
-    class Drink
+    public class Drink
     {
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public double Price { get; set; }
+        public int Quantity { get; set; }
     }
 }

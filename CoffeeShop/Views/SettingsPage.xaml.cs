@@ -1,3 +1,4 @@
+using CoffeeShop.Views.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,6 +27,43 @@ namespace CoffeeShop.Views
         public SettingsPage()
         {
             this.InitializeComponent();
+            NavView.SelectedItem = NavView.MenuItems[0];
+            //Config();
+        }
+
+        //private void Config()
+        //{
+        //    this.appearance.Tag = typeof(Settings.AppearancePage);
+        //    this.paymentSettings.Tag = typeof(Settings.PaymentSettingsPage);
+        //    this.productsManagement.Tag = typeof(Settings.ProductsManagementPage);
+        //    this.aboutUs.Tag = typeof(Settings.AboutUsPage);
+        //    this.helpDesk.Tag = typeof(Settings.HelpDeskPage);
+
+        //    NavView.SelectedItem = NavView.MenuItems[0];
+        //}
+
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            var selectedItem = (NavigationViewItem)args.SelectedItem;
+
+            switch (selectedItem.Name.ToString())
+            {
+                case "appearance":
+                    content.Navigate(typeof(Settings.AppearancePage));
+                    break;
+                case "paymentSettings":
+                    content.Navigate(typeof(Settings.PaymentSettingsPage));
+                    break;
+                case "productsManagement":
+                    content.Navigate(typeof(Settings.ProductsManagementPage));
+                    break;
+                case "aboutUs":
+                    content.Navigate(typeof(Settings.AboutUsPage));
+                    break;
+                case "helpDesk":
+                    content.Navigate(typeof(Settings.HelpDeskPage));
+                    break;
+            }
         }
     }
 }

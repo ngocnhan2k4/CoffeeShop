@@ -27,6 +27,12 @@ namespace CoffeeShop
         public MainWindow()
         {
             this.InitializeComponent();
+            
+            config();
+        }
+
+        private void config()
+        {
             this.dashboard.Tag = typeof(DashboardPage);
             this.products.Tag = typeof(ProductsManagementPage);
             this.settings.Tag = typeof(SettingsPage);
@@ -48,5 +54,6 @@ namespace CoffeeShop
                     break;
             }
         }
+       
     }
 }
