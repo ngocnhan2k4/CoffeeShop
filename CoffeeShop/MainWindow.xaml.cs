@@ -1,3 +1,5 @@
+using CoffeeShop.Views;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -25,12 +27,30 @@ namespace CoffeeShop
     {
         public MainWindow()
         {
+            
             this.InitializeComponent();
+            this.dashboard.Tag = typeof(DashboardPage);
+            //var dashboardPage = App.Services.GetService<DashboardPage>();
+            //this.Content = dashboardPage;
+            this.products.Tag = typeof(ProductsManagementPage);
+            this.settings.Tag = typeof(SettingsPage);
+
+            NavView.SelectedItem = NavView.MenuItems[0];
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            myButton.Content = "Clicked";
+            var selectedItem = (NavigationViewItem)args.SelectedItem;
+            switch (selectedItem.Name.ToString())
+            {
+                case "dashboard":
+                case "products":
+                case "settings":
+                    var type = (Type)(selectedItem).Tag;
+
+                    content.Navigate(type);
+                    break;
+            }
         }
     }
 }
