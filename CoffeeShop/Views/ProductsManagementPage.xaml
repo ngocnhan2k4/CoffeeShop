@@ -15,38 +15,16 @@
                 <Image Source="{Binding Image}" Stretch="Fill" Width="100" Height="100"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Padding="5,10,5,1">
                     <TextBlock TextWrapping="Wrap" Height="38" MaxLines="2" TextTrimming="CharacterEllipsis" Text="{x:Bind Name}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{x:Bind OriginalPrice}" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                    <TextBlock Text="{x:Bind Sizes[0].Price}" HorizontalAlignment="Center" Margin="0,0,0,3"/>
                     <TextBlock HorizontalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}"
                         Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">
-                        <Run Text="{Binding Stock}"/><Run Text=" available"/>
+                        <Run Text="{Binding  Sizes[0].Stock }"/><Run Text=" available"/>
                     </TextBlock>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="ItemOrder1" x:DataType="model:Drink">
-            <StackPanel Orientation="Horizontal" Width="200">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock 
-                     Text="{x:Bind Name}"
-                     Style="{ThemeResource BaseTextBlockStyle}"
-                     Margin="12,6,0,0"/>
-                    <TextBlock
-                     Text="{x:Bind OriginalPrice}"
-                     Style="{ThemeResource BodyTextBlockStyle}"
-                     Margin="12,0,0,6"/>
-                    <TextBlock
-                     Text="{x:Bind Stock}"
-                     Style="{ThemeResource BodyTextBlockStyle}"
-                     Margin="12,0,0,6"/>
-                </Grid>
-            </StackPanel>
-        </DataTemplate>
+
 
         <DataTemplate x:Key="ItemOrder" x:DataType="model:Drink">
             <Grid Margin="10" Padding="10" Background="#FF1D1D1D" CornerRadius="5">
@@ -155,7 +133,7 @@
                        ItemTemplate="{StaticResource ChooseDrink}"
                        ItemsSource="{x:Bind ViewModel.Drinks}"
                        IsItemClickEnabled="True"
-                       SelectionMode="Multiple"
+                       SelectionMode="None"
                        ItemClick="StyledGrid_ItemClick" >
                         <GridView.ItemContainerStyle>
                             <Style TargetType="GridViewItem" BasedOn="{StaticResource DefaultGridViewItemStyle}">

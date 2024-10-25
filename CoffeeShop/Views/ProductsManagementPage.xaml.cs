@@ -14,6 +14,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Size = CoffeeShop.Models.Size;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -42,7 +43,23 @@ namespace CoffeeShop.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            ViewModel.ChosenDrinks.Add(new Drink() { Image = "/Assets/images.jpeg", Name = "Cà phê sữa Cà phê sữa Cà phê sữa", Size = "S", Description = "sữa", OriginalPrice = 12000, SalePrice = 15000, Stock = 100, CategoryID = 97 });
+            ViewModel.ChosenDrinks.Add(new Drink()
+            {
+                // add custom drink
+                Name = "Cà phêee",
+                Sizes = new List<Size>
+                {
+                    new Size { Name = "S", Price = 20000, Stock = 20 },
+                    new Size { Name = "M", Price = 25000, Stock = 15 },
+                    new Size { Name = "L", Price = 30000, Stock = 10 }
+                },
+                Description = "Cà phê thơm ngon.",
+                Image = "ms-appx:///Assets/download.jpg",
+                Discount = 0,
+                CategoryID = 1,
+                Ingredients = "Cà phê, sữa đặc, đá"
+
+            });
         }
 
         private void BackgroundRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)

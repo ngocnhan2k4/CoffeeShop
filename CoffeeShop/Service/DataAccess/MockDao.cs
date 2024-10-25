@@ -50,19 +50,192 @@ namespace CoffeeShop.Service.DataAccess
 
         public List<Drink> GetDrinks()
         {
-            var list = new List<Drink>()
-    {
-        new Drink() {Image="/Assets/images.jpeg" , Name="Cà phê sữa Cà phê sữa Cà phê sữa", Size="S", Description="cà phê có sữa", OriginalPrice=12000, SalePrice=15000, Stock=100, CategoryID=97 },
-        new Drink() {Image="/Assets/images.jpeg" ,  Name="Cà phê sữa", Size="M", Description="cà phê có sữa", OriginalPrice=15000, SalePrice=18000, Stock=100, CategoryID=97 },
-        new Drink() {Image="/Assets/images.jpeg" ,  Name="Cà phê sữa", Size="L", Description="cà phê có sữa", OriginalPrice=18000, SalePrice=21000, Stock=100, CategoryID=97 },
-        new Drink() {Image="/Assets/images.jpeg" ,  Name="Cà phê đen", Size="S", Description="cà phê không sữa", OriginalPrice=10000, SalePrice=12000, Stock=100, CategoryID=97 },
-        new Drink() {Image="/Assets/images.jpeg" ,  Name="Trà sữa trân châu", Size="S", Description="chỉ có trân châu đen", OriginalPrice=18000, SalePrice=20000, Stock=100, CategoryID=96 },
-        new Drink() {Image="/Assets/images.jpeg",  Name="Trà sữa matcha", Size="S", Description="có matcha", OriginalPrice=25000, SalePrice=27000, Stock=100, CategoryID=96 },
-        new Drink() {Image="/Assets/images.jpeg" ,  Name="Trà sữa hoa hồng", Size="S", Description="có hoa hồng", OriginalPrice=25000, SalePrice=27000, Stock=100, CategoryID=96 },
-        new Drink() {Image="/Assets/images.jpeg" ,  Name="Sinh tố dâu", Size="S", Description="sinh tố làm từ dâu", OriginalPrice=18000, SalePrice=27000, Stock=100, CategoryID=99 },
-        new Drink() {Image="/Assets/images.jpeg",  Name="Sinh tố xoài", Size="S", Description="sinh tố làm từ xoài", OriginalPrice=18000, SalePrice=27000, Stock=100, CategoryID=99 },
-        new Drink() {Image="/Assets/images.jpeg" ,  Name="Sinh tố đu đủ", Size="S", Description="sinh tố làm từ đu đủ", OriginalPrice=18000, SalePrice=27000, Stock=100, CategoryID=99 }
-    };
+                List<Drink> list = [
+                new ()
+                {
+                    Name = "Cà Phê Sữa Đá",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "S", Price = 20000, Stock = 20 },
+                        new () { Name = "M", Price = 25000, Stock = 15 },
+                        new () { Name = "L", Price = 30000, Stock = 10 }
+                    },
+                    Description = "Cà phê sữa đá thơm ngon.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 1,
+                    Ingredients = "Cà phê, sữa đặc, đá"
+                },
+                new ()
+                {
+                    Name = "Trà Sữa",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "S", Price = 30000, Stock = 25 },
+                        new () { Name = "M", Price = 35000, Stock = 20 },
+                        new () { Name = "L", Price = 40000, Stock = 15 }
+                    },
+                    Description = "Trà sữa thơm ngon, mát lạnh.",
+                     Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 2,
+                    Ingredients = "Trà, sữa, đường, trân châu"
+                },
+                new ()
+                {
+                    Name = "Sinh Tố Bơ",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "S", Price = 25000, Stock = 10 },
+                        new () { Name = "M", Price = 30000, Stock = 8 },
+                        new () { Name = "L", Price = 35000, Stock = 5 }
+                    },
+                    Description = "Sinh tố bơ tươi ngon.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 3,
+                    Ingredients = "Bơ, sữa, đường"
+                },
+                new ()
+                {
+                    Name = "Nước Ép Cam",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "S", Price = 20000, Stock = 12 },
+                        new () { Name = "M", Price = 25000, Stock = 9 }
+                    },
+                    Description = "Nước ép cam tươi mát.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 4,
+                    Ingredients = "Cam, đường"
+                },
+                new ()
+                {
+                    Name = "Soda Chanh",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "M", Price = 15000, Stock = 18 },
+                        new () { Name = "L", Price = 20000, Stock = 12 }
+                    },
+                    Description = "Soda chanh thơm ngon, sảng khoái.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 3,
+                    Ingredients = "Soda, chanh, đường"
+                },
+                new ()
+                {
+                    Name = "Cà Phê Đen",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "S", Price = 20000, Stock = 30 }
+                    },
+                    Description = "Cà phê đen đậm đà.",
+                     Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 1,
+                    Ingredients = "Cà phê"
+                },
+                new ()
+                {
+                    Name = "Matcha Latte",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "M", Price = 35000, Stock = 10 },
+                        new () { Name = "L", Price = 40000, Stock = 8 }
+                    },
+                    Description = "Trà matcha hòa quyện với sữa.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 2,
+                    Ingredients = "Matcha, sữa"
+                },
+                new ()
+                {
+                    Name = "Cacao",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "S", Price = 30000, Stock = 12 },
+                        new () { Name = "M", Price = 35000, Stock = 9 }
+                    },
+                    Description = "Cacao nóng thơm ngon.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 3,
+                    Ingredients = "Bột cacao, sữa"
+                },
+                new ()
+                {
+                    Name = "Nước Dừa",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "M", Price = 20000, Stock = 15 },
+                        new () { Name = "L", Price = 25000, Stock = 10 }
+                    },
+                    Description = "Nước dừa tươi mát.",
+                     Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 4,
+                    Ingredients = "Nước dừa"
+                },
+                new ()
+                {
+                    Name = "Trà Đào",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "S", Price = 25000, Stock = 20 },
+                        new () { Name = "M", Price = 30000, Stock = 15 }
+                    },
+                    Description = "Trà đào thơm ngon.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 2,
+                    Ingredients = "Trà, đào"
+                },
+                new ()
+                {
+                    Name = "Sữa Chua",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "S", Price = 15000, Stock = 18 },
+                        new () { Name = "M", Price = 20000, Stock = 12 }
+                    },
+                    Description = "Sữa chua tươi mát.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 1,
+                    Ingredients = "Sữa, đường"
+                },
+                new ()
+                {
+                    Name = "Nước Mía",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "M", Price = 25000, Stock = 22 },
+                        new () { Name = "L", Price = 30000, Stock = 18 }
+                    },
+                    Description = "Nước mía thơm ngon.",
+                    Image = "ms-appx:///Assets/images.jpeg",
+                    Discount = 0,
+                    CategoryID = 4,
+                    Ingredients = "Mía, đường"
+                },
+                new ()
+                {
+                    Name = "Nước Chanh Muối",
+                    Sizes = new List<Size>
+                    {
+                        new () { Name = "M", Price = 20000, Stock = 15 },
+                        new () { Name = "L", Price = 25000, Stock = 10 }
+                    },
+                    Description = "Nước chanh muối giải khát.",
+                    Image = "ms-appx:///Assets/download.jpg",
+                    Discount = 0,
+                    CategoryID = 3,
+                    Ingredients = "Chanh, muối"
+                }
+            ];
 
             return list;
         }
@@ -78,8 +251,7 @@ namespace CoffeeShop.Service.DataAccess
                 new(){InvoiceID=5, CreatedAt="2023-9-16",TotalAmount=27000, PaymentMethod="Cash", CustomerName="Trần Thị C", Status="UnPaid"}
             };
             return list;
-
-
         }
     }
+    
 }
