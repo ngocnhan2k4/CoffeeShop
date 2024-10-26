@@ -55,10 +55,10 @@ namespace CoffeeShop.Service.BusinessLogic
         {
             var drinks = dao.GetDrinks();
             double result = 0;
-            foreach (var drink in drinks)
-            {
-                result += drink.OriginalPrice*drink.Stock;
-            }
+            //foreach (var drink in drinks)
+            //{
+            //    result += drink.OriginalPrice*drink.Stock;
+            //}
             return result;
         }
         public static double CalculateRevennue(IDao dao, int year) // This method is used to calculate the revenue of the shop in a year
@@ -163,20 +163,20 @@ namespace CoffeeShop.Service.BusinessLogic
             {
                 revenueByCategory.Add(category.CategoryName, 0);
             }
-            var invoicesInYear = invoices.Where(invoice => Convert.ToDateTime(invoice.CreatedAt).Year == year).ToList();
+            //var invoicesInYear = invoices.Where(invoice => Convert.ToDateTime(invoice.CreatedAt).Year == year).ToList();
 
-            for (int i = 0; i < invoicesInYear.Count; i++)
-            {
-                for (int j = 0; j < detailInvoices.Count; j++)
-                {
-                    if (invoicesInYear[i].InvoiceID == detailInvoices[j].InvoiceID)
-                    {
-                        var drink = drinks.Find(x => x.Name == detailInvoices[j].NameDrink && x.Size == detailInvoices[j].Size);
-                        var category = categories.Find(x => x.CategoryID == drink.CategoryID);
-                        revenueByCategory[category.CategoryName] += detailInvoices[j].Quantity * drink.SalePrice;
-                    }
-                }
-            }
+            //for (int i = 0; i < invoicesInYear.Count; i++)
+            //{
+            //    for (int j = 0; j < detailInvoices.Count; j++)
+            //    {
+            //        if (invoicesInYear[i].InvoiceID == detailInvoices[j].InvoiceID)
+            //        {
+            //            var drink = drinks.Find(x => x.Name == detailInvoices[j].NameDrink && x.Size == detailInvoices[j].Size);
+            //            var category = categories.Find(x => x.CategoryID == drink.CategoryID);
+            //            revenueByCategory[category.CategoryName] += detailInvoices[j].Quantity * drink.SalePrice;
+            //        }
+            //    }
+            //}
                 return revenueByCategory;
         }
 

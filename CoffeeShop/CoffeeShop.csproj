@@ -14,6 +14,9 @@
 		<EnableMsixTooling>true</EnableMsixTooling>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Content Remove="Assets\images.jpeg" />
+	</ItemGroup>
+	<ItemGroup>
 		<None Remove="Views\DashboardPage.xaml" />
 		<None Remove="Views\ProductsManagementPage.xaml" />
 		<None Remove="Views\SettingsPage.xaml" />
@@ -25,7 +28,9 @@
 		<Content Include="Assets\Square150x150Logo.scale-200.png" />
 		<Content Include="Assets\Square44x44Logo.scale-200.png" />
 		<Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-		<Content Include="Assets\StoreLogo.png" />
+		<Content Include="Assets\StoreLogo.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Assets\Wide310x150Logo.scale-200.png" />
 	</ItemGroup>
 	
@@ -41,6 +46,12 @@
 
 	<ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
 		<ProjectCapability Include="Msix" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Assets\images.jpeg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Views\ProductsManagementPage.xaml">

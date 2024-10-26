@@ -35,7 +35,7 @@ namespace CoffeeShop
             this.products.Tag = typeof(ProductsManagementPage);
             this.settings.Tag = typeof(SettingsPage);
 
-            NavView.SelectedItem = NavView.MenuItems[0];
+            NavView.SelectedItem = NavView.MenuItems[1];
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
