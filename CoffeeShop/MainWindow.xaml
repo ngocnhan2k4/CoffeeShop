@@ -15,14 +15,6 @@
             <NavigationViewItem Content="Products Management" Icon="Manage" Name="products"/>
             <NavigationViewItem Content="Settings" Icon="Setting" Name="settings"/>
         </NavigationView.MenuItems>
-        <!--<NavigationView.MenuItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Fill="#A020F0" Width="50" Height="Auto" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <TextBlock Text="{Binding Content}" Foreground="{Binding Foreground}"/>
-                </StackPanel>
-            </DataTemplate>
-        </NavigationView.MenuItemTemplate>-->
-            <Frame Name="content"/>
+        <Frame Name="content"/>
     </NavigationView>
 </Window>

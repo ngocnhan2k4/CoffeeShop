@@ -42,9 +42,10 @@ namespace CoffeeShop
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
+            MainWindow = new Window();
             m_window.Activate();
         }
-
+        public Window MainWindow { get; private set; }
         private Window m_window;
     }
 }
