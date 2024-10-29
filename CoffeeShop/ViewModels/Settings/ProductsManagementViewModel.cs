@@ -113,18 +113,19 @@ namespace CoffeeShop.ViewModels.Settings
 
             Category category = new()
             {
+                CategoryID = Categories.Count + 1,
                 CategoryName = CategoryName,
             };
 
             // Thêm Categories vừa Add vào mảng NewCategories đẻ sau cập nhật database
             NewCategories.Add(category);
-
+            ClearError();
             return true;
         }
 
         public void UpdateDrinksIntoDB()
         {
-            // call API to update drinks 
+            // call API to update drinks and categories
         }
 
         private bool ValidateDrink(Drink drink)

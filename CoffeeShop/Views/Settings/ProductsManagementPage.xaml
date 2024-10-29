@@ -61,7 +61,7 @@
 
             <Pivot Grid.Row="1" Margin="0,20,0,0" 
                x:Name="TabListDrink"
-               ItemsSource="{x:Bind ViewModel.Categories}"
+               ItemsSource="{x:Bind ViewModel.Categories, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                SelectedIndex="{x:Bind ViewModel.SelectedCategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <Pivot.HeaderTemplate>
                     <DataTemplate>
@@ -215,9 +215,7 @@
                     <ListView ItemsSource="{x:Bind ViewModel.NewCategories, Mode=OneWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBox Text="{Binding CategoryName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
-                                </StackPanel>
+                                <TextBox Text="{Binding CategoryName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -225,7 +223,7 @@
 
                 <!-- Add new category -->
                 <TextBlock Text="Add New Category" FontWeight="Bold" Margin="0,16,0,0"/>
-                <TextBox x:Name="NewCategoryNameTextBox" Header="Category Name" PlaceholderText="Enter category name" />
+                <TextBox x:Name="NewCategoryNameTextBox" PlaceholderText="Enter category name" />
                 <Button Content="Add Category" Click="AddCategoryButton_Click" Background="Green" Foreground="White" Margin="0,8,0,0"/>
 
                 <!-- Error message display -->
