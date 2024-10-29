@@ -1,4 +1,5 @@
 using CoffeeShop.Views;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,6 +27,7 @@ namespace CoffeeShop
     {
         public MainWindow()
         {
+            
             this.InitializeComponent();
             
             config();
@@ -34,10 +36,12 @@ namespace CoffeeShop
         private void config()
         {
             this.dashboard.Tag = typeof(DashboardPage);
+            //var dashboardPage = App.Services.GetService<DashboardPage>();
+            //this.Content = dashboardPage;
             this.products.Tag = typeof(ProductsManagementPage);
             this.settings.Tag = typeof(SettingsPage);
 
-            NavView.SelectedItem = NavView.MenuItems[0];
+            NavView.SelectedItem = NavView.MenuItems[1];
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

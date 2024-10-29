@@ -5,6 +5,9 @@ using System;
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
+using System;
+
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -12,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace CoffeeShop.Models
 {
+
     public class Size : INotifyPropertyChanged
     {
         public string Name { get; set; } // S M L 
@@ -95,6 +99,7 @@ namespace CoffeeShop.Models
             Discount = other.Discount;
             CategoryID = other.CategoryID;
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

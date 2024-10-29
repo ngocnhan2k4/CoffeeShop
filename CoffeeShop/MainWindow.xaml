@@ -10,6 +10,7 @@
 
     <NavigationView x:Name="NavView" PaneTitle="StreamPOS" IsBackButtonVisible="Collapsed"
                     SelectionChanged="NavView_SelectionChanged" IsSettingsVisible="False"   >
+
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Dashboard" Icon="Home" Name="dashboard"/>
             <NavigationViewItem Content="Products Management" Icon="Manage" Name="products"/>
