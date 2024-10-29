@@ -65,6 +65,7 @@ namespace CoffeeShop
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
+            MainWindow = new Window();
             m_window.Activate();
 
 
@@ -83,7 +84,7 @@ namespace CoffeeShop
             // Set the window size to the display area size
             appWindow.Resize(new SizeInt32(displayAreaWidth, displayAreaHeight));
         }
-
+        public Window MainWindow { get; private set; }
         private Window m_window;
     }
 }

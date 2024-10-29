@@ -53,3 +53,4 @@ public sealed class FullObservableCollection<T> : ObservableCollection<T>
         OnCollectionChanged(args);
     }
 }
+>>>>>>> develop

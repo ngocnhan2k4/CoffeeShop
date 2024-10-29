@@ -29,6 +29,12 @@ namespace CoffeeShop
         {
             
             this.InitializeComponent();
+            
+            config();
+        }
+
+        private void config()
+        {
             this.dashboard.Tag = typeof(DashboardPage);
             //var dashboardPage = App.Services.GetService<DashboardPage>();
             //this.Content = dashboardPage;
@@ -52,5 +58,6 @@ namespace CoffeeShop
                     break;
             }
         }
+       
     }
 }

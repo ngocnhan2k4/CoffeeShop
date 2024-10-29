@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,6 +14,18 @@ namespace CoffeeShop.Models
     {
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }
+
+        public Category()
+        {
+            CategoryID = 0;
+            CategoryName = "";
+        }
+
+        public Category(Category other)
+        {
+            CategoryID = other.CategoryID;
+            CategoryName = other.CategoryName;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
