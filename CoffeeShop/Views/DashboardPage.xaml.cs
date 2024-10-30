@@ -35,22 +35,19 @@ namespace CoffeeShop.Views
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-
         public SalesDashboardViewModel SalesDashboard { get; set; }
     
-        public DashboardPage(/*SalesDashboardViewModel viewModel*/)
+        public DashboardPage()
         {
             this.InitializeComponent();
-            //SalesDashboard = viewModel;
-            //DataContext = SalesDashboard;
+        
             SalesDashboard = new SalesDashboardViewModel(DateTime.Now.Year);    
             yearDatePicker.MinYear = new DateTimeOffset(new DateTime(SalesDashboard.SaleService.Years[1], 1, 1));
             yearDatePicker.MaxYear = new DateTimeOffset(new DateTime(SalesDashboard.SaleService.Years[0], 1, 1));
             yearDatePicker.Date = new DateTimeOffset(new DateTime(DateTime.Now.Year, yearDatePicker.Date.Month, yearDatePicker.Date.Day));
            
             RefreshCharts();
-
+           
         }
 
         private  void YearDatePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
@@ -65,9 +62,8 @@ namespace CoffeeShop.Views
             OnPropertyChanged(nameof(SalesDashboard.SaleService.Revenue));
             OnPropertyChanged(nameof(SalesDashboard.SaleService.Profit));
             OnPropertyChanged(nameof(SalesDashboard.SaleService.Years));
-            OnPropertyChanged(nameof(SalesDashboard.SaleService.MonthlyRevenue));
             OnPropertyChanged(nameof(SalesDashboard.SaleService.NumberOrders));
-            OnPropertyChanged(nameof(SalesDashboard.SaleService.RevenueByCategory));
+            
             RefreshCharts();
             SalesDashboard.TopDrink.Clear();
             foreach (var drink in SalesDashboard.SaleService.CalculateTopDrinks(SalesDashboard.SaleService.dao, selectedYear))
@@ -83,8 +79,6 @@ namespace CoffeeShop.Views
         }
         private void RefreshCharts()
         {
-            
-
             // Clear existing series
             RevenueChart.Series.Clear();
             CategoryRevenueChart.Series.Clear();
@@ -98,8 +92,6 @@ namespace CoffeeShop.Views
                 EnableTooltip = true,
                
             };
-           
-
             var categoryRevenueSeries = new PieSeries
             {
                 ItemsSource = SalesDashboard.SaleService.RevenueByCategory.Select(kv => new { Category = kv.Key, SalesAmount = kv.Value }).ToList(),
@@ -113,7 +105,5 @@ namespace CoffeeShop.Views
             RevenueChart.Series.Add(revenueSeries);
             CategoryRevenueChart.Series.Add(categoryRevenueSeries);
         }
-
-        
     }
 }

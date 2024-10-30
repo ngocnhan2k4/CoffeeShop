@@ -15,6 +15,53 @@ namespace CoffeeShop.ViewModels
     /// <summary>
     /// This class represents the view model for the Sales Dashboard
     /// </summary>
+    /// 
+    public class MonthSalesData
+    {
+        public int Month { get; set; }
+        public double Revenue { get; set; }
+    }
+
+    public class ProductSalesData
+    {
+        public string Category { get; set; }
+        public double SalesAmount { get; set; }
+    }
+
+    public class CartesianChartViewModel
+    {
+        public ObservableCollection<MonthSalesData> Data { get; set; }
+        public SalesService salesService = new SalesService(new MockDao(), DateTime.Now.Year);
+        public CartesianChartViewModel()
+        {
+
+            Data = new ObservableCollection<MonthSalesData>();
+            for (int i = 0; i < 12; i++)
+            {
+                Data.Add(new MonthSalesData { Month = i + 1, Revenue = salesService.MonthlyRevenue[i] });
+            }
+        }
+    }
+
+    public class PieChartViewModel
+    {
+        public ObservableCollection<ProductSalesData> Data { get; set; }
+        public SalesService salesService = new SalesService(new MockDao(), DateTime.Now.Year);
+
+        public PieChartViewModel()
+        {
+            foreach (var categoryData in salesService.RevenueByCategory)
+            {
+
+                Data.Add(new ProductSalesData
+                {
+                    Category = categoryData.Key,
+                    SalesAmount = categoryData.Value
+                });
+            }
+        }
+    }
+
     public class SalesDashboardViewModel : INotifyPropertyChanged
     {
         public SalesService SaleService { get; set; }
@@ -49,8 +96,6 @@ namespace CoffeeShop.ViewModels
             DeliveryInvoices = new FullObservableCollection<DeliveryInvoice>(dao.GetDeliveryInvoices());
             SaleService = new SalesService(dao,year);
             TopDrink = new ObservableCollection<string>(SaleService.CalculateTopDrinks(dao, year));
-
-
         }
         private void OnPropertyChanged(string propertyName)
         {
