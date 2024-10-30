@@ -51,7 +51,8 @@ namespace CoffeeShop.Service.DataAccess
 
         public List<Drink> GetDrinks()
         {
-                List<Drink> list = [
+            List<Drink> list = new List<Drink>()
+            {
                 new ()
                 {
                     Name = "Cà Phê Sữa Đá",
@@ -62,10 +63,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 30000, Stock = 10 }
                     },
                     Description = "Cà phê sữa đá thơm ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 1,
-                    Ingredients = "Cà phê, sữa đặc, đá"
+                    CategoryID = 1
                 },
                 new ()
                 {
@@ -77,10 +77,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 40000, Stock = 15 }
                     },
                     Description = "Trà sữa thơm ngon, mát lạnh.",
-                     Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 2,
-                    Ingredients = "Trà, sữa, đường, trân châu"
+                    CategoryID = 2
                 },
                 new ()
                 {
@@ -92,10 +91,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 35000, Stock = 5 }
                     },
                     Description = "Sinh tố bơ tươi ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 3,
-                    Ingredients = "Bơ, sữa, đường"
+                    CategoryID = 3
                 },
                 new ()
                 {
@@ -106,10 +104,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "M", Price = 25000, Stock = 9 }
                     },
                     Description = "Nước ép cam tươi mát.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 4,
-                    Ingredients = "Cam, đường"
+                    CategoryID = 4
                 },
                 new ()
                 {
@@ -120,10 +117,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 20000, Stock = 12 }
                     },
                     Description = "Soda chanh thơm ngon, sảng khoái.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 3,
-                    Ingredients = "Soda, chanh, đường"
+                    CategoryID = 3
                 },
                 new ()
                 {
@@ -133,10 +129,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "S", Price = 20000, Stock = 30 }
                     },
                     Description = "Cà phê đen đậm đà.",
-                     Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 1,
-                    Ingredients = "Cà phê"
+                    CategoryID = 1
                 },
                 new ()
                 {
@@ -147,10 +142,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 40000, Stock = 8 }
                     },
                     Description = "Trà matcha hòa quyện với sữa.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 2,
-                    Ingredients = "Matcha, sữa"
+                    CategoryID = 2
                 },
                 new ()
                 {
@@ -161,10 +155,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "M", Price = 35000, Stock = 9 }
                     },
                     Description = "Cacao nóng thơm ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 3,
-                    Ingredients = "Bột cacao, sữa"
+                    CategoryID = 3
                 },
                 new ()
                 {
@@ -175,10 +168,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 25000, Stock = 10 }
                     },
                     Description = "Nước dừa tươi mát.",
-                     Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 4,
-                    Ingredients = "Nước dừa"
+                    CategoryID = 4
                 },
                 new ()
                 {
@@ -189,10 +181,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "M", Price = 30000, Stock = 15 }
                     },
                     Description = "Trà đào thơm ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 2,
-                    Ingredients = "Trà, đào"
+                    CategoryID = 2
                 },
                 new ()
                 {
@@ -203,10 +194,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "M", Price = 20000, Stock = 12 }
                     },
                     Description = "Sữa chua tươi mát.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 1,
-                    Ingredients = "Sữa, đường"
+                    CategoryID = 1
                 },
                 new ()
                 {
@@ -217,10 +207,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 30000, Stock = 18 }
                     },
                     Description = "Nước mía thơm ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 4,
-                    Ingredients = "Mía, đường"
+                    CategoryID = 4
                 },
                 new ()
                 {
@@ -231,23 +220,66 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 25000, Stock = 10 }
                     },
                     Description = "Nước chanh muối giải khát.",
-                    Image = "ms-appx:///Assets/download.jpg",
+                    ImageString = "ms-appx:///Assets/default.jpg", // Changed here
                     Discount = 0,
-                    CategoryID = 3,
-                    Ingredients = "Chanh, muối"
-                }
-            ];
+                    CategoryID = 3
+                },
+                 new ()
+    {
+        Name = "Trà Sữa Trân Châu",
+        Sizes = new List<Size>
+        {
+            new () { Name = "S", Price = 35000, Stock = 30 },
+            new () { Name = "M", Price = 40000, Stock = 25 },
+            new () { Name = "L", Price = 45000, Stock = 20 }
+        },
+        Description = "Trà sữa với trân châu mềm mịn.",
+        ImageString = "ms-appx:///Assets/images.jpeg",
+        Discount = 0,
+        CategoryID = 0
+    },
+    new ()
+    {
+        Name = "Trà Sữa Matcha Trân Châu",
+        Sizes = new List<Size>
+        {
+            new () { Name = "S", Price = 38000, Stock = 15 },
+            new () { Name = "M", Price = 43000, Stock = 10 },
+            new () { Name = "L", Price = 48000, Stock = 5 }
+        },
+        Description = "Trà sữa matcha kết hợp với trân châu.",
+        ImageString = "ms-appx:///Assets/images.jpeg",
+        Discount = 0,
+        CategoryID = 0
+    },
+    new ()
+    {
+        Name = "Trà Sữa Hoa Quả",
+        Sizes = new List<Size>
+        {
+            new () { Name = "S", Price = 36000, Stock = 20 },
+            new () { Name = "M", Price = 41000, Stock = 15 },
+            new () { Name = "L", Price = 46000, Stock = 10 }
+        },
+        Description = "Trà sữa với hương vị hoa quả tươi ngon.",
+        ImageString = "ms-appx:///Assets/images.jpeg",
+        Discount = 0,
+        CategoryID = 0
+    },
+            };
 
             return list;
         }
-        public Tuple<List<Drink>, int> GetDrinks(
+    
+    public Tuple<List<Drink>, int> GetDrinks(
              int page, int rowsPerPage,
              string keyword, int categoryID,
              Dictionary<string, SortType> sortOptions
          )
         {
-            List<Drink> drinks = [
-              new ()
+        List<Drink> drinks = new List<Drink>()
+            {
+                new ()
                 {
                     Name = "Cà Phê Sữa Đá",
                     Sizes = new List<Size>
@@ -257,10 +289,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 30000, Stock = 10 }
                     },
                     Description = "Cà phê sữa đá thơm ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 1,
-                    Ingredients = "Cà phê, sữa đặc, đá"
+                    CategoryID = 1
                 },
                 new ()
                 {
@@ -272,10 +303,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 40000, Stock = 15 }
                     },
                     Description = "Trà sữa thơm ngon, mát lạnh.",
-                     Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 2,
-                    Ingredients = "Trà, sữa, đường, trân châu"
+                    CategoryID = 2
                 },
                 new ()
                 {
@@ -287,10 +317,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 35000, Stock = 5 }
                     },
                     Description = "Sinh tố bơ tươi ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 3,
-                    Ingredients = "Bơ, sữa, đường"
+                    CategoryID = 3
                 },
                 new ()
                 {
@@ -301,10 +330,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "M", Price = 25000, Stock = 9 }
                     },
                     Description = "Nước ép cam tươi mát.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 4,
-                    Ingredients = "Cam, đường"
+                    CategoryID = 4
                 },
                 new ()
                 {
@@ -315,10 +343,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 20000, Stock = 12 }
                     },
                     Description = "Soda chanh thơm ngon, sảng khoái.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 3,
-                    Ingredients = "Soda, chanh, đường"
+                    CategoryID = 3
                 },
                 new ()
                 {
@@ -328,10 +355,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "S", Price = 20000, Stock = 30 }
                     },
                     Description = "Cà phê đen đậm đà.",
-                     Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 1,
-                    Ingredients = "Cà phê"
+                    CategoryID = 1
                 },
                 new ()
                 {
@@ -342,10 +368,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 40000, Stock = 8 }
                     },
                     Description = "Trà matcha hòa quyện với sữa.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 2,
-                    Ingredients = "Matcha, sữa"
+                    CategoryID = 2
                 },
                 new ()
                 {
@@ -356,10 +381,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "M", Price = 35000, Stock = 9 }
                     },
                     Description = "Cacao nóng thơm ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 3,
-                    Ingredients = "Bột cacao, sữa"
+                    CategoryID = 3
                 },
                 new ()
                 {
@@ -370,10 +394,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 25000, Stock = 10 }
                     },
                     Description = "Nước dừa tươi mát.",
-                     Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 4,
-                    Ingredients = "Nước dừa"
+                    CategoryID = 4
                 },
                 new ()
                 {
@@ -384,10 +407,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "M", Price = 30000, Stock = 15 }
                     },
                     Description = "Trà đào thơm ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 2,
-                    Ingredients = "Trà, đào"
+                    CategoryID = 2
                 },
                 new ()
                 {
@@ -398,10 +420,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "M", Price = 20000, Stock = 12 }
                     },
                     Description = "Sữa chua tươi mát.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 1,
-                    Ingredients = "Sữa, đường"
+                    CategoryID = 1
                 },
                 new ()
                 {
@@ -412,10 +433,9 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 30000, Stock = 18 }
                     },
                     Description = "Nước mía thơm ngon.",
-                    Image = "ms-appx:///Assets/images.jpeg",
+                    ImageString = "ms-appx:///Assets/images.jpeg", // Changed here
                     Discount = 0,
-                    CategoryID = 4,
-                    Ingredients = "Mía, đường"
+                    CategoryID = 4
                 },
                 new ()
                 {
@@ -426,15 +446,56 @@ namespace CoffeeShop.Service.DataAccess
                         new () { Name = "L", Price = 25000, Stock = 10 }
                     },
                     Description = "Nước chanh muối giải khát.",
-                    Image = "ms-appx:///Assets/download.jpg",
+                    ImageString = "ms-appx:///Assets/default.jpg", // Changed here
                     Discount = 0,
-                    CategoryID = 3,
-                    Ingredients = "Chanh, muối"
-                }
-          ];
+                    CategoryID = 3
+                },
+                 new ()
+    {
+        Name = "Trà Sữa Trân Châu",
+        Sizes = new List<Size>
+        {
+            new () { Name = "S", Price = 35000, Stock = 30 },
+            new () { Name = "M", Price = 40000, Stock = 25 },
+            new () { Name = "L", Price = 45000, Stock = 20 }
+        },
+        Description = "Trà sữa với trân châu mềm mịn.",
+        ImageString = "ms-appx:///Assets/images.jpeg",
+        Discount = 0,
+        CategoryID = 0
+    },
+    new ()
+    {
+        Name = "Trà Sữa Matcha Trân Châu",
+        Sizes = new List<Size>
+        {
+            new () { Name = "S", Price = 38000, Stock = 15 },
+            new () { Name = "M", Price = 43000, Stock = 10 },
+            new () { Name = "L", Price = 48000, Stock = 5 }
+        },
+        Description = "Trà sữa matcha kết hợp với trân châu.",
+        ImageString = "ms-appx:///Assets/images.jpeg",
+        Discount = 0,
+        CategoryID = 0
+    },
+    new ()
+    {
+        Name = "Trà Sữa Hoa Quả",
+        Sizes = new List<Size>
+        {
+            new () { Name = "S", Price = 36000, Stock = 20 },
+            new () { Name = "M", Price = 41000, Stock = 15 },
+            new () { Name = "L", Price = 46000, Stock = 10 }
+        },
+        Description = "Trà sữa với hương vị hoa quả tươi ngon.",
+        ImageString = "ms-appx:///Assets/images.jpeg",
+        Discount = 0,
+        CategoryID = 0
+    },
+            };
 
-            // Search
-            var query = from e in drinks
+        // Search
+        var query = from e in drinks
                         where e.Name.ToLower().Contains(keyword.ToLower())
                         select e;
 

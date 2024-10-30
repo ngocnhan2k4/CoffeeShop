@@ -13,7 +13,7 @@
 
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Dashboard" Icon="Home" Name="dashboard"/>
-            <NavigationViewItem Content="Products Management" Icon="Manage" Name="products"/>
+            <NavigationViewItem Content="Home" Icon="Manage" Name="products"/>
             <NavigationViewItem Content="Settings" Icon="Setting" Name="settings"/>
         </NavigationView.MenuItems>
         <Frame Name="content"/>

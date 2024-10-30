@@ -38,7 +38,7 @@ namespace CoffeeShop
             this.dashboard.Tag = typeof(DashboardPage);
             //var dashboardPage = App.Services.GetService<DashboardPage>();
             //this.Content = dashboardPage;
-            this.products.Tag = typeof(ProductsManagementPage);
+            this.products.Tag = typeof(HomePage);
             this.settings.Tag = typeof(SettingsPage);
 
             NavView.SelectedItem = NavView.MenuItems[1];

@@ -20,7 +20,7 @@
     <Page Update="Views\Settings\PaymentSettingsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ProductsManagementPage.xaml">
+    <Page Update="Views\HomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingsPage.xaml">

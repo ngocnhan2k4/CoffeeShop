@@ -84,7 +84,7 @@ namespace CoffeeShop.Models
                     new () { Name = "L", Price = 0, Stock = 0 }
             ];
             Description = "";
-            ImageString = "ms-appx:///Assets/download.jpg";
+            ImageString = "ms-appx:///Assets/default.jpg";
             Discount = 0;
             CategoryID = 0;
         }

@@ -29,7 +29,7 @@ namespace CoffeeShop.ViewModels.Settings
             set
             {
                 _selectedCategoryIndex = value;
-                DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex + 1));
+                DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex));
             }
         }
 
@@ -51,11 +51,11 @@ namespace CoffeeShop.ViewModels.Settings
             _selectedCategoryIndex = 0;
             NameSizes = ["S", "M", "L"];
             IDao dao = new MockDao();
-            Drinks = dao.GetAllDrinks();
+            Drinks = dao.GetDrinks();
             Categories = new (dao.GetCategories());
             NewDrinks = [];
             NewCategories = [];
-            DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex + 1));
+            DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex));
         }
 
         public List<Drink> FilterDrinksByCategoryID(int CategoryID)
@@ -93,7 +93,7 @@ namespace CoffeeShop.ViewModels.Settings
             if (!ValidateDrink(NewDrinkAdded)) return false;
 
             // Thêm ơ cả DrinksByCategoryID và Drinks 
-            NewDrinkAdded.CategoryID = SelectedCategoryIndex + 1;
+            NewDrinkAdded.CategoryID = SelectedCategoryIndex ;
             DrinksByCategoryID.Add(NewDrinkAdded);
             Drinks.Add(NewDrinkAdded);
 

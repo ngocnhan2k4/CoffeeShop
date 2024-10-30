@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\DashboardPage.xaml" />
-    <None Remove="Views\ProductsManagementPage.xaml" />
+    <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\Settings\AboutUsPage.xaml" />
     <None Remove="Views\Settings\AppearancePage.xaml" />
@@ -72,7 +72,7 @@
     <None Update="Assets\backgroundaboutus.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Update="Assets\download.jpg">
+    <Content Update="Assets\default.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Update="Assets\profile1.jpg">
@@ -100,7 +100,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\ProductsManagementPage.xaml">
+    <Page Update="Views\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -62,7 +62,7 @@ namespace CoffeeShop.ViewModels
         }
     }
 
-    public class SalesDashboardViewModel : INotifyPropertyChanged
+    public class DashboardViewModel : INotifyPropertyChanged
     {
         public SalesService SaleService { get; set; }
         public FullObservableCollection<Drink> Drinks { get; set; }
@@ -86,7 +86,7 @@ namespace CoffeeShop.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
        
-        public SalesDashboardViewModel(int year)
+        public DashboardViewModel(int year)
         {
             IDao dao = new MockDao();
             Drinks = new FullObservableCollection<Drink>(dao.GetDrinks());

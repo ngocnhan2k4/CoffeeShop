@@ -35,13 +35,13 @@ namespace CoffeeShop.Views
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public SalesDashboardViewModel SalesDashboard { get; set; }
+        public DashboardViewModel SalesDashboard { get; set; }
     
         public DashboardPage()
         {
             this.InitializeComponent();
         
-            SalesDashboard = new SalesDashboardViewModel(DateTime.Now.Year);    
+            SalesDashboard = new DashboardViewModel(DateTime.Now.Year);    
             yearDatePicker.MinYear = new DateTimeOffset(new DateTime(SalesDashboard.SaleService.Years[1], 1, 1));
             yearDatePicker.MaxYear = new DateTimeOffset(new DateTime(SalesDashboard.SaleService.Years[0], 1, 1));
             yearDatePicker.Date = new DateTimeOffset(new DateTime(DateTime.Now.Year, yearDatePicker.Date.Month, yearDatePicker.Date.Day));

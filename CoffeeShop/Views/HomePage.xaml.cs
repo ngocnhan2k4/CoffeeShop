@@ -25,12 +25,13 @@ namespace CoffeeShop.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ProductsManagementPage : Page
+    public sealed partial class HomePage : Page
     {
-        public DrinkViewModel ViewModel { get; set; }
+        public HomeViewModel ViewModel { get; set; }
        // public DrinkViewModel ChosenViewModel { get; set; }
-        public ProductsManagementPage()
-        {  ViewModel = new DrinkViewModel();
+        public HomePage()
+        {  
+            ViewModel = new HomeViewModel();
             this.InitializeComponent();        
             DateText.Text = DateTime.Now.ToString("dddd, d MMMM yyyy");
             // SamplePage1Item.IsSelected = true;

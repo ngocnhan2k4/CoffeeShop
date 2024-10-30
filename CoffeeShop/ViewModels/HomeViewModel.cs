@@ -12,7 +12,7 @@ using static CoffeeShop.Service.DataAccess.IDao;
 
 namespace CoffeeShop.ViewModels
 {
-    public class DrinkViewModel : INotifyPropertyChanged
+    public class HomeViewModel : INotifyPropertyChanged
     {
         public FullObservableCollection<Drink> Drinks
         {
@@ -67,7 +67,7 @@ namespace CoffeeShop.ViewModels
                 LoadData();
             }
         }
-        public DrinkViewModel()
+        public HomeViewModel()
         {
             IDao dao = new MockDao();
          //   Drinks = new FullObservableCollection<Drink>(dao.GetDrinks());
