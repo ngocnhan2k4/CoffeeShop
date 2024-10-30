@@ -474,5 +474,4 @@ namespace CoffeeShop.Service.DataAccess
             return list;
         }
     }
-    
 }
