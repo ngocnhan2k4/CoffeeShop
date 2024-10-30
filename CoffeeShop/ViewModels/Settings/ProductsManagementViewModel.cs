@@ -51,7 +51,7 @@ namespace CoffeeShop.ViewModels.Settings
             _selectedCategoryIndex = 0;
             NameSizes = ["S", "M", "L"];
             IDao dao = new MockDao();
-            Drinks = dao.GetAllDrinks();
+            Drinks = dao.GetDrinks();
             Categories = new (dao.GetCategories());
             NewDrinks = [];
             NewCategories = [];

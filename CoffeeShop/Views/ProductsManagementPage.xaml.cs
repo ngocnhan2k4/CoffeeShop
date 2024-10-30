@@ -117,7 +117,7 @@ namespace CoffeeShop.Views
             //        new Size { Name = "L", Price = 30000, Stock = 10 }
             //    },
             //    Description = "Cà phê thơm ngon.",
-            //    Image = "ms-appx:///Assets/download.jpg",
+            //    Image = "ms-appx:///Assets/default.jpg",
             //    Discount = 0,
             //    CategoryID = 1,
             //    Ingredients = "Cà phê, sữa đặc, đá"
