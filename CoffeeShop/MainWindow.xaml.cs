@@ -1,4 +1,6 @@
+using CoffeeShop.ViewModels;
 using CoffeeShop.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -7,6 +9,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Windows.PushNotifications;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,11 +28,14 @@ namespace CoffeeShop
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        public MainViewModel ViewModel { get; set; }
         public MainWindow()
         {
             
             this.InitializeComponent();
-            
+
+            ViewModel = Ioc.Default.GetService<MainViewModel>();
+
             config();
         }
 
@@ -58,6 +64,6 @@ namespace CoffeeShop
                     break;
             }
         }
-       
+
     }
 }

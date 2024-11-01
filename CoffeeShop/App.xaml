@@ -16,12 +16,27 @@
                         <ResourceDictionary x:Key="Light">
                             <SolidColorBrush
                             x:Key="CustomBackground"
-                            Color="HotPink" />
+                            Color="#e8e8eb" />
                         </ResourceDictionary>
                         <ResourceDictionary x:Key="Dark">
                             <SolidColorBrush
                             x:Key="CustomBackground"
-                            Color="SkyBlue" />
+                            Color="#212121" />
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Light">
+                            <SolidColorBrush
+                          x:Key="CustomText"
+                            Color="#212121" />
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Dark">
+                            <SolidColorBrush
+                          x:Key="CustomText"
+                            Color="#e8e8eb" />
                         </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
                 </ResourceDictionary>

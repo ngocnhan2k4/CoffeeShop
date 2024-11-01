@@ -28,12 +28,12 @@
                             IsPaneToggleButtonVisible="False"
                             SelectionChanged="NavView_SelectionChanged" 
                             IsSettingsVisible="False" 
-                            Background="Gray"
+                         
                             CornerRadius="20"
                             VerticalAlignment="Stretch">
                 <NavigationView.Resources>
                     <Style TargetType="NavigationViewItem">
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Foreground" Value="{ThemeResource CustomText}"/>
                         <Setter Property="FontSize" Value="16"/>
                         <Setter Property="MinHeight" Value="70"/>
                         <Setter Property="Template">
@@ -48,9 +48,9 @@
                                             <StackPanel>
                                                 <TextBlock Text="{TemplateBinding Content}" 
                                                                FontWeight="SemiBold" 
-                                                               Foreground="White"/>
+                                                               Foreground="{ThemeResource CustomText}"/>
                                                 <TextBlock Text="{TemplateBinding Tag}" 
-                                                               Foreground="LightGray" 
+                                                               Foreground="{ThemeResource CustomText}" 
                                                                FontSize="14" 
                                                                Opacity="0.7" 
                                                                Margin="0,4,0,0"/>

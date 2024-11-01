@@ -22,6 +22,7 @@ using CoffeeShop.Service.DataAccess;
 using CoffeeShop.ViewModels;
 using CoffeeShop.Views;
 using Microsoft.Extensions.DependencyInjection;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -41,23 +42,13 @@ namespace CoffeeShop
         public App()
         {
             this.InitializeComponent();
-
+            Ioc.Default.ConfigureServices(ConfigureServices());
             // Add Syncfusion Community License
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzUzMTEwNkAzMjM3MmUzMDJlMzBSN1dwZm5TQ2xIdUgzMXZFbXV1Q01wQzJFRkdpVXo0SVh0MWo4cXJoYXA0PQ==");
-            //ConfigureServices();
+            ConfigureServices();
            
         }
-        //private void ConfigureServices()
-        //{
-        //    var serviceCollection = new ServiceCollection();
 
-        //    // Register services and view models
-        //    serviceCollection.AddSingleton<IDao, MockDao>();
-        //    serviceCollection.AddTransient<SalesDashboardViewModel>();
-        //    serviceCollection.AddTransient<DashboardPage>();
-
-        //    Services = serviceCollection.BuildServiceProvider();
-        //}
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
@@ -85,6 +76,13 @@ namespace CoffeeShop
             appWindow.Resize(new SizeInt32(displayAreaWidth, displayAreaHeight));
         }
         public Window MainWindow { get; private set; }
-        private Window m_window;
+        public static Window?  m_window { get; set; }
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            services.AddSingleton<MainViewModel>();
+            return services.BuildServiceProvider();
+        }
     }
 }
