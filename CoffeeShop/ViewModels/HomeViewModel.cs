@@ -14,12 +14,17 @@ namespace CoffeeShop.ViewModels
 {
     public class HomeViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public FullObservableCollection<Drink> Drinks
         {
             get; set;
         }
+
         public FullObservableCollection<Category> Categories { get; set; }
         public FullObservableCollection<DetailInvoice> ChosenDrinks { get; set; }
+        public decimal TotalPrice { get; set; }
+
+
 
         public ObservableCollection<PageInfo> PageInfos { get; set; }
         public int SelectedPageIndex { get; set; } = 0;
@@ -151,13 +156,14 @@ namespace CoffeeShop.ViewModels
                 };
                 ChosenDrinks.Add(newInvoice);
             }
+            TotalPrice = ChosenDrinks.Sum(di => di.Price * di.Quantity);
         }
         public void RemoveDrink(DetailInvoice detail)
         {
  
             ChosenDrinks.Remove(detail);
-            
+            TotalPrice = ChosenDrinks.Sum(di => di.Price * di.Quantity);
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+   
     }
 }
