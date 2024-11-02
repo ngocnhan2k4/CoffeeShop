@@ -14,186 +14,195 @@
     <Page.Resources>
         <helper:IntToVnCurrencyConverter x:Key="currency"/>
     </Page.Resources>
-    <Grid  Margin="0,0,0,20" Background="LightBlue">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
-        </Grid.RowDefinitions >
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.Column="0" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#D896FF" Offset="0.0"/>
-                    <GradientStop Color="#B14FFF" Offset="1.0"/>
-                </LinearGradientBrush>
-            </Grid.Background>
+        <Grid  Margin="0,0,0,20" Background="LightBlue" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions >
 
-            <TextBlock Text="TỔNG TIỀN NHẬP KHO: " 
-               FontWeight="Bold" 
-               FontSize="25" 
-               HorizontalAlignment="Center" Margin="0,30,0,0"/>
-
-            <TextBlock Text="{x:Bind SalesDashboard.SaleService.TotalCost, Mode=OneWay, Converter={StaticResource currency}}"
-           FontSize="25" 
-           FontWeight="Bold" 
-           HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
-        </Grid>
-
-
-        <Grid Grid.Row="0" Grid.Column="1"  CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
-
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#4FACFE" Offset="0.0"/>
-                    <GradientStop Color="#00F2FE" Offset="1.0"/>
-                </LinearGradientBrush>
-
-            </Grid.Background>
-            <TextBlock Text="DOANH THU: " 
-            FontWeight="Bold" 
-            FontSize="25" 
-            HorizontalAlignment="Center" Margin="0,30,0,0"/>
-
-
-            <TextBlock Text="{x:Bind SalesDashboard.SaleService.Revenue, Mode=OneWay, Converter={StaticResource currency}}"
-            FontSize="25" 
-            FontWeight="Bold" 
-            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
-
-        </Grid>
-
-
-      
-      
-        <Grid Grid.Row="1" Grid.Column="0"  CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
-
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#FF758C" Offset="0.0"/>
-                    <GradientStop Color="#FF7EB3" Offset="1.0"/>
-                </LinearGradientBrush>
-
-            </Grid.Background>
-            <TextBlock Text="LỢI NHUẬN: " 
-            FontWeight="Bold" 
-            FontSize="25" 
-            HorizontalAlignment="Center" Margin="0,30,0,0"/>
-
-
-            <TextBlock Text="{x:Bind SalesDashboard.SaleService.Profit, Mode=OneWay, Converter={StaticResource currency}}"
-            FontSize="25" 
-            FontWeight="Bold" 
-            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
-
-        </Grid>
-        <Grid Grid.Row="1" Grid.Column="1"  CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
-
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#FAD961" Offset="0.0"/>
-                    <GradientStop Color="#F76B1C" Offset="1.0"/>
-                </LinearGradientBrush>
-
-
-            </Grid.Background>
-            <TextBlock Text="SỐ LƯỢNG ĐƠN HÀNG: " 
-            FontWeight="Bold" 
-            FontSize="25" 
-            HorizontalAlignment="Center" Margin="0,30,0,0"/>
-
-
-            <TextBlock Text="{x:Bind SalesDashboard.SaleService.NumberOrders, Mode=OneWay}"
-            FontSize="25" 
-            FontWeight="Bold" 
-            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
-
-        </Grid>
-        <Canvas Grid.Row="0" Grid.Column="2"  Grid.RowSpan="2">
-
-            <DatePicker x:Name="yearDatePicker"  
-             HorizontalAlignment="Center"
-             Margin="10,0,10,0"
-             BorderThickness="2"
-             Background="LightPink"
-             FontSize="25" 
-             FontWeight="Bold" 
-             BorderBrush="Black"  Canvas.Left="45" Canvas.Top="10"
-             DayVisible="False" MonthVisible="False"  DateChanged="YearDatePicker_DateChanged"/>
-
-
-
-            <StackPanel Orientation="Vertical"  Canvas.Top="97" Padding="20" Height="192" Width="385" HorizontalAlignment="Center"  Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
-                <StackPanel.Background>
+            <Grid Grid.Row="0" Grid.Column="0" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
+                <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#9D50BB" Offset="0.0"/>
-                        <GradientStop Color="#6E48AA" Offset="1.0"/>
-                      
+                        <GradientStop Color="#D896FF" Offset="0.0"/>
+                        <GradientStop Color="#B14FFF" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <TextBlock Text="TỔNG TIỀN NHẬP KHO: " 
+            FontWeight="Bold" 
+            FontSize="25" 
+            HorizontalAlignment="Center" Margin="0,30,0,0"/>
+
+                <TextBlock Text="{x:Bind SalesDashboard.SaleService.TotalCost, Mode=OneWay, Converter={StaticResource currency}}"
+        FontSize="25" 
+        FontWeight="Bold" 
+        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
+            </Grid>
+
+
+            <Grid Grid.Row="0" Grid.Column="1"  CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
+
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#4FACFE" Offset="0.0"/>
+                        <GradientStop Color="#00F2FE" Offset="1.0"/>
+                    </LinearGradientBrush>
+
+                </Grid.Background>
+                <TextBlock Text="DOANH THU: " 
+         FontWeight="Bold" 
+         FontSize="25" 
+         HorizontalAlignment="Center" Margin="0,30,0,0"/>
+
+
+                <TextBlock Text="{x:Bind SalesDashboard.SaleService.Revenue, Mode=OneWay, Converter={StaticResource currency}}"
+         FontSize="25" 
+         FontWeight="Bold" 
+         HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
+
+            </Grid>
+
+
+
+
+            <Grid Grid.Row="1" Grid.Column="0"  CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
+
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FF758C" Offset="0.0"/>
+                        <GradientStop Color="#FF7EB3" Offset="1.0"/>
+                    </LinearGradientBrush>
+
+                </Grid.Background>
+                <TextBlock Text="LỢI NHUẬN: " 
+         FontWeight="Bold" 
+         FontSize="25" 
+         HorizontalAlignment="Center" Margin="0,30,0,0"/>
+
+
+                <TextBlock Text="{x:Bind SalesDashboard.SaleService.Profit, Mode=OneWay, Converter={StaticResource currency}}"
+         FontSize="25" 
+         FontWeight="Bold" 
+         HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
+
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="1"  CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
+
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FAD961" Offset="0.0"/>
+                        <GradientStop Color="#F76B1C" Offset="1.0"/>
                     </LinearGradientBrush>
 
 
-
-                </StackPanel.Background>
-                <TextBlock Text="TOP ĐỒ UỐNG BÁN CHẠY: " 
-                 FontWeight="Bold" 
-                 FontSize="25" 
-                 HorizontalAlignment="Center"/>
-
-                <ItemsControl ItemsSource="{x:Bind  SalesDashboard.TopDrink}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </Canvas>
+                </Grid.Background>
+                <TextBlock Text="SỐ LƯỢNG ĐƠN HÀNG: " 
+         FontWeight="Bold" 
+         FontSize="25" 
+         HorizontalAlignment="Center" Margin="0,30,0,0"/>
 
 
-        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
-            <chart:SfCartesianChart Header="DOANH THU THEO THÁNG" x:Name="RevenueChart">
-                <chart:SfCartesianChart.Legend>
-                    <chart:ChartLegend/>
-                </chart:SfCartesianChart.Legend>
-                <chart:SfCartesianChart.XAxes>
-                    <chart:CategoryAxis Header="Month"/>
-                </chart:SfCartesianChart.XAxes>
-                <chart:SfCartesianChart.YAxes>
-                    <chart:NumericalAxis Header="Revenue"/>
-                </chart:SfCartesianChart.YAxes>
-                <chart:ColumnSeries 
-             Label="Sales" 
-             EnableTooltip="True"
-             ShowDataLabels="True"
-             ItemsSource="{x:Bind SalesDashboard.SaleService.MonthlyRevenue, Mode=OneWay}"
-             XBindingPath="Month" 
-             YBindingPath="Revenue">
-                    
-                </chart:ColumnSeries>
-            </chart:SfCartesianChart>
-        </Border>
+                <TextBlock Text="{x:Bind SalesDashboard.SaleService.NumberOrders, Mode=OneWay}"
+         FontSize="25" 
+         FontWeight="Bold" 
+         HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
 
-        <Border Grid.Row="2" Grid.Column="2" Background="LightPink" Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
-            <chart:SfCircularChart Header="DOANH THU THEO TỪNG LOẠI ĐỒ UỐNG" x:Name="CategoryRevenueChart">
-                <chart:SfCircularChart.Legend>
-                    <chart:ChartLegend/>
-                </chart:SfCircularChart.Legend>
-                <chart:PieSeries 
-             ItemsSource="{x:Bind SalesDashboard.SaleService.RevenueByCategory, Mode=OneWay}"
-             ShowDataLabels="True"
-             XBindingPath="Category"
-             EnableTooltip="True"
-             YBindingPath="SalesAmount">
-                    <chart:PieSeries.DataLabelSettings>
-                        <chart:CircularDataLabelSettings Position="Outside"/>
-                    </chart:PieSeries.DataLabelSettings>
-                </chart:PieSeries>
-            </chart:SfCircularChart>
-        </Border>
+            </Grid>
+            <Canvas Grid.Row="0" Grid.Column="2"  Grid.RowSpan="2">
+
+                <DatePicker x:Name="yearDatePicker"  
+          HorizontalAlignment="Center"
+          Margin="10,0,10,0"
+          BorderThickness="2"
+          Background="LightPink"
+          FontSize="25" 
+          FontWeight="Bold" 
+          BorderBrush="Black"  Canvas.Left="45" Canvas.Top="10"
+          DayVisible="False" MonthVisible="False"  DateChanged="YearDatePicker_DateChanged"/>
+
+
+
+                <StackPanel Orientation="Vertical"  Canvas.Top="97" Padding="20" Height="192" Width="385" HorizontalAlignment="Center"  Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
+                    <StackPanel.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#9D50BB" Offset="0.0"/>
+                            <GradientStop Color="#6E48AA" Offset="1.0"/>
+
+                        </LinearGradientBrush>
+
+
+
+                    </StackPanel.Background>
+                    <TextBlock Text="TOP ĐỒ UỐNG BÁN CHẠY: " 
+              FontWeight="Bold" 
+              FontSize="25" 
+              HorizontalAlignment="Center"/>
+
+                    <ItemsControl ItemsSource="{x:Bind  SalesDashboard.TopDrink}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Canvas>
+
+
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
+                <chart:SfCartesianChart Header="DOANH THU THEO THÁNG" x:Name="RevenueChart">
+                    <chart:SfCartesianChart.Legend>
+                        <chart:ChartLegend/>
+                    </chart:SfCartesianChart.Legend>
+                    <chart:SfCartesianChart.XAxes>
+                        <chart:CategoryAxis Header="Month"/>
+                    </chart:SfCartesianChart.XAxes>
+                    <chart:SfCartesianChart.YAxes>
+                        <chart:NumericalAxis Header="Revenue"/>
+                    </chart:SfCartesianChart.YAxes>
+                    <chart:ColumnSeries 
+          Label="Sales" 
+          EnableTooltip="True"
+          ShowDataLabels="True"
+          ItemsSource="{x:Bind SalesDashboard.SaleService.MonthlyRevenue, Mode=OneWay}"
+          XBindingPath="Month" 
+          YBindingPath="Revenue">
+
+                    </chart:ColumnSeries>
+                </chart:SfCartesianChart>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="2" Background="LightPink" Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
+                <chart:SfCircularChart Header="DOANH THU THEO TỪNG LOẠI ĐỒ UỐNG" x:Name="CategoryRevenueChart">
+                    <chart:SfCircularChart.Legend>
+                        <chart:ChartLegend/>
+                    </chart:SfCircularChart.Legend>
+                    <chart:PieSeries 
+          ItemsSource="{x:Bind SalesDashboard.SaleService.RevenueByCategory, Mode=OneWay}"
+          ShowDataLabels="True"
+          XBindingPath="Category"
+          EnableTooltip="True"
+          YBindingPath="SalesAmount">
+                        <chart:PieSeries.DataLabelSettings>
+                            <chart:CircularDataLabelSettings Position="Outside"/>
+                        </chart:PieSeries.DataLabelSettings>
+                    </chart:PieSeries>
+                </chart:SfCircularChart>
+            </Border>
+        </Grid>
+    
+    
     </Grid>
+   
 </Page>

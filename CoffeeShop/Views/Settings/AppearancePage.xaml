@@ -11,5 +11,19 @@
 
     <StackPanel>
         <TextBlock Text="Theme"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock
+          Margin="10,5,5,5"
+          VerticalAlignment="Center"
+          Text="Select your side" />
+            <RadioButton
+          Command="{x:Bind ViewModel.SetThemeCommand}"
+          CommandParameter="Light"
+          Content="Light" />
+            <RadioButton
+          Command="{x:Bind ViewModel.SetThemeCommand}"
+          CommandParameter="Dark"
+          Content="Dark" />
+        </StackPanel>
     </StackPanel>
 </Page>

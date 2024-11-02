@@ -28,13 +28,13 @@ namespace CoffeeShop
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        public MainViewModel ViewModel { get; set; }
+     //   public MainViewModel ViewModel { get; set; }
         public MainWindow()
         {
             
             this.InitializeComponent();
 
-            ViewModel = Ioc.Default.GetService<MainViewModel>();
+       //     ViewModel = Ioc.Default.GetService<MainViewModel>();
 
             config();
         }

@@ -71,7 +71,7 @@ namespace CoffeeShop.ViewModels
         {
             SetThemeCommand = new RelayCommand<string>((themeName) => UpdateTheme(themeName));
             _themeSelectorService = themeSelectorService;
-            UpdateTheme("Default");
+            UpdateTheme("Light");
         }
 
         private void UpdateTheme(string? themeName)

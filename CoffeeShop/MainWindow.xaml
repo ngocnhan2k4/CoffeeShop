@@ -9,12 +9,7 @@
     mc:Ignorable="d" >
 
 
-    <!--<StackPanel>
-        <RadioButtons>
-            <RadioButton Content="Light" Command="{x:Bind ViewModel.SetThemeCommand}" CommandParameter="Light" />
-            <RadioButton Content="Dark" />
-        </RadioButtons>
-        <TextBlock Text="Hello, world!" />
+    <StackPanel Background="{ThemeResource CustomBackground}">
         <NavigationView x:Name="NavView" PaneTitle="StreamPOS" IsBackButtonVisible="Collapsed"
                  SelectionChanged="NavView_SelectionChanged" IsSettingsVisible="False"   >
 
@@ -25,8 +20,8 @@
             </NavigationView.MenuItems>
             <Frame Name="content"/>
         </NavigationView>
-    </StackPanel>-->
-    <Grid Background="{ThemeResource CustomBackground}">
+    </StackPanel>
+    <!--<Grid Background="{ThemeResource CustomBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -61,5 +56,5 @@
                 <Frame Name="content"/>
             </NavigationView>
         </StackPanel>
-    </Grid>
+    </Grid>-->
 </Window>
