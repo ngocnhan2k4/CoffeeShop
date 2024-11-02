@@ -9,8 +9,7 @@
     xmlns:chart="using:Syncfusion.UI.Xaml.Charts" 
     xmlns:model="using:CoffeeShop.ViewModels" 
     xmlns:helper="using:CoffeeShop.Helper"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
     <Page.Resources>
         <helper:IntToVnCurrencyConverter x:Key="currency"/>
     </Page.Resources>

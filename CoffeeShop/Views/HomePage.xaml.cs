@@ -202,25 +202,7 @@ namespace CoffeeShop.Views
             }
         }
 
-        private async void ThemeToggleButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (Application.Current != null)
-                {
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        // Change to light theme
-                        Application.Current.RequestedTheme = ApplicationTheme.Light;
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exception (e.g., log the error)
-                Debug.WriteLine($"Error setting theme: {ex.Message}");
-            }
-        }
+
     }
 
     //private void StyledGrid_ItemClick(object sender, ItemClickEventArgs e)
