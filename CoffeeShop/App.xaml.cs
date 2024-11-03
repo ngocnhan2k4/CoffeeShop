@@ -22,7 +22,7 @@ using CoffeeShop.Service.DataAccess;
 using CoffeeShop.ViewModels;
 using CoffeeShop.Views;
 using Microsoft.Extensions.DependencyInjection;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using CoffeeShop.Service;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -45,8 +45,9 @@ namespace CoffeeShop
             Ioc.Default.ConfigureServices(ConfigureServices());
             // Add Syncfusion Community License
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzUzMTEwNkAzMjM3MmUzMDJlMzBSN1dwZm5TQ2xIdUgzMXZFbXV1Q01wQzJFRkdpVXo0SVh0MWo4cXJoYXA0PQ==");
-            ConfigureServices();
-           
+            
+            ServiceFactory.Register(typeof(IDao), typeof(SqlServerDao));
+            //ConfigureServices();
         }
 
         /// <summary>
