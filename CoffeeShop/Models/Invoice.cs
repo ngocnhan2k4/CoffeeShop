@@ -14,10 +14,11 @@ namespace CoffeeShop.Models
     {
         public int InvoiceID { get; set; }
         public string CreatedAt { get; set; }
-        public double TotalAmount { get; set; }
+        public int TotalAmount { get; set; }
         public string PaymentMethod { get; set; }
         public string Status { get; set; }
         public string CustomerName { get; set; }
+        public string HasDelivery { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
