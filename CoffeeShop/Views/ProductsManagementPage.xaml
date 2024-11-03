@@ -19,7 +19,7 @@
                     <!-- ComboBox for selecting size -->
                     <ComboBox x:Name="SizeComboBox" SelectedIndex="0" 
                       ItemsSource="{x:Bind Sizes}"
-                      SelectionChanged="SizeComboBox_SelectionChanged">
+                      SelectionChanged="SizeComboBox_SelectionChanged" HorizontalAlignment="Center">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="model:Size">
                                 <TextBlock Text="{x:Bind Name}" />
