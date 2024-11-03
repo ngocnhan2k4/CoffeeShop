@@ -1,3 +1,5 @@
+using CoffeeShop.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,8 +25,10 @@ namespace CoffeeShop.Views.Settings
     /// </summary>
     public sealed partial class AppearancePage : Page
     {
+        public MainViewModel ViewModel { get; set; }
         public AppearancePage()
         {
+            ViewModel = Ioc.Default.GetService<MainViewModel>();
             this.InitializeComponent();
         }
     }

@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,7 +29,6 @@ namespace CoffeeShop.Views
     public sealed partial class HomePage : Page
     {
         public HomeViewModel ViewModel { get; set; }
-       // public DrinkViewModel ChosenViewModel { get; set; }
         public HomePage()
         {  
             ViewModel = new HomeViewModel();
@@ -104,26 +104,18 @@ namespace CoffeeShop.Views
             // load lại chữ dưới page navigation
             pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
         }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            //ViewModel.ChosenDrinks.Add(new Drink()
-            //{
-            //    // add custom drink
-            //    Name = "Cà phêee",
-            //    Sizes = new List<Size>
-            //    {
-            //        new Size { Name = "S", Price = 20000, Stock = 20 },
-            //        new Size { Name = "M", Price = 25000, Stock = 15 },
-            //        new Size { Name = "L", Price = 30000, Stock = 10 }
-            //    },
-            //    Description = "Cà phê thơm ngon.",
-            //    Image = "ms-appx:///Assets/download.jpg",
-            //    Discount = 0,
-            //    CategoryID = 1,
-            //    Ingredients = "Cà phê, sữa đặc, đá"
+            if (sender is not ToggleButton checkedToggleButton)
+            {
+                return;
+            }
 
-            //});
+            foreach (ToggleButton toggleButton in ToggeButtons.Children.OfType<ToggleButton>())
+            {
+                toggleButton.IsChecked = toggleButton == checkedToggleButton;
+                toggleButton.IsHitTestVisible = toggleButton != checkedToggleButton;
+            }
         }
 
         private void BackgroundRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -131,10 +123,7 @@ namespace CoffeeShop.Views
 
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            ViewModel.ChosenDrinks[ViewModel.ChosenDrinks.Count - 1].NameDrink = "Cà phêee";
-        }
+
 
         private void TrashButton_Click(object sender, RoutedEventArgs e)
         {
@@ -142,7 +131,7 @@ namespace CoffeeShop.Views
             var detailInvoice = button.DataContext as DetailInvoice;
             if (detailInvoice != null)
                 ViewModel.RemoveDrink(detailInvoice);
-            }
+         }
 
         private void SizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -173,9 +162,49 @@ namespace CoffeeShop.Views
             var size = sizeComboBox.SelectedItem as Size;
             ViewModel.AddDrink(drink, size);
         }
+        private void OrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Get the checked ToggleButton content
+            var checkedToggleButton = ToggeButtons.Children.OfType<ToggleButton>().FirstOrDefault(tb => tb.IsChecked == true);
+            var checkedContent = checkedToggleButton?.Content.ToString();
 
-     
+            // Get the total price
+            var totalPrice = ViewModel.TotalPrice;
+
+            // Order ...
+            var message = $"Order: {checkedContent}, Total Price: {totalPrice}";
+            var dialog = new ContentDialog
+            {
+                XamlRoot = this.XamlRoot,
+                Title = "Order Details",
+                Content = message,
+                CloseButtonText = "OK"
+            };
+            dialog.ShowAsync();
+        }
+        private async void ThemeToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Application.Current != null && Dispatcher != null)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        // Change to dark theme
+                        Application.Current.RequestedTheme = ApplicationTheme.Dark;
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (e.g., log the error)
+                Debug.WriteLine($"Error setting theme: {ex.Message}");
+            }
+        }
+
+
     }
+
     //private void StyledGrid_ItemClick(object sender, ItemClickEventArgs e)
     //{
     //    //var clickedDrink = e.ClickedItem as Drink;

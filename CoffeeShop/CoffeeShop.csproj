@@ -19,6 +19,8 @@
     <Content Remove="Assets\profile1.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="DarkTheme.xaml" />
+    <None Remove="LightTheme.xaml" />
     <None Remove="Views\DashboardPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
@@ -79,6 +81,12 @@
     <None Update="Assets\profile1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="DarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="LightTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Settings\HelpDeskPage.xaml">

@@ -42,24 +42,14 @@ namespace CoffeeShop
         public App()
         {
             this.InitializeComponent();
-
+            Ioc.Default.ConfigureServices(ConfigureServices());
             // Add Syncfusion Community License
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzUzMTEwNkAzMjM3MmUzMDJlMzBSN1dwZm5TQ2xIdUgzMXZFbXV1Q01wQzJFRkdpVXo0SVh0MWo4cXJoYXA0PQ==");
+            
             ServiceFactory.Register(typeof(IDao), typeof(SqlServerDao));
             //ConfigureServices();
-
         }
-        //private void ConfigureServices()
-        //{
-        //    var serviceCollection = new ServiceCollection();
 
-        //    // Register services and view models
-        //    serviceCollection.AddSingleton<IDao, MockDao>();
-        //    serviceCollection.AddTransient<SalesDashboardViewModel>();
-        //    serviceCollection.AddTransient<DashboardPage>();
-
-        //    Services = serviceCollection.BuildServiceProvider();
-        //}
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
@@ -87,6 +77,13 @@ namespace CoffeeShop
             appWindow.Resize(new SizeInt32(displayAreaWidth, displayAreaHeight));
         }
         public Window MainWindow { get; private set; }
-        private Window m_window;
+        public static Window?  m_window { get; set; }
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            services.AddSingleton<MainViewModel>();
+            return services.BuildServiceProvider();
+        }
     }
 }
