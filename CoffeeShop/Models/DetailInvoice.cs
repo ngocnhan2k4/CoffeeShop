@@ -17,7 +17,7 @@ namespace CoffeeShop.Models
         public int Quantity { get; set; }
         public string Size { get; set; }
 
-        public decimal Price { get; set; }
+        public int Price { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

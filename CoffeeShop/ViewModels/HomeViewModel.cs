@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Helper;
 using CoffeeShop.Models;
+using CoffeeShop.Service;
 using CoffeeShop.Service.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace CoffeeShop.ViewModels
         }
 
         private string _sort = "";
-     
+        IDao _dao;
         public string SortBy
         {
             get => _sort;
@@ -69,10 +70,11 @@ namespace CoffeeShop.ViewModels
         }
         public HomeViewModel()
         {
-            IDao dao = new MockDao();
-         //   Drinks = new FullObservableCollection<Drink>(dao.GetDrinks());
+            //IDao dao = new MockDao();
+            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            //   Drinks = new FullObservableCollection<Drink>(dao.GetDrinks());
             ChosenDrinks = new FullObservableCollection<DetailInvoice>();
-            Categories = new FullObservableCollection<Category>(dao.GetCategories());
+            Categories = new FullObservableCollection<Category>(_dao.GetCategories());
             RowsPerPage = 8;
             CurrentPage = 1;
 
@@ -82,8 +84,9 @@ namespace CoffeeShop.ViewModels
         private Dictionary<string, SortType> _sortOptions = new();
         public void LoadData()
         {
-            IDao dao = new MockDao();
-            var (items, count) = dao.GetDrinks(
+            //IDao dao = new MockDao();
+            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            var (items, count) = _dao.GetDrinks(
                 CurrentPage, RowsPerPage, Keyword,CategoryID,
                 _sortOptions
             );

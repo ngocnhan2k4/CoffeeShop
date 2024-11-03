@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Helper;
 using CoffeeShop.Models;
+using CoffeeShop.Service;
 using CoffeeShop.Service.BusinessLogic;
 using CoffeeShop.Service.DataAccess;
 using System;
@@ -31,7 +32,7 @@ namespace CoffeeShop.ViewModels
     public class CartesianChartViewModel
     {
         public ObservableCollection<MonthSalesData> Data { get; set; }
-        public SalesService salesService = new SalesService(new MockDao(), DateTime.Now.Year);
+        public SalesService salesService = new SalesService(/*new MockDao()*/ServiceFactory.GetChildOf(typeof(IDao)) as IDao, DateTime.Now.Year);
         public CartesianChartViewModel()
         {
 
@@ -46,7 +47,7 @@ namespace CoffeeShop.ViewModels
     public class PieChartViewModel
     {
         public ObservableCollection<ProductSalesData> Data { get; set; }
-        public SalesService salesService = new SalesService(new MockDao(), DateTime.Now.Year);
+        public SalesService salesService = new SalesService(/*new MockDao()*/ServiceFactory.GetChildOf(typeof(IDao)) as IDao, DateTime.Now.Year);
 
         public PieChartViewModel()
         {
@@ -70,6 +71,7 @@ namespace CoffeeShop.ViewModels
         public FullObservableCollection<Invoice> Invoices { get; set; }
         public FullObservableCollection<DetailInvoice> DetailInvoices { get; set; }
         public FullObservableCollection<DeliveryInvoice> DeliveryInvoices { get; set; }
+        IDao _dao;
         public ObservableCollection<string> TopDrink
         {
             get { return _topDrink; }
@@ -88,14 +90,15 @@ namespace CoffeeShop.ViewModels
        
         public DashboardViewModel(int year)
         {
-            IDao dao = new MockDao();
-            Drinks = new FullObservableCollection<Drink>(dao.GetDrinks());
-            Categories = new FullObservableCollection<Category>(dao.GetCategories());
-            Invoices = new FullObservableCollection<Invoice>(dao.GetInvoices());
-            DetailInvoices = new FullObservableCollection<DetailInvoice>(dao.GetDetailInvoices());
-            DeliveryInvoices = new FullObservableCollection<DeliveryInvoice>(dao.GetDeliveryInvoices());
-            SaleService = new SalesService(dao,year);
-            TopDrink = new ObservableCollection<string>(SaleService.CalculateTopDrinks(dao, year));
+            //IDao dao = new MockDao();
+            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            Drinks = new FullObservableCollection<Drink>(_dao.GetDrinks());
+            Categories = new FullObservableCollection<Category>(_dao.GetCategories());
+            Invoices = new FullObservableCollection<Invoice>(_dao.GetInvoices());
+            DetailInvoices = new FullObservableCollection<DetailInvoice>(_dao.GetDetailInvoices());
+            DeliveryInvoices = new FullObservableCollection<DeliveryInvoice>(_dao.GetDeliveryInvoices());
+            SaleService = new SalesService(_dao,year);
+            TopDrink = new ObservableCollection<string>(SaleService.CalculateTopDrinks(_dao, year));
         }
         private void OnPropertyChanged(string propertyName)
         {
