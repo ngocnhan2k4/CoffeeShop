@@ -41,28 +41,8 @@ namespace CoffeeShop.ViewModels
     }
     public class MainViewModel : ObservableObject
     {
-     /*   private string? _topTitle;
-        private SolidColorBrush? _themeColor;
-        private string? _textBoxText;*/
+
         private readonly IThemeSelectorService _themeSelectorService;
-
-/*        public string? TopTitle
-        {
-            get => _topTitle;
-            set => SetProperty(ref _topTitle, value);
-        }*/
-
-/*        public SolidColorBrush? ThemeColor
-        {
-            get => _themeColor;
-            set => SetProperty(ref _themeColor, value);
-        }
-*/
- /*       public string? TextBoxText
-        {
-            get => _textBoxText;
-            set => SetProperty(ref _textBoxText, value);
-        }*/
 
         public ICommand SetThemeCommand { get; }
 
@@ -79,25 +59,11 @@ namespace CoffeeShop.ViewModels
             if (Enum.TryParse(themeName, out ElementTheme theme) is true)
             {
                 _themeSelectorService.SetTheme(theme);
-     /*           TopTitle = theme switch
-                {
-                    ElementTheme.Light => "GOOD SIDE",
-                    ElementTheme.Dark => "DARK SIDE",
-                    _ => "NEUTRAL SIDE",
-                };
-                ThemeColor = theme switch
-                {
-                    ElementTheme.Light => new SolidColorBrush(Colors.LightGreen),
-                    ElementTheme.Dark => new SolidColorBrush(Colors.Red),
-                    _ => new SolidColorBrush(Colors.Gray),
-                };
-                TextBoxText = theme switch
-                {
-                    ElementTheme.Light => "May the Force be with you.",
-                    ElementTheme.Dark => "May the Force serve you well.",
-                    _ => "?",
-                };*/
             }
+        }
+        public ElementTheme GetTheme()
+        {
+            return _themeSelectorService.GetTheme();
         }
     }
 }

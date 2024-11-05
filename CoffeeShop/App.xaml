@@ -10,37 +10,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->
-
-                <!--<ResourceDictionary>
-                    <ResourceDictionary.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Light">
-                            <SolidColorBrush
-                            x:Key="CustomBackground"
-                            Color="#e8e8eb" />
-                        </ResourceDictionary>
-                        <ResourceDictionary x:Key="Dark">
-                            <SolidColorBrush
-                            x:Key="CustomBackground"
-                            Color="#212121" />
-                        </ResourceDictionary>
-                    </ResourceDictionary.ThemeDictionaries>
-                </ResourceDictionary>
-
-                <ResourceDictionary>
-                    <ResourceDictionary.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Light">
-                            <SolidColorBrush
-                          x:Key="CustomText"
-                            Color="#212121" />
-                        </ResourceDictionary>
-                        <ResourceDictionary x:Key="Dark">
-                            <SolidColorBrush
-                          x:Key="CustomText"
-                            Color="#e8e8eb" />
-                        </ResourceDictionary>
-                    </ResourceDictionary.ThemeDictionaries>
-                </ResourceDictionary>-->
-                <!-- Light Mode Colors -->
                 <ResourceDictionary>
                     <ResourceDictionary.ThemeDictionaries>
                         <ResourceDictionary x:Key="Light">
@@ -50,7 +19,7 @@
                             <SolidColorBrush x:Key="AccentColor" Color="#6200EE  " />
                             <SolidColorBrush x:Key="ButtonBackground" Color="#FFFFFF " />
                             <SolidColorBrush x:Key="ButtonText" Color="#6200EE " />
-                            <SolidColorBrush x:Key="ItemBackground" Color="#fbfbfb" />
+                            <SolidColorBrush x:Key="ItemBackground" Color="#EEEEEE" />
                             <SolidColorBrush x:Key="InputFieldBackground" Color="#FAFAFA " />
                             <SolidColorBrush x:Key="PlaceholderTextColor" Color="#9E9E9E " />
                             <SolidColorBrush x:Key="BorderColor" Color="#E0E0E0 " />
@@ -93,6 +62,7 @@
                 <Setter Property="Background" Value="{ThemeResource InputFieldBackground}"/>
                 <Setter Property="PlaceholderForeground" Value="{ThemeResource PlaceholderTextColor}"/>
             </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -14,12 +14,14 @@
             <TextBlock
           Margin="10,5,5,5"
           VerticalAlignment="Center"
-          Text="Select your side" />
+          Text="Select your side: " />
             <RadioButton
+          Name="LightThemeRadioButton"
           Command="{x:Bind ViewModel.SetThemeCommand}"
           CommandParameter="Light"
           Content="Light" />
             <RadioButton
+          Name="DarkThemeRadioButton"
           Command="{x:Bind ViewModel.SetThemeCommand}"
           CommandParameter="Dark"
           Content="Dark" />
