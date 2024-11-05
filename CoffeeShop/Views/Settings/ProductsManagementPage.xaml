@@ -11,7 +11,7 @@
     <Page.Resources>
         <DataTemplate x:Key="ItemDrink">
             <Border BorderBrush="Black" BorderThickness="1" CornerRadius="8">
-                <Grid HorizontalAlignment="Center" Width="180">
+                <Grid HorizontalAlignment="Center" Width="180" Background="{ThemeResource ItemBackground}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="Auto"/>
@@ -43,7 +43,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="AntiqueWhite" Padding="12" VerticalAlignment="Stretch">
+        <Grid Grid.Row="0"  Padding="12" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="70"/>
@@ -54,8 +54,9 @@
             <Grid Grid.Row="0">
                 <TextBlock Text="Products Management" FontWeight="Bold" FontSize="20" />
                 <Button Content="Manage Categories" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                    Background="Transparent" Foreground="Black" BorderBrush="White" 
-                    BorderThickness="2" Width="160" Height="40" Click="ShowDialogManageCategory_ButtonClick"/>
+                    Background="Transparent" BorderBrush="{ThemeResource PrimaryText}" 
+                    BorderThickness="2" Width="160" Height="40" Click="ShowDialogManageCategory_ButtonClick"
+                        Foreground="{ThemeResource PrimaryText}"/>
             </Grid>
 
             <Pivot Grid.Row="1" Margin="0,20,0,0" 

@@ -11,10 +11,10 @@
     <StackPanel>
         <StackPanel.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#D2B48C" Offset="0.0"/>
-                <!-- Màu nâu nhạt -->
+                <!--<GradientStop Color="#D2B48C" Offset="0.0"/>
+                --><!-- Màu nâu nhạt --><!--
                 <GradientStop Color="#A67C52" Offset="1.0"/>
-                <!-- Màu nâu sẫm hơn -->
+                --><!-- Màu nâu sẫm hơn -->
             </LinearGradientBrush>
         </StackPanel.Background>
         <TextBlock FontSize="25" Margin="10 10 0 15" FontStyle="Italic" FontWeight="Bold">

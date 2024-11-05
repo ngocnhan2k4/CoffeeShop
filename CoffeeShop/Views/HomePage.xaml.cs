@@ -162,7 +162,27 @@ namespace CoffeeShop.Views
             var size = sizeComboBox.SelectedItem as Size;
             ViewModel.AddDrink(drink, size);
         }
-        private void OrderButton_Click(object sender, RoutedEventArgs e)
+        /*    private void OrderButton_Click(object sender, RoutedEventArgs e)
+            {
+                // Get the checked ToggleButton content
+                var checkedToggleButton = ToggeButtons.Children.OfType<ToggleButton>().FirstOrDefault(tb => tb.IsChecked == true);
+                var checkedContent = checkedToggleButton?.Content.ToString();
+
+                // Get the total price
+                var totalPrice = ViewModel.TotalPrice;
+
+                // Order ...
+                var message = $"Order: {checkedContent}, Total Price: {totalPrice}";
+                var dialog = new ContentDialog
+                {
+                    XamlRoot = this.XamlRoot,
+                    Title = "Order Details",
+                    Content = message,
+                    CloseButtonText = "OK"
+                };
+                dialog.ShowAsync();
+            }*/
+        private async void OrderButton_Click(object sender, RoutedEventArgs e)
         {
             // Get the checked ToggleButton content
             var checkedToggleButton = ToggeButtons.Children.OfType<ToggleButton>().FirstOrDefault(tb => tb.IsChecked == true);
@@ -171,16 +191,14 @@ namespace CoffeeShop.Views
             // Get the total price
             var totalPrice = ViewModel.TotalPrice;
 
-            // Order ...
+            // Order details message
             var message = $"Order: {checkedContent}, Total Price: {totalPrice}";
-            var dialog = new ContentDialog
-            {
-                XamlRoot = this.XamlRoot,
-                Title = "Order Details",
-                Content = message,
-                CloseButtonText = "OK"
-            };
-            dialog.ShowAsync();
+
+            // Update the ContentDialog content
+            OrderDetailsTextBlock.Text = message;
+
+            // Show the ContentDialog
+            await OrderDetailsDialog.ShowAsync();
         }
         private async void ThemeToggleButton_Checked(object sender, RoutedEventArgs e)
         {

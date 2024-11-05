@@ -9,12 +9,14 @@ using static CoffeeShop.Service.DataAccess.IDao;
 
 namespace CoffeeShop.Service.DataAccess
 {
+
     public class SqlServerDao : IDao
     {
+        private readonly string connectionString = "Server=127.0.0.1;Database=coffee-shop;User ID=sa;Password=SqlServer@123;TrustServerCertificate=True;";
         public List<Category> GetCategories()
         {
             var categories = new List<Category>();
-            using var conn = new SqlConnection("Server=127.0.0.1;Database=coffee-shop;User ID=sa;Password=SqlServer@123;TrustServerCertificate=True;");
+            using var conn = new SqlConnection(connectionString);
             conn.Open();
 
             using var cmd = new SqlCommand("SELECT name, id FROM category", conn);
@@ -33,7 +35,7 @@ namespace CoffeeShop.Service.DataAccess
         public List<DeliveryInvoice> GetDeliveryInvoices()
         {
             var list = new List<DeliveryInvoice>();
-            using var conn = new SqlConnection("Server=127.0.0.1;Database=coffee-shop;User ID=sa;Password=SqlServer@123;TrustServerCertificate=True;");
+            using var conn = new SqlConnection(connectionString);
             conn.Open();
 
             using var cmd = new SqlCommand("SELECT * FROM delivery_invoice", conn);
@@ -53,7 +55,7 @@ namespace CoffeeShop.Service.DataAccess
         public List<DetailInvoice> GetDetailInvoices()
         {
             var list = new List<DetailInvoice>();
-            using var conn = new SqlConnection("Server=127.0.0.1;Database=coffee-shop;User ID=sa;Password=SqlServer@123;TrustServerCertificate=True;");
+            using var conn = new SqlConnection(connectionString);
             conn.Open();
 
             using var cmd = new SqlCommand("""
@@ -77,7 +79,7 @@ namespace CoffeeShop.Service.DataAccess
         public List<Drink> GetDrinks()
         {
             var drinks = new List<Drink>();
-            using var conn = new SqlConnection("Server=127.0.0.1;Database=coffee-shop;User ID=sa;Password=SqlServer@123;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+            using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = """
@@ -96,7 +98,11 @@ namespace CoffeeShop.Service.DataAccess
                     Discount = 0,
                     Sizes = new List<Size>()
                 };
-
+                drinks.Add(drink);
+            }
+            reader.Close();
+            foreach ( var drink in drinks)
+            {
                 var sizeCmd = conn.CreateCommand();
                 sizeCmd.CommandText = "SELECT size, price, stock FROM drink WHERE name = @name GROUP BY size, price, stock ORDER BY size DESC";
                 sizeCmd.Parameters.AddWithValue("@name", drink.Name);
@@ -110,7 +116,7 @@ namespace CoffeeShop.Service.DataAccess
                         Stock = sizeReader.GetInt32(2)
                     });
                 }
-                drinks.Add(drink);
+                sizeReader.Close();
             }
             return drinks;
         }
@@ -172,7 +178,7 @@ namespace CoffeeShop.Service.DataAccess
         public List<Invoice> GetInvoices()
         {
             var list = new List<Invoice>();
-            using var conn = new SqlConnection("Server=127.0.0.1;Database=coffee-shop;User ID=sa;Password=SqlServer@123;TrustServerCertificate=True;");
+            using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT * FROM invoice";
@@ -190,6 +196,128 @@ namespace CoffeeShop.Service.DataAccess
                 list.Add(invoice);
             }
             return list;
+        }
+
+        public int CalculateNumberOrders(int year)
+        {
+            int total = 0;
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT COUNT(*) FROM Invoice WHERE YEAR(Created_At) = @Year
+                """, conn);
+            cmd.Parameters.AddWithValue("@Year", year);
+            total = (int)cmd.ExecuteScalar();
+            return total;
+        }
+
+        public int CalculateTotalCost()
+        {
+            int result = 0;
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT SUM(price * stock) FROM Drink
+                """, conn);
+            result = (int)cmd.ExecuteScalar();
+            return result;
+        }
+
+        public int CalculateRevenue(int year)
+        {
+            int result = 0;
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT SUM(total) FROM Invoice WHERE YEAR(Created_At) = @Year
+                """, conn);
+            cmd.Parameters.AddWithValue("@Year", year);
+            result = (int)cmd.ExecuteScalar();
+            return result;
+        }
+
+        public int CalculateProfit(int year)
+        {
+            return CalculateRevenue(year) - CalculateTotalCost();
+        }
+
+        public List<int> CalculateYears()
+        {
+            List<int> years = new List<int>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT DISTINCT YEAR(Created_At) FROM Invoice
+                """, conn);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                years.Add(reader.GetInt32(0));
+            }
+            return new() { years.Max(), years.Min() };
+        }
+
+        public List<int> CalculateMonthlyRevenue(int year)
+        {
+            List<int> result = new();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT MONTH(Created_At), SUM(Total) FROM Invoice WHERE YEAR(Created_At) = @Year GROUP BY MONTH(Created_At)
+                """, conn);
+            cmd.Parameters.AddWithValue("@Year", year);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                result.Add(reader.GetInt32(1));
+            }
+            return result;
+        }
+
+        public List<string> CalculateTopDrinks(int year)
+        {
+            List<string> result = new List<string>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT TOP 5 d.Name, SUM(di.Quantity) AS TotalQuantity
+                FROM invoice_detail di
+                JOIN invoice i ON di.Invoice_ID = i.id
+                JOIN drink d ON di.drink_id = d.id
+                WHERE YEAR(i.Created_At) = @Year
+                GROUP BY d.Name
+                ORDER BY TotalQuantity DESC
+                """, conn);
+            cmd.Parameters.AddWithValue("@Year", year);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                result.Add(reader.GetString(0));
+            }
+            return result;
+        }
+
+        public Dictionary<string, int> CalculateRevenueCategory(int year)
+        {
+            Dictionary<string, int> revenueByCategory = new Dictionary<string, int>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT c.name, SUM(di.Quantity * d.price) AS TotalRevenue
+                FROM invoice_detail di
+                JOIN invoice i ON di.Invoice_ID = i.id
+                JOIN drink d ON di.drink_id = d.id
+                JOIN Category c ON d.Category_ID = c.id
+                WHERE YEAR(i.Created_At) = @Year
+                GROUP BY c.name
+                """, conn);
+            cmd.Parameters.AddWithValue("@Year", year);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                revenueByCategory.Add(reader.GetString(0), reader.GetInt32(1));
+            }
+            return revenueByCategory;
         }
     }
 }

@@ -30,6 +30,13 @@ namespace CoffeeShop.Views.Settings
         {
             ViewModel = Ioc.Default.GetService<MainViewModel>();
             this.InitializeComponent();
+            if(ViewModel.GetTheme() == ElementTheme.Dark) {
+                DarkThemeRadioButton.IsChecked = true;
+            }
+            else
+            {
+                LightThemeRadioButton.IsChecked = true;
+            }
         }
     }
 }
