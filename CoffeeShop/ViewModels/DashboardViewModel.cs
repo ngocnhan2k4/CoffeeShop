@@ -98,7 +98,8 @@ namespace CoffeeShop.ViewModels
             DetailInvoices = new FullObservableCollection<DetailInvoice>(_dao.GetDetailInvoices());
             DeliveryInvoices = new FullObservableCollection<DeliveryInvoice>(_dao.GetDeliveryInvoices());
             SaleService = new SalesService(_dao,year);
-            TopDrink = new ObservableCollection<string>(SaleService.CalculateTopDrinks(_dao, year));
+         //   TopDrink = new ObservableCollection<string>(SaleService.CalculateTopDrinks(_dao, year));
+            TopDrink = new ObservableCollection<string>(_dao.CalculateTopDrinks( year));
         }
         private void OnPropertyChanged(string propertyName)
         {

@@ -567,6 +567,41 @@ namespace CoffeeShop.Service.DataAccess
 
 
         }
+
+        public int CalculateNumberOrders(int year)
+        {
+            return 0;
+        }
+        public int CalculateTotalCost()
+        {
+            return 0;
+        }
+        public int CalculateRevenue(int year)
+        {
+            return 0;
+        }
+        public int CalculateProfit(int year)
+        {
+            return 0;
+        }
+        public List<int> CalculateYears()
+        {
+            return new List<int>();
+        }
+        public List<int> CalculateMonthlyRevenue(int year)
+        {
+            return new List<int>();
+        }
+        public List<string> CalculateTopDrinks(int year)
+        {
+            return new List<string>();
+        }
+
+        public Dictionary<string, int> CalculateRevenueCategory(int year)
+        {
+            return new Dictionary<string, int>();
+        }
     }
+
     
 }

@@ -24,9 +24,6 @@ namespace CoffeeShop.ViewModels
         public FullObservableCollection<Category> Categories { get; set; }
         public FullObservableCollection<DetailInvoice> ChosenDrinks { get; set; }
         public decimal TotalPrice { get; set; }
-
-
-
         public ObservableCollection<PageInfo> PageInfos { get; set; }
         public int SelectedPageIndex { get; set; } = 0;
 
@@ -44,6 +41,7 @@ namespace CoffeeShop.ViewModels
             set
             {
                 _categoryID = value;
+                CurrentPage = 1;
                 LoadData();
             }
         }
@@ -69,20 +67,17 @@ namespace CoffeeShop.ViewModels
                 {
                     _sortOptions["Price"] = SortType.Descending;
                 }
-
                 LoadData();
             }
         }
         public HomeViewModel()
         {
-            //IDao dao = new MockDao();
             _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
             //   Drinks = new FullObservableCollection<Drink>(dao.GetDrinks());
             ChosenDrinks = new FullObservableCollection<DetailInvoice>();
             Categories = new FullObservableCollection<Category>(_dao.GetCategories());
             RowsPerPage = 8;
             CurrentPage = 1;
-
             LoadData();
         }
 
