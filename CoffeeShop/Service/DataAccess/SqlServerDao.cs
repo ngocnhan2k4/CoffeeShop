@@ -1,6 +1,7 @@
 ﻿using CoffeeShop.Models;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -123,57 +124,74 @@ namespace CoffeeShop.Service.DataAccess
 
         public Tuple<List<Drink>, int> GetDrinks(int page, int rowsPerPage, string keyword, int categoryID, Dictionary<string, IDao.SortType> sortOptions)
         {
-            var drinks = GetDrinks(); 
-            // Search
-            var query = from e in drinks
-                        where e.Name.ToLower().Contains(keyword.ToLower())
-                        select e;
+            var drinks = new List<Drink>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
 
-            // Filter
-            if (categoryID != -1)
+            string sortClause = "ORDER BY ";
+            if(sortOptions.Count == 0)
             {
-                query = query.Where(e => e.CategoryID == categoryID);
+                sortClause += "name";
             }
-            // Sort
             foreach (var option in sortOptions)
             {
                 if (option.Key == "Price")
                 {
-                    if (option.Value == SortType.Ascending)
-                    {
-                        query = query.OrderBy(e => e.Sizes[0].Price * (1 - e.Discount));
-                    }
-                    else
-                    {
-                        query = query.OrderByDescending(e => e.Sizes[0].Price * (1 - e.Discount));
-                    }
+                    sortClause +=  (option.Value == SortType.Ascending) ? "price ASC" : "price DESC";
                 }
-                if (option.Key == "Stock")
+                else if (option.Key == "Stock")
                 {
-                    if (option.Value == SortType.Descending)
+                    if(option.Value == SortType.Descending)
                     {
-                        query = query.OrderByDescending(e => {
-                            int sum = 0;
-                            foreach (var size in e.Sizes)
-                            {
-                                sum += size.Stock;
-                            }
-                            return sum;
-                        }
-                        );
+                        sortClause+= "totalQuantity DESC";
                     }
+                        
                 }
             }
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = $"""
+                    SELECT name, category_id, description, image, size, price, stock, (select sum(dd.stock)  from drink dd where d.name = dd.name ) as totalQuantity
+                    from drink d
+                    WHERE name LIKE @keyword AND (@categoryID = -1 OR category_id = @categoryID)
+                    {sortClause}
+                    """;
+            cmd.Parameters.AddWithValue("@keyword", $"%{keyword}%");
+            cmd.Parameters.AddWithValue("@categoryID", categoryID);
+      /*      cmd.Parameters.AddWithValue("@offset", (page - 1) * rowsPerPage);
+            cmd.Parameters.AddWithValue("@rowsPerPage", rowsPerPage);*/
 
-            var result = query
-                .Skip((page - 1) * rowsPerPage)
-                .Take(rowsPerPage);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var drink = drinks.FirstOrDefault(d => d.Name == reader.GetString(0));
+                if (drink == null)
+                {
+                    drink = new Drink
+                    {
+                        Name = reader.GetString(0),
+                        CategoryID = reader.GetInt32(1),
+                        Description = reader.GetString(2),
+                        ImageString = reader.GetString(3),
+                        Discount = 0,
+                        Sizes = new List<Size>()
+                    };
+                    drinks.Add(drink);
+                }
+                drink.Sizes.Add(new Size
+                {
+                    Name = reader.GetString(4),
+                    Price = reader.GetInt32(5),
+                    Stock = reader.GetInt32(6)
+                });
+            }
 
-            return new Tuple<List<Drink>, int>(
-                result.ToList(),
-                query.Count()
-            );
+            var result = drinks
+             .Skip((page - 1) * rowsPerPage)
+             .Take(rowsPerPage);
+
+            return new Tuple<List<Drink>, int>(result.ToList(), drinks.Count);
         }
+
 
         public List<Invoice> GetInvoices()
         {

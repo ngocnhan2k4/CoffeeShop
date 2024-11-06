@@ -62,7 +62,7 @@ namespace CoffeeShop
             m_window.Activate();
 
 
-            // Set the window to full screen with close and minimize buttons
+/*            // Set the window to full screen with close and minimize buttons
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
             var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
             var appWindow = AppWindow.GetFromWindowId(windowId);
@@ -76,6 +76,18 @@ namespace CoffeeShop
 
             // Set the window size to the display area size
             appWindow.Resize(new SizeInt32(displayAreaWidth, displayAreaHeight));
+
+            // Center the window on the screen
+            var displayAreaX = displayAreaWorkArea.X;
+            var displayAreaY = displayAreaWorkArea.Y;
+            appWindow.Move(new PointInt32(displayAreaX, displayAreaY));*/
+
+            // Maximize the window
+            // Assuming you have a reference to your window (currentWindow)
+            if (m_window.AppWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.Maximize();
+            }
         }
         public Window MainWindow { get; private set; }
         public static Window?  m_window { get; set; }

@@ -570,31 +570,31 @@ namespace CoffeeShop.Service.DataAccess
 
         public int CalculateNumberOrders(int year)
         {
-            return 0;
+            return 1000;
         }
         public int CalculateTotalCost()
         {
-            return 0;
+            return 5000;
         }
         public int CalculateRevenue(int year)
         {
-            return 0;
+            return 10000;
         }
         public int CalculateProfit(int year)
         {
-            return 0;
+            return 7000;
         }
         public List<int> CalculateYears()
         {
-            return new List<int>();
+            return new List<int> { 2022,2023,2024 };
         }
         public List<int> CalculateMonthlyRevenue(int year)
         {
-            return new List<int>();
+            return new List<int> { 1000, 2000, 3000, 4000, 50000 };
         }
         public List<string> CalculateTopDrinks(int year)
         {
-            return new List<string>();
+            return new List<string> { "tra sua", "ca phe", "nuoc ngot"};
         }
 
         public Dictionary<string, int> CalculateRevenueCategory(int year)

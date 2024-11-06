@@ -131,9 +131,10 @@ namespace CoffeeShop.ViewModels
                 LoadData();
             }
         }
-        public void Search()
+        public void Search(string keyword)
         {
             CurrentPage = 1;
+            Keyword = keyword;
             LoadData();
         }
         public void AddDrink(Drink drink, Size size)

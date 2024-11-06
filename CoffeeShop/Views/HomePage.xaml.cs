@@ -100,7 +100,7 @@ namespace CoffeeShop.Views
         }
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.Search();
+            ViewModel.Search(SearchTextBox.Text);
             // load lại chữ dưới page navigation
             pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
         }
