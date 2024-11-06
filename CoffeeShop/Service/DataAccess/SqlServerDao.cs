@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
 using static CoffeeShop.Service.DataAccess.IDao;
 
 namespace CoffeeShop.Service.DataAccess
@@ -277,7 +278,7 @@ namespace CoffeeShop.Service.DataAccess
 
         public List<int> CalculateMonthlyRevenue(int year)
         {
-            List<int> result = new();
+            List<int> result = Enumerable.Repeat(0, 12).ToList();
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = new SqlCommand("""
@@ -287,7 +288,9 @@ namespace CoffeeShop.Service.DataAccess
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                result.Add(reader.GetInt32(1));
+                int month = reader.GetInt32(0);
+                int reveune = reader.GetInt32(1);
+                result[month-1]= reveune;
             }
             return result;
         }
