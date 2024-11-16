@@ -1,0 +1,6 @@
+- Install mysql server from docker
+- Install dependencies 
+    - npm i
+- Install knex global 
+- Create table: knex migrate:latest
+- Add data: knex seed:run

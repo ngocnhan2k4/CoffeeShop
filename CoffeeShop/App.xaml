@@ -27,7 +27,7 @@
 
                         <!-- Dark Mode Colors -->
                         <ResourceDictionary x:Key="Dark">
-                            <SolidColorBrush x:Key="PageBackground" Color="#010104" />
+                            <SolidColorBrush x:Key="PageBackground" Color="#2C3E50" />
                             <SolidColorBrush x:Key="PrimaryText" Color="#ebe9fc" />
                             <SolidColorBrush x:Key="SecondaryText" Color="#A0A0A0" />
                             <SolidColorBrush x:Key="AccentColor" Color="#BB86FC   " />
