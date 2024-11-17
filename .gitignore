@@ -4,4 +4,4 @@
 /backend/.env
 /backend/node_modules
 CoffeeShop/Service/DataAccess/IDAO.cs
-CoffeeShop/Service/DataAccess/IMockDAO.cs
+CoffeeShop/Service/DataAccess/MockDAO.cs
