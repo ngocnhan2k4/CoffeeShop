@@ -10,8 +10,59 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Light">
+                            <SolidColorBrush x:Key="PageBackground" Color="#f3f3f3" />
+                            <SolidColorBrush x:Key="PrimaryText" Color="#333333" />
+                            <SolidColorBrush x:Key="SecondaryText" Color="#757575" />
+                            <SolidColorBrush x:Key="AccentColor" Color="#6200EE  " />
+                            <SolidColorBrush x:Key="ButtonBackground" Color="#FFFFFF " />
+                            <SolidColorBrush x:Key="ButtonText" Color="#6200EE " />
+                            <SolidColorBrush x:Key="ItemBackground" Color="#EEEEEE" />
+                            <SolidColorBrush x:Key="InputFieldBackground" Color="#FAFAFA " />
+                            <SolidColorBrush x:Key="PlaceholderTextColor" Color="#9E9E9E " />
+                            <SolidColorBrush x:Key="BorderColor" Color="#E0E0E0 " />
+                        </ResourceDictionary>
+
+                        <!-- Dark Mode Colors -->
+                        <ResourceDictionary x:Key="Dark">
+                            <SolidColorBrush x:Key="PageBackground" Color="#2C3E50" />
+                            <SolidColorBrush x:Key="PrimaryText" Color="#ebe9fc" />
+                            <SolidColorBrush x:Key="SecondaryText" Color="#A0A0A0" />
+                            <SolidColorBrush x:Key="AccentColor" Color="#BB86FC   " />
+                            <SolidColorBrush x:Key="ButtonBackground" Color="#3a31d8 " />
+                            <SolidColorBrush x:Key="ButtonText" Color="#ebe9fc" />
+                            <SolidColorBrush x:Key="ItemBackground" Color="#242424" />
+                            <SolidColorBrush x:Key="InputFieldBackground" Color="#1C1C1C " />
+                            <SolidColorBrush x:Key="PlaceholderTextColor" Color="#757575 " />
+                            <SolidColorBrush x:Key="BorderColor" Color="#333333 " />
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+              
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
+
+            <!-- Default TextBlock Style -->
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{ThemeResource PrimaryText}"/>
+            </Style>
+            
+            <!-- Default Button Style -->
+            <Style TargetType="Button" BasedOn="{StaticResource AccentButtonStyle}" />
+
+            <!-- Default Page Style -->
+            <Style TargetType="Page">
+                <Setter Property="Background" Value="{ThemeResource PageBackground}"/>
+                <Setter Property="Padding" Value="20"/>
+            </Style>
+            <!-- Default TextBox Style -->
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="{ThemeResource InputFieldBackground}"/>
+                <Setter Property="PlaceholderForeground" Value="{ThemeResource PlaceholderTextColor}"/>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
