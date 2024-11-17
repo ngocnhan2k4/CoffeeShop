@@ -116,9 +116,9 @@
 
                     <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">
                         <Grid>
-                            <TextBox x:Name="SearchTextBox" Width="300" PlaceholderText="Search..." Background="Transparent" Padding="50,5,0,5"
-                             Text="{x:Bind ViewModel.Keyword, 
-                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox x:Name="SearchTextBox" Width="300" PlaceholderText="Search..." Background="Transparent" Padding="50,5,0,5"/>
+                             <!--Text="{x:Bind ViewModel.Keyword, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
                             <Button Content="&#xE721;" FontFamily="Segoe MDL2 Assets"   Width="50" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Background="Transparent" BorderThickness="0" Click="Search_Click"
                                     Foreground="{ThemeResource PrimaryText}"/>
 
@@ -140,7 +140,7 @@
                         <SelectorBarItem Text="Milkshakes" x:Name="SamplePage6Item" />
                     </SelectorBar>-->
                     <SelectorBar x:Name="SelectorBar" Grid.Column="0" SelectionChanged="SelectorBar_SelectionChanged">
-                        <SelectorBarItem Text="All" Tag="-1" />
+                        <SelectorBarItem Text="All" Tag="-1" IsSelected="True" />
                     </SelectorBar>
 
                     <ComboBox x:Name="SortComboBox" Grid.Column="1" SelectionChanged="SortComboBox_SelectionChanged" SelectedIndex="0" >

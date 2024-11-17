@@ -42,20 +42,7 @@ namespace CoffeeShop.Service.DataAccess
 
         }
 
-        public List<DetailInvoice> GetDetailInvoices()
-        {
-            var list = new List<DetailInvoice>()
-            {
-                new DetailInvoice() { InvoiceID = 1, NameDrink = "Cà phê sữa", Quantity = 1, Size = "M" },
-                new DetailInvoice() { InvoiceID = 2, NameDrink = "Cà phê sữa", Quantity = 1, Size = "S" },
-                new DetailInvoice() { InvoiceID = 3, NameDrink = "Trà sữa matcha", Quantity = 1, Size = "S" },
-                new DetailInvoice() { InvoiceID = 4, NameDrink = "Cà phê sữa", Quantity = 1, Size = "S" },
-                new DetailInvoice() { InvoiceID = 5, NameDrink = "Sinh tố xoài", Quantity = 1, Size = "S" },
-            };
-            return list;
 
-
-        }
 
         public List<Drink> GetDrinks()
         {
@@ -567,39 +554,161 @@ namespace CoffeeShop.Service.DataAccess
 
 
         }
+        public List<DetailInvoice> GetDetailInvoices()
+        {
+            var list = new List<DetailInvoice>()
+            {
+                new DetailInvoice() { InvoiceID = 1, NameDrink = "Cà Phê Sữa Đá", Quantity = 1, Size = "M" },
+                new DetailInvoice() { InvoiceID = 2, NameDrink = "Cà Phê Sữa Đá", Quantity = 1, Size = "S" },
+                new DetailInvoice() { InvoiceID = 3, NameDrink = "Trà Sữa Matcha Trân Châu", Quantity = 1, Size = "S" },
+                new DetailInvoice() { InvoiceID = 4, NameDrink = "Cà Phê Sữa Đá", Quantity = 1, Size = "S" },
+                new DetailInvoice() { InvoiceID = 5, NameDrink = "Sinh Tố Bơ", Quantity = 1, Size = "S" },
+            };
+            return list;
 
+
+        }
         public int CalculateNumberOrders(int year)
         {
-            return 0;
+            int total = 0;
+            var invoices = GetInvoices();
+            foreach (var invoice in invoices)
+            {
+                if (Convert.ToDateTime(invoice.CreatedAt).Year == year)
+                {
+                    total++;
+                }
+            }
+            return total;
         }
         public int CalculateTotalCost()
         {
-            return 0;
+            var drinks = GetDrinks();
+            int result = 0;
+            foreach (var drink in drinks)
+            {
+                foreach(var size in drink.Sizes)
+                {
+                    result += size.Price * size.Stock;
+                }
+            }
+            return result;
         }
         public int CalculateRevenue(int year)
         {
-            return 0;
+            var invoices = GetInvoices();
+            int result = 0;
+            foreach (var invoice in invoices)
+            {
+                if (Convert.ToDateTime(invoice.CreatedAt).Year == year)
+                    result += invoice.TotalAmount;
+            }
+            return result;
         }
         public int CalculateProfit(int year)
         {
-            return 0;
+            return CalculateRevenue(year) - CalculateTotalCost();
         }
         public List<int> CalculateYears()
         {
-            return new List<int>();
+            List<int> years = new List<int>();
+            var invoices = GetInvoices();
+            foreach (var invoice in invoices)
+            {
+                int year = Convert.ToDateTime(invoice.CreatedAt).Year;
+                if (!years.Contains(year))
+                {
+                    years.Add(year);
+                }
+            }
+            return new() { years.Max(), years.Min() };
         }
         public List<int> CalculateMonthlyRevenue(int year)
         {
-            return new List<int>();
+            List<int> result = new();
+            var invoices = GetInvoices();
+            for (int i = 1; i <= 12; i++)
+            {
+                int revenue = 0;
+                foreach (var invoice in invoices)
+                {
+                    if (Convert.ToDateTime(invoice.CreatedAt).Month == i && (Convert.ToDateTime(invoice.CreatedAt).Year == year))
+                    {
+                        revenue += invoice.TotalAmount;
+                    }
+                }
+                result.Add(revenue);
+            }
+            return result;
         }
         public List<string> CalculateTopDrinks(int year)
         {
-            return new List<string>();
+            List<string> result = new List<string>();
+            var detailInvoices = GetDetailInvoices();
+            var invoices = GetInvoices();
+            var drinks = GetDrinks();
+            Dictionary<string, int> drinkSold = new Dictionary<string, int>();
+
+
+            var invoicesInYear = invoices.Where(invoice => Convert.ToDateTime(invoice.CreatedAt).Year == year).ToList();
+
+            foreach (var invoice in invoicesInYear)
+            {
+                var detailInvoiceList = detailInvoices.Where(di => di.InvoiceID == invoice.InvoiceID);
+
+                foreach (var detailInvoice in detailInvoiceList)
+                {
+                    var drinkName = drinks.Find(x => x.Name == detailInvoice.NameDrink)?.Name;
+                    if (drinkName != null)
+                    {
+                        if (drinkSold.ContainsKey(drinkName))
+                        {
+                            drinkSold[drinkName] += detailInvoice.Quantity;
+                        }
+                        else
+                        {
+                            drinkSold.Add(drinkName, detailInvoice.Quantity);
+                        }
+                    }
+                }
+            }
+            var sortedDrinkSold = drinkSold.OrderByDescending(x => x.Value).Take(5);
+            foreach (var drink in sortedDrinkSold)
+            {
+                result.Add(drink.Key);
+            }
+            return result;
         }
 
         public Dictionary<string, int> CalculateRevenueCategory(int year)
         {
-            return new Dictionary<string, int>();
+            var detailInvoices = GetDetailInvoices();
+            var drinks = GetDrinks();
+            var categories = GetCategories();
+            var invoices = GetInvoices();
+
+
+            Dictionary<string, int> revenueByCategory = new Dictionary<string, int>();
+            foreach (var category in categories)
+            {
+                revenueByCategory.Add(category.CategoryName, 0);
+            }
+            var invoicesInYear = invoices.Where(invoice => Convert.ToDateTime(invoice.CreatedAt).Year == year).ToList();
+
+            for (int i = 0; i < invoicesInYear.Count; i++)
+            {
+                for (int j = 0; j < detailInvoices.Count; j++)
+                {
+                    if (invoicesInYear[i].InvoiceID == detailInvoices[j].InvoiceID)
+                    {
+                        var drink = drinks.Find(x => x.Name == detailInvoices[j].NameDrink );
+                        var price = drink.Sizes.Find(x => x.Name == detailInvoices[j].Size).Price;
+                        var category = categories.Find(x => x.CategoryID == drink.CategoryID);
+                        revenueByCategory[category.CategoryName] += detailInvoices[j].Quantity * price;
+                    }
+                }
+            }
+            return revenueByCategory;
         }
     }
 
