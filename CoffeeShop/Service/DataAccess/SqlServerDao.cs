@@ -33,7 +33,36 @@ namespace CoffeeShop.Service.DataAccess
             }
             return categories;
         }
-
+        /// <summary>
+        /// The function to add a list category into database
+        /// </summary>
+        /// <param name="categories"></param>
+        /// <returns>bool</returns>
+        public bool AddCategories(List<Category> categories)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                foreach (var category in categories)
+                {
+                    using var cmd = conn.CreateCommand();
+                    cmd.Transaction = transaction;
+                    cmd.CommandText = "INSERT INTO category (id, name) VALUES (@id, @name)";
+                    cmd.Parameters.AddWithValue("@name", category.CategoryName);
+                    cmd.Parameters.AddWithValue("@id", category.CategoryID);
+                    cmd.ExecuteNonQuery();
+                }
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                return false;
+            }
+        }
         public List<DeliveryInvoice> GetDeliveryInvoices()
         {
             var list = new List<DeliveryInvoice>();
@@ -103,7 +132,7 @@ namespace CoffeeShop.Service.DataAccess
                 drinks.Add(drink);
             }
             reader.Close();
-            foreach ( var drink in drinks)
+            foreach (var drink in drinks)
             {
                 var sizeCmd = conn.CreateCommand();
                 sizeCmd.CommandText = "SELECT size, price, stock FROM drink WHERE name = @name GROUP BY size, price, stock ORDER BY size DESC";
@@ -130,7 +159,7 @@ namespace CoffeeShop.Service.DataAccess
             conn.Open();
 
             string sortClause = "ORDER BY ";
-            if(sortOptions.Count == 0)
+            if (sortOptions.Count == 0)
             {
                 sortClause += "name";
             }
@@ -138,15 +167,15 @@ namespace CoffeeShop.Service.DataAccess
             {
                 if (option.Key == "Price")
                 {
-                    sortClause +=  (option.Value == SortType.Ascending) ? "price ASC" : "price DESC";
+                    sortClause += (option.Value == SortType.Ascending) ? "price ASC" : "price DESC";
                 }
                 else if (option.Key == "Stock")
                 {
-                    if(option.Value == SortType.Descending)
+                    if (option.Value == SortType.Descending)
                     {
-                        sortClause+= "totalQuantity DESC";
+                        sortClause += "totalQuantity DESC";
                     }
-                        
+
                 }
             }
             using var cmd = conn.CreateCommand();
@@ -158,8 +187,8 @@ namespace CoffeeShop.Service.DataAccess
                     """;
             cmd.Parameters.AddWithValue("@keyword", $"%{keyword}%");
             cmd.Parameters.AddWithValue("@categoryID", categoryID);
-      /*      cmd.Parameters.AddWithValue("@offset", (page - 1) * rowsPerPage);
-            cmd.Parameters.AddWithValue("@rowsPerPage", rowsPerPage);*/
+            /*      cmd.Parameters.AddWithValue("@offset", (page - 1) * rowsPerPage);
+                  cmd.Parameters.AddWithValue("@rowsPerPage", rowsPerPage);*/
 
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -193,7 +222,48 @@ namespace CoffeeShop.Service.DataAccess
             return new Tuple<List<Drink>, int>(result.ToList(), drinks.Count);
         }
 
-
+        /// <summary>
+        /// The function to add a list drink into database
+        /// </summary>
+        /// <param name="drinks"></param>
+        /// <returns>bool</returns>
+        public bool AddDrinks(List<Drink> drinks)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                foreach (var drink in drinks)
+                {
+                    foreach (var size in drink.Sizes)
+                    {
+                        if (size.Stock == 0) continue;
+                        using var cmd = conn.CreateCommand();
+                        cmd.Transaction = transaction;
+                        cmd.CommandText = """
+                                    INSERT INTO drink (name, category_id, description, image, size, stock, price)
+                                    VALUES (@name, @category_id, @description, @image, @size, @stock, @price)
+                                    """;
+                        cmd.Parameters.AddWithValue("@name", drink.Name);
+                        cmd.Parameters.AddWithValue("@category_id", drink.CategoryID);
+                        cmd.Parameters.AddWithValue("@description", drink.Description);
+                        cmd.Parameters.AddWithValue("@image", drink.ImageString);
+                        cmd.Parameters.AddWithValue("@size", size.Name);
+                        cmd.Parameters.AddWithValue("@stock", size.Stock);
+                        cmd.Parameters.AddWithValue("@price", size.Price);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                return false;
+            }
+        }
         public List<Invoice> GetInvoices()
         {
             var list = new List<Invoice>();
@@ -290,7 +360,7 @@ namespace CoffeeShop.Service.DataAccess
             {
                 int month = reader.GetInt32(0);
                 int reveune = reader.GetInt32(1);
-                result[month-1]= reveune;
+                result[month - 1] = reveune;
             }
             return result;
         }

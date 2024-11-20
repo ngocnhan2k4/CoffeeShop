@@ -1,5 +1,4 @@
-﻿﻿using CoffeeShop.Models;
-using Microsoft.Data.SqlClient;
+﻿using CoffeeShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,9 @@ namespace CoffeeShop.Service.DataAccess
             string keyword, int categoryID,
             Dictionary<string, SortType> sortOptions
         );
+        public bool AddDrinks(List<Drink> drinks);
         List<Category> GetCategories();
+        public bool AddCategories(List<Category> categories);
         List<DeliveryInvoice> GetDeliveryInvoices();
         List<Invoice> GetInvoices();
         List<DetailInvoice> GetDetailInvoices();
@@ -33,6 +34,5 @@ namespace CoffeeShop.Service.DataAccess
         public List<int> CalculateMonthlyRevenue(int year);
         public List<string> CalculateTopDrinks(int year);
         public Dictionary<string, int> CalculateRevenueCategory(int year);
-      
     }
 }

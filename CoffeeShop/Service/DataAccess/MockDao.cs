@@ -14,7 +14,7 @@ namespace CoffeeShop.Service.DataAccess
     /// </summary>
     public class MockDao : IDao
     {
-       
+
         public List<Category> GetCategories()
         {
             var list = new List<Category>()
@@ -26,8 +26,11 @@ namespace CoffeeShop.Service.DataAccess
                 new Category() { CategoryID = 4, CategoryName = "Nước ép" }
             };
             return list;
+        }
 
-
+        public bool AddCategories(List<Category> categories)
+        {
+            return true;
         }
 
         public List<DeliveryInvoice> GetDeliveryInvoices()
@@ -267,12 +270,12 @@ namespace CoffeeShop.Service.DataAccess
 
 
         }
-    
-    public Tuple<List<Drink>, int> GetDrinks(
-             int page, int rowsPerPage,
-             string keyword, int categoryID,
-             Dictionary<string, SortType> sortOptions
-         )
+
+        public Tuple<List<Drink>, int> GetDrinks(
+                 int page, int rowsPerPage,
+                 string keyword, int categoryID,
+                 Dictionary<string, SortType> sortOptions
+             )
         {
             List<Drink> drinks = new List<Drink>()
                     {
@@ -507,16 +510,16 @@ namespace CoffeeShop.Service.DataAccess
                 {
                     if (option.Value == SortType.Ascending)
                     {
-                        query = query.OrderBy(e => e.Sizes[0].Price*(1-e.Discount));
+                        query = query.OrderBy(e => e.Sizes[0].Price * (1 - e.Discount));
                     }
                     else
                     {
                         query = query.OrderByDescending(e => e.Sizes[0].Price * (1 - e.Discount));
                     }
                 }
-                if(option.Key == "Stock")
+                if (option.Key == "Stock")
                 {
-                    if(option.Value == SortType.Descending)
+                    if (option.Value == SortType.Descending)
                     {
                         query = query.OrderByDescending(e => {
                             int sum = 0;
@@ -539,6 +542,11 @@ namespace CoffeeShop.Service.DataAccess
                 result.ToList(),
                 query.Count()
             );
+        }
+
+        public bool AddDrinks(List<Drink> drinks)
+        {
+            return true;
         }
         public List<Invoice> GetInvoices()
         {
@@ -587,7 +595,7 @@ namespace CoffeeShop.Service.DataAccess
             int result = 0;
             foreach (var drink in drinks)
             {
-                foreach(var size in drink.Sizes)
+                foreach (var size in drink.Sizes)
                 {
                     result += size.Price * size.Stock;
                 }
@@ -701,7 +709,7 @@ namespace CoffeeShop.Service.DataAccess
                 {
                     if (invoicesInYear[i].InvoiceID == detailInvoices[j].InvoiceID)
                     {
-                        var drink = drinks.Find(x => x.Name == detailInvoices[j].NameDrink );
+                        var drink = drinks.Find(x => x.Name == detailInvoices[j].NameDrink);
                         var price = drink.Sizes.Find(x => x.Name == detailInvoices[j].Size).Price;
                         var category = categories.Find(x => x.CategoryID == drink.CategoryID);
                         revenueByCategory[category.CategoryName] += detailInvoices[j].Quantity * price;
@@ -712,5 +720,5 @@ namespace CoffeeShop.Service.DataAccess
         }
     }
 
-    
+
 }
