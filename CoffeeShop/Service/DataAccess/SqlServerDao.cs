@@ -34,6 +34,34 @@ namespace CoffeeShop.Service.DataAccess
             return categories;
         }
 
+        /// <summary>
+        /// The function to add a list category into database
+        /// </summary>
+        /// <param name="categories"></param>
+        /// <returns>bool</returns>
+        public bool AddCategories(List<Category> categories)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try {
+                foreach(var category in categories) {
+                    using var cmd = conn.CreateCommand();
+                    cmd.Transaction = transaction;
+                    cmd.CommandText = "INSERT INTO category (id, name) VALUES (@id, @name)";
+                    cmd.Parameters.AddWithValue("@name", category.CategoryName);
+                    cmd.Parameters.AddWithValue("@id", category.CategoryID);
+                    cmd.ExecuteNonQuery();
+                }
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception) {
+                transaction.Rollback();
+                return false;
+            }
+        }
+
         public List<DeliveryInvoice> GetDeliveryInvoices()
         {
             var list = new List<DeliveryInvoice>();
@@ -191,6 +219,45 @@ namespace CoffeeShop.Service.DataAccess
              .Take(rowsPerPage);
 
             return new Tuple<List<Drink>, int>(result.ToList(), drinks.Count);
+        }
+
+        /// <summary>
+        /// The function to add a list drink into database
+        /// </summary>
+        /// <param name="drinks"></param>
+        /// <returns>bool</returns>
+        public bool AddDrinks(List<Drink> drinks)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try {
+                foreach(var drink in drinks) {
+                    foreach(var size in drink.Sizes) {
+                        if(size.Stock == 0) continue;
+                        using var cmd = conn.CreateCommand();
+                        cmd.Transaction = transaction;
+                        cmd.CommandText = """
+                                    INSERT INTO drink (name, category_id, description, image, size, stock, price)
+                                    VALUES (@name, @category_id, @description, @image, @size, @stock, @price)
+                                    """;
+                        cmd.Parameters.AddWithValue("@name", drink.Name);
+                        cmd.Parameters.AddWithValue("@category_id", drink.CategoryID);
+                        cmd.Parameters.AddWithValue("@description", drink.Description);
+                        cmd.Parameters.AddWithValue("@image", drink.ImageString);
+                        cmd.Parameters.AddWithValue("@size", size.Name);
+                        cmd.Parameters.AddWithValue("@stock", size.Stock);
+                        cmd.Parameters.AddWithValue("@price", size.Price);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception) {
+                transaction.Rollback();
+                return false;
+            }
         }
 
 

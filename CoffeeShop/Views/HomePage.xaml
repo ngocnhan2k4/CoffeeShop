@@ -59,7 +59,6 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="{Binding NameDrink}"  />
-                
                         </StackPanel>
                         <NumberBox Grid.Column="1" x:Name="NumberBoxSpinButtonPlacementExample" HorizontalAlignment="Right"
                    Value="{x:Bind Quantity, Mode=TwoWay}"
@@ -98,7 +97,6 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-
                 <Grid  Padding="10,0,10,0" Grid.Column="0" Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -106,7 +104,6 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Vertical" Grid.Column="0">
-                      
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontWeight="SemiBold" Text="Coffee Shop" FontSize="30" VerticalAlignment="Top"/>
                             <TextBlock Text="POS" FontStyle="Oblique" VerticalAlignment="Top" Margin="5,8,0,0" FontWeight="SemiLight"/>
