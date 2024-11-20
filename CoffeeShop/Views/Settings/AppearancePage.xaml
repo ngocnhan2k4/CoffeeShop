@@ -6,10 +6,25 @@
     xmlns:local="using:CoffeeShop.Views.Settings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <StackPanel>
         <TextBlock Text="Theme"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock
+          Margin="10,5,5,5"
+          VerticalAlignment="Center"
+          Text="Select your side: " />
+            <RadioButton
+          Name="LightThemeRadioButton"
+          Command="{x:Bind ViewModel.SetThemeCommand}"
+          CommandParameter="Light"
+          Content="Light" />
+            <RadioButton
+          Name="DarkThemeRadioButton"
+          Command="{x:Bind ViewModel.SetThemeCommand}"
+          CommandParameter="Dark"
+          Content="Dark" />
+        </StackPanel>
     </StackPanel>
 </Page>

@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Helper;
 using CoffeeShop.Models;
+using CoffeeShop.Service;
 using CoffeeShop.Service.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace CoffeeShop.ViewModels.Settings
             set
             {
                 _selectedCategoryIndex = value;
-                DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex + 1));
+                DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex));
             }
         }
 
@@ -40,7 +41,7 @@ namespace CoffeeShop.ViewModels.Settings
         public int NewDrinkCategoryID {  get; set; }
 
         public string Error {  get; set; }
-
+        IDao _dao;
         public ProductsManagementViewModel()
         {
             LoadData();
@@ -50,12 +51,13 @@ namespace CoffeeShop.ViewModels.Settings
         {
             _selectedCategoryIndex = 0;
             NameSizes = ["S", "M", "L"];
-            IDao dao = new MockDao();
-            Drinks = dao.GetDrinks();
-            Categories = new (dao.GetCategories());
+            //IDao dao = new MockDao();
+            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            Drinks = _dao.GetDrinks();
+            Categories = new (_dao.GetCategories());
             NewDrinks = [];
             NewCategories = [];
-            DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex + 1));
+            DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex));
         }
 
         public List<Drink> FilterDrinksByCategoryID(int CategoryID)
@@ -93,7 +95,7 @@ namespace CoffeeShop.ViewModels.Settings
             if (!ValidateDrink(NewDrinkAdded)) return false;
 
             // Thêm ơ cả DrinksByCategoryID và Drinks 
-            NewDrinkAdded.CategoryID = SelectedCategoryIndex + 1;
+            NewDrinkAdded.CategoryID = SelectedCategoryIndex ;
             DrinksByCategoryID.Add(NewDrinkAdded);
             Drinks.Add(NewDrinkAdded);
 

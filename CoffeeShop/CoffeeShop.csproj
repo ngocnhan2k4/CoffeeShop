@@ -19,8 +19,10 @@
     <Content Remove="Assets\profile1.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="DarkTheme.xaml" />
+    <None Remove="LightTheme.xaml" />
     <None Remove="Views\DashboardPage.xaml" />
-    <None Remove="Views\ProductsManagementPage.xaml" />
+    <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\Settings\AboutUsPage.xaml" />
     <None Remove="Views\Settings\AppearancePage.xaml" />
@@ -43,6 +45,8 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
@@ -78,6 +82,12 @@
     <None Update="Assets\profile1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="DarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="LightTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Settings\HelpDeskPage.xaml">
@@ -100,7 +110,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\ProductsManagementPage.xaml">
+    <Page Update="Views\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

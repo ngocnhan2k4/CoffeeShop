@@ -6,16 +6,15 @@
     xmlns:local="using:CoffeeShop.Views.Settings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <StackPanel>
         <StackPanel.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#D2B48C" Offset="0.0"/>
-                <!-- Màu nâu nhạt -->
+                <!--<GradientStop Color="#D2B48C" Offset="0.0"/>
+                --><!-- Màu nâu nhạt --><!--
                 <GradientStop Color="#A67C52" Offset="1.0"/>
-                <!-- Màu nâu sẫm hơn -->
+                --><!-- Màu nâu sẫm hơn -->
             </LinearGradientBrush>
         </StackPanel.Background>
         <TextBlock FontSize="25" Margin="10 10 0 15" FontStyle="Italic" FontWeight="Bold">

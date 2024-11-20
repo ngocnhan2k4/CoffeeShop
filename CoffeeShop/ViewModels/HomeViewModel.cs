@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Helper;
 using CoffeeShop.Models;
+using CoffeeShop.Service;
 using CoffeeShop.Service.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,17 @@ using static CoffeeShop.Service.DataAccess.IDao;
 
 namespace CoffeeShop.ViewModels
 {
-    public class DrinkViewModel : INotifyPropertyChanged
+    public class HomeViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public FullObservableCollection<Drink> Drinks
         {
             get; set;
         }
+
         public FullObservableCollection<Category> Categories { get; set; }
         public FullObservableCollection<DetailInvoice> ChosenDrinks { get; set; }
-
+        public decimal TotalPrice { get; set; }
         public ObservableCollection<PageInfo> PageInfos { get; set; }
         public int SelectedPageIndex { get; set; } = 0;
 
@@ -38,12 +41,13 @@ namespace CoffeeShop.ViewModels
             set
             {
                 _categoryID = value;
+                CurrentPage = 1;
                 LoadData();
             }
         }
 
         private string _sort = "";
-     
+        IDao _dao;
         public string SortBy
         {
             get => _sort;
@@ -63,27 +67,26 @@ namespace CoffeeShop.ViewModels
                 {
                     _sortOptions["Price"] = SortType.Descending;
                 }
-
                 LoadData();
             }
         }
-        public DrinkViewModel()
+        public HomeViewModel()
         {
-            IDao dao = new MockDao();
-         //   Drinks = new FullObservableCollection<Drink>(dao.GetDrinks());
+            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            //   Drinks = new FullObservableCollection<Drink>(dao.GetDrinks());
             ChosenDrinks = new FullObservableCollection<DetailInvoice>();
-            Categories = new FullObservableCollection<Category>(dao.GetCategories());
+            Categories = new FullObservableCollection<Category>(_dao.GetCategories());
             RowsPerPage = 8;
             CurrentPage = 1;
-
             LoadData();
         }
 
         private Dictionary<string, SortType> _sortOptions = new();
         public void LoadData()
         {
-            IDao dao = new MockDao();
-            var (items, count) = dao.GetDrinks(
+            //IDao dao = new MockDao();
+            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            var (items, count) = _dao.GetDrinks(
                 CurrentPage, RowsPerPage, Keyword,CategoryID,
                 _sortOptions
             );
@@ -128,9 +131,10 @@ namespace CoffeeShop.ViewModels
                 LoadData();
             }
         }
-        public void Search()
+        public void Search(string keyword)
         {
             CurrentPage = 1;
+            Keyword = keyword;
             LoadData();
         }
         public void AddDrink(Drink drink, Size size)
@@ -151,13 +155,14 @@ namespace CoffeeShop.ViewModels
                 };
                 ChosenDrinks.Add(newInvoice);
             }
+            TotalPrice = ChosenDrinks.Sum(di => di.Price * di.Quantity);
         }
         public void RemoveDrink(DetailInvoice detail)
         {
  
             ChosenDrinks.Remove(detail);
-            
+            TotalPrice = ChosenDrinks.Sum(di => di.Price * di.Quantity);
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+   
     }
 }
