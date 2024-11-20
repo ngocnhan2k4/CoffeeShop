@@ -23,5 +23,14 @@ namespace CoffeeShop.Service.DataAccess
         List<DeliveryInvoice> GetDeliveryInvoices();
         List<Invoice> GetInvoices();
         List<DetailInvoice> GetDetailInvoices();
+
+        public int CalculateNumberOrders(int year);
+        public int CalculateTotalCost();
+        public int CalculateRevenue(int year);
+        public int CalculateProfit(int year);
+        public List<int> CalculateYears();
+        public List<int> CalculateMonthlyRevenue(int year);
+        public List<string> CalculateTopDrinks(int year);
+        public Dictionary<string, int> CalculateRevenueCategory(int year);
     }
 }
