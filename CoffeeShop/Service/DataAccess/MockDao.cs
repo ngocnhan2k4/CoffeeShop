@@ -26,8 +26,11 @@ namespace CoffeeShop.Service.DataAccess
                 new Category() { CategoryID = 4, CategoryName = "Nước ép" }
             };
             return list;
+        }
 
-
+        public bool AddCategories(List<Category> categories)
+        {
+            return true;
         }
 
         public List<DeliveryInvoice> GetDeliveryInvoices()
@@ -539,6 +542,11 @@ namespace CoffeeShop.Service.DataAccess
                 result.ToList(),
                 query.Count()
             );
+        }
+
+        public bool AddDrinks(List<Drink> drinks)
+        {
+            return true;
         }
         public List<Invoice> GetInvoices()
         {
