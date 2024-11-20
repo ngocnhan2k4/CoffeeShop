@@ -10,6 +10,7 @@ using WinRT.Interop;
 using System.Collections.Generic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Linq;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -51,9 +52,21 @@ namespace CoffeeShop.Views.Settings
             await ManageCategoriesDialog.ShowAsync();
         }
 
-        private void SaveChanges_ButtonClick(object sender, RoutedEventArgs e)
+        private async void SaveChanges_ButtonClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.UpdateDrinksIntoDB();
+            if(ViewModel.NewCategories.Count == 0 && ViewModel.NewDrinks.Count == 0) return;
+            
+            bool result = ViewModel.UpdateDrinksAndCategoriesIntoDB();
+            await new ContentDialog()
+            {
+                XamlRoot = XamlRoot,
+                Content = new TextBlock()
+                {
+                    Text = result ? "Save changes successfully" : "Save changes failed", 
+                    FontSize = 20
+                },
+                CloseButtonText = "Close"
+            }.ShowAsync();
         }
 
         private void DiscardChanges_ButtonClick(object sender, RoutedEventArgs e)
@@ -91,7 +104,17 @@ namespace CoffeeShop.Views.Settings
 
         private void ManageCategoriesDialog_SaveButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            ViewModel.Categories = new(ViewModel.NewCategories.Select(c => new Category(c)));
+            List<Category> categories = new();
+            foreach (Category category in ViewModel.NewCategories)
+            {
+                if(ViewModel.Categories.FirstOrDefault(c => c.CategoryID == category.CategoryID) == null)
+                {
+                    categories.Add(category);
+                    ViewModel.Categories.Add(category);
+                }
+            }
+            ViewModel.NewCategories.Clear();
+            ViewModel.NewCategories = new(categories); // mảng NewCategories sẽ lưu những category mới được thêm vào
         }
 
         private void AddCategoryButton_Click(object sender, RoutedEventArgs e)

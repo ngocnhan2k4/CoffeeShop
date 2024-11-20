@@ -115,19 +115,42 @@ namespace CoffeeShop.ViewModels.Settings
 
             Category category = new()
             {
-                CategoryID = Categories.Count + 1,
+                CategoryID = Categories.Count,
                 CategoryName = CategoryName,
             };
 
-            // Thêm Categories vừa Add vào mảng NewCategories đẻ sau cập nhật database
-            NewCategories.Add(category);
             ClearError();
+            // Thêm Categories vừa Add vào mảng NewCategories để sau cập nhật database
+            NewCategories.Add(category);
+           
             return true;
         }
 
-        public void UpdateDrinksIntoDB()
+        public bool UpdateDrinksAndCategoriesIntoDB()
         {
-            // call API to update drinks and categories
+            bool isAddedDrinks = _dao.AddDrinks(NewDrinks);
+            bool isAddedCategories = _dao.AddCategories(NewCategories.ToList());
+
+            if (!isAddedDrinks)
+            {
+                foreach (var drink in NewDrinks)
+                {
+                    DrinksByCategoryID.Remove(drink);
+                    Drinks.Remove(drink);
+                }
+            }
+
+            if (!isAddedCategories)
+            {
+                foreach (var category in NewCategories)
+                {
+                    Categories.Remove(category);
+                }
+            }
+
+            NewDrinks.Clear();
+            NewCategories.Clear();
+            return isAddedDrinks && isAddedCategories;
         }
 
         private bool ValidateDrink(Drink drink)
