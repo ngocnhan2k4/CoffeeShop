@@ -23,12 +23,17 @@
     <None Remove="LightTheme.xaml" />
     <None Remove="Views\DashboardPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
+    <None Remove="Views\InvoicePage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\Settings\AboutUsPage.xaml" />
     <None Remove="Views\Settings\AppearancePage.xaml" />
     <None Remove="Views\Settings\HelpDeskPage.xaml" />
     <None Remove="Views\Settings\PaymentSettingsPage.xaml" />
     <None Remove="Views\Settings\ProductsManagementPage.xaml" />
+    <None Remove="Views\UserControls\HomePage\ChoseDrinkUserControl.xaml" />
+    <None Remove="Views\UserControls\HomePage\DrinkListUserControl.xaml" />
+    <None Remove="Views\UserControls\InvoicePage\InvoiceDetailUserControl.xaml" />
+    <None Remove="Views\UserControls\InvoicePage\InvoiceListUserControl.xaml" />
   </ItemGroup>
 
 
@@ -82,6 +87,30 @@
     <None Update="Assets\profile1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\UserControls\HomePage\DrinkListUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\HomePage\ChoseDrinkUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\InvoicePage\InvoiceListUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\InvoicePage\InvoiceDetailUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\Invoice\InvoiceDetailUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\Invoice\InvoiceDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\Invoice\InvoiceListUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\InvoicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="DarkTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

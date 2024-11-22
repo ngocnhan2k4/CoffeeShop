@@ -718,6 +718,56 @@ namespace CoffeeShop.Service.DataAccess
             }
             return revenueByCategory;
         }
+
+        public List<Invoice> GetListInvoiceId()
+        {
+            return new List<Invoice>
+    {
+        new Invoice { InvoiceID = 1, CreatedAt = "2023-01-01", TotalAmount = 100, PaymentMethod = "Credit Card", Status = "Completed", CustomerName = "John Doe", HasDelivery = "Yes" },
+        new Invoice { InvoiceID = 2, CreatedAt = "2023-02-01", TotalAmount = 200, PaymentMethod = "Cash", Status = "Pending", CustomerName = "Jane Smith", HasDelivery = "No" }
+    };
+        }
+        public List<DetailInvoice> GetDetailInvoicesOfId(int invoiceId)
+        {
+            return new List<DetailInvoice> {
+                //create 5 tiems of Detail Invoice
+                new DetailInvoice {
+                    InvoiceID = 1,
+                    NameDrink = "Cà Phê Sữa Đá",
+                    Quantity = 1,
+                    Size = "M",
+                    Price = 25000
+                },
+                new DetailInvoice {
+                    InvoiceID = 1,
+                    NameDrink = "Trà Sữa",
+                    Quantity = 1,
+                    Size = "M",
+                    Price = 25000
+                },
+                new DetailInvoice {
+                    InvoiceID = 1,
+                    NameDrink = "Sinh Tố Bơ",
+                    Quantity = 1,
+                    Size = "S",
+                    Price = 25000
+                },
+                new DetailInvoice {
+                    InvoiceID = 1,
+                    NameDrink = "Nước Ép Cam",
+                    Quantity = 1,
+                    Size = "M",
+                    Price = 25000
+                },
+                new DetailInvoice {
+                    InvoiceID = 1,
+                    NameDrink = "Soda Chanh",
+                    Quantity = 1,
+                    Size = "M",
+                    Price = 25000
+                }
+                };
+        }
     }
 
 
