@@ -37,5 +37,6 @@ namespace CoffeeShop.Service.DataAccess
 
         public List<Invoice> GetListInvoiceId();
         public List<DetailInvoice> GetDetailInvoicesOfId(int invoiceId);
+        public void UpdateInvoiceStatus(int invoiceId, string status);
     }
 }

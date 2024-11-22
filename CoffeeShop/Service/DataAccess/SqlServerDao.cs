@@ -467,5 +467,19 @@ namespace CoffeeShop.Service.DataAccess
             }
             return detailInvoices;
         }
+        public void UpdateInvoiceStatus(int invoiceId, string status)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "UPDATE invoice SET Status = @Status WHERE id = @InvoiceID";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Status", status);
+                    command.Parameters.AddWithValue("@InvoiceID", invoiceId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

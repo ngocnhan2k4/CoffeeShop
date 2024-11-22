@@ -768,6 +768,10 @@ namespace CoffeeShop.Service.DataAccess
                 }
                 };
         }
+        public void UpdateInvoiceStatus(int invoiceId, string status)
+        {
+            
+        }
     }
 
 

@@ -57,5 +57,14 @@ namespace CoffeeShop.Views.UserControls.InvoicePage
                 ItemClick?.Invoke(selectedInvoice);
             }
         }
+
+        public void SetInvoice(int invoiceID, string status)
+        {
+            var invoice = ViewModel.invoices.FirstOrDefault(i => i.InvoiceID == invoiceID);
+            if (invoice != null)
+            {
+                invoice.Status = status;
+            }
+        }
     }
 }

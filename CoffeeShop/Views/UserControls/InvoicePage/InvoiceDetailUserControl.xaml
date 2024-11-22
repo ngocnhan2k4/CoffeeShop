@@ -5,10 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CoffeeShop.Views.UserControls.InvoicePage"
     xmlns:model="using:CoffeeShop.Models"
+    xmlns:converters="using:CoffeeShop.Helper"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+    </UserControl.Resources>
     <Grid>
         <StackPanel>
             <TextBlock >
@@ -19,6 +23,10 @@
             </TextBlock>
             <TextBlock >
                  <Run Text="Total Amount: "/><Run Text="{x:Bind ViewModel._invoice.TotalAmount, Mode=OneWay}"/>
+            </TextBlock>
+            <TextBlock >
+                 <Run Text="Status: "/><Run Text="{x:Bind ViewModel._invoice.Status, Mode=OneWay}" Foreground="{x:Bind ViewModel._invoice.Status, Mode=OneWay, 
+                                            Converter={StaticResource StatusToColorConverter} }" />
             </TextBlock>
             <ListView x:Name="DetailInvoiceListView" ItemsSource="{x:Bind ViewModel.detailInvoices, Mode=OneWay}" >
                 <ListView.ItemTemplate>
@@ -31,6 +39,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.ButtonVisibility, Mode=OneWay}">
+                <Button Content="Cancel" Click="CancelButton_Click" />
+                <Button Content="Complete" Click="CompleteButton_Click" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

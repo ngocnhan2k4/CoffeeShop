@@ -34,5 +34,10 @@ namespace CoffeeShop.Views
         {
             InvoiceDetailControl.SetInvoiceDetails(invoice);
         }
+
+        private void InvoiceDetailControl_ItemClick(int invoiceID, string status)
+        {
+            InvoiceListControl.SetInvoice(invoiceID, status);
+        }
     }
 }

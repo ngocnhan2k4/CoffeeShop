@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <user_control:InvoiceListUserControl x:Name="InvoiceListControl"  Grid.Row="0" Grid.Column="0" ItemClick="InvoiceListControl_ItemClick"/>
-        <user_control:InvoiceDetailUserControl x:Name="InvoiceDetailControl"
+        <user_control:InvoiceDetailUserControl x:Name="InvoiceDetailControl" ItemClick="InvoiceDetailControl_ItemClick"
                                                 Grid.Row="0" Grid.Column="1" />
     </Grid>
 </Page>

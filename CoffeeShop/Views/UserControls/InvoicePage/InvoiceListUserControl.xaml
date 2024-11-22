@@ -5,18 +5,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CoffeeShop.Views.UserControls.InvoicePage"
     xmlns:model="using:CoffeeShop.Models"
+    xmlns:converters="using:CoffeeShop.Helper"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+    </UserControl.Resources>
     <Grid>
         <ListView x:Name="InvoiceListView" SelectionChanged="InvoiceListView_SelectionChanged"
-                  ItemsSource="{x:Bind ViewModel.invoices}" >
+                  ItemsSource="{x:Bind ViewModel.invoices, Mode=OneWay}" >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Invoice">
                     <StackPanel>
                         <TextBlock Text="{Binding InvoiceID}" />
-                        <TextBlock Text="{Binding Status}" />
+                        <TextBlock Text="{Binding Status, Mode=OneWay}" Foreground="{Binding Status, Mode=OneWay, Converter={StaticResource StatusToColorConverter}}" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

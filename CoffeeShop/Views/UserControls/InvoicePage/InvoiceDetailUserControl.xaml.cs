@@ -25,12 +25,16 @@ namespace CoffeeShop.Views.UserControls.InvoicePage
 {
     public sealed partial class InvoiceDetailUserControl : UserControl
     {
+        public delegate void EventHandler(int invoiceID, string status);
+        public event EventHandler ItemClick;
         public class InvoiceDetailViewModel : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
             public FullObservableCollection<DetailInvoice> detailInvoices { get; set; }
             IDao _dao;
             public Invoice _invoice { get; set; }
+            public Visibility ButtonVisibility => _invoice?.Status == "Wait" ? Visibility.Visible : Visibility.Collapsed;
+
             public InvoiceDetailViewModel()
             {
                 _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
@@ -40,6 +44,17 @@ namespace CoffeeShop.Views.UserControls.InvoicePage
             {
                 _invoice = invoice;
                 detailInvoices = new FullObservableCollection<DetailInvoice>(_dao.GetDetailInvoicesOfId(invoice.InvoiceID));
+            }
+            protected void OnPropertyChanged(string propertyName)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+            public void setStatus(string status)
+            {
+                _invoice.Status = status;
+                OnPropertyChanged("ButtonVisibility");
+                _dao.UpdateInvoiceStatus(_invoice.InvoiceID, status);
             }
         }
         InvoiceDetailViewModel ViewModel { get; set; }
@@ -55,6 +70,15 @@ namespace CoffeeShop.Views.UserControls.InvoicePage
         //    CustomerNameTextBlock.Text = $"Customer: {invoice.CustomerName}";
         //    TotalAmountTextBlock.Text = $"Total Amount: {invoice.TotalAmount}";
             ViewModel.SetDetailInvoices(invoice);
+        }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.setStatus("Cancel");
+        }
+
+        private void CompleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.setStatus("Paid");
         }
     }
 }
