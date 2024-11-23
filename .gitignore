@@ -1,7 +1,9 @@
 /.vs
-/CoffeeShop/bin
-/CoffeeShop/obj
+bin
+obj
 /backend/.env
 /backend/node_modules
 CoffeeShop/Service/DataAccess/IDAO.cs
 CoffeeShop/Service/DataAccess/MockDAO.cs
+/TestResults
+.env*
