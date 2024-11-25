@@ -88,6 +88,11 @@
                             <FontIcon Glyph="Manage" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
+                    <NavigationViewItem Content="Change Language" Name="changeLanguage" Tag="Technical support">
+                        <NavigationViewItem.Icon>
+                            <FontIcon Glyph="Manage" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
                 </NavigationView.MenuItems>
             </NavigationView>
 
