@@ -14,7 +14,18 @@ namespace CoffeeShop.Service.DataAccess
 
     public class SqlServerDao : IDao
     {
-        private readonly string connectionString = "Server=127.0.0.1;Database=coffee-shop;User ID=sa;Password=SqlServer@123;TrustServerCertificate=True;";
+
+        private readonly string server = Environment.GetEnvironmentVariable("SERVER") ?? "127.0.0.1";
+        private readonly string database = Environment.GetEnvironmentVariable("DATABASE") ?? "coffee-shop-test";
+        private readonly string userId = Environment.GetEnvironmentVariable("USERID") ?? "sa";
+        private readonly string password = Environment.GetEnvironmentVariable("PASSWORD") ?? "SqlServer@123";
+        private readonly string connectionString;
+
+        public SqlServerDao()
+        {
+            connectionString = $"Server={server};Database={database};User Id={userId};Password={password};TrustServerCertificate=True";
+        }
+
         public List<Category> GetCategories()
         {
             var categories = new List<Category>();
@@ -481,5 +492,6 @@ namespace CoffeeShop.Service.DataAccess
                 }
             }
         }
+
     }
 }

@@ -719,6 +719,7 @@ namespace CoffeeShop.Service.DataAccess
             return revenueByCategory;
         }
 
+
         public List<Invoice> GetListInvoiceId()
         {
             return new List<Invoice>
@@ -772,6 +773,7 @@ namespace CoffeeShop.Service.DataAccess
         {
             
         }
+
     }
 
 

@@ -23,7 +23,8 @@ using CoffeeShop.ViewModels;
 using CoffeeShop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using CoffeeShop.Service;
-using CommunityToolkit.Mvvm.DependencyInjection; 
+using CommunityToolkit.Mvvm.DependencyInjection;
+using dotenv.net;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -49,6 +50,9 @@ namespace CoffeeShop
             
             ServiceFactory.Register(typeof(IDao), typeof(SqlServerDao));
             ConfigureServices();
+
+            // Loading env 
+            DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { ".env" }));
         }
 
         /// <summary>
