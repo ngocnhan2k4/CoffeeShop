@@ -14,6 +14,7 @@ namespace CoffeeShop.Service.DataAccess
 
     public class SqlServerDao : IDao
     {
+
         private readonly string server = Environment.GetEnvironmentVariable("SERVER") ?? "127.0.0.1";
         private readonly string database = Environment.GetEnvironmentVariable("DATABASE") ?? "coffee-shop-test";
         private readonly string userId = Environment.GetEnvironmentVariable("USERID") ?? "sa";
@@ -420,5 +421,77 @@ namespace CoffeeShop.Service.DataAccess
             }
             return revenueByCategory;
         }
+
+
+        public List<Invoice> GetListInvoiceId()
+        {
+            var invoices = new List<Invoice>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT id, created_at, total, method, status, customer_name, has_delivery 
+                FROM invoice 
+                Order by created_at desc
+                """, conn);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var invoice = new Invoice
+                {
+                    InvoiceID = reader.GetInt32(0),
+                    CreatedAt = reader.GetDateTime(1).ToString("yyyy-MM-dd"),
+                    TotalAmount = reader.GetInt32(2),
+                    PaymentMethod = reader.GetString(3),
+                    Status = reader.GetString(4),
+                    CustomerName = reader.GetString(5),
+                    HasDelivery = reader.GetString(6)
+                };
+                invoices.Add(invoice);
+            }
+            return invoices;
+        }
+
+        public List<DetailInvoice> GetDetailInvoicesOfId(int invoiceId)
+        {
+            var detailInvoices = new List<DetailInvoice>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+        SELECT invoice_detail.drink_id, drink.name, invoice_detail.quantity, drink.size, invoice_detail.price
+        FROM invoice_detail
+        JOIN drink ON invoice_detail.drink_id = drink.id
+        WHERE invoice_detail.invoice_id = @invoiceId
+        """, conn);
+            cmd.Parameters.AddWithValue("@invoiceId", invoiceId);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var di = new DetailInvoice
+                {
+                    InvoiceID = reader.GetInt32(0),
+                    NameDrink = reader.GetString(1),
+                    Quantity = reader.GetInt32(2),
+                    Size = reader.GetString(3),
+                    Price = reader.GetInt32(4)
+                };
+                detailInvoices.Add(di);
+            }
+            return detailInvoices;
+        }
+        public void UpdateInvoiceStatus(int invoiceId, string status)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "UPDATE invoice SET Status = @Status WHERE id = @InvoiceID";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Status", status);
+                    command.Parameters.AddWithValue("@InvoiceID", invoiceId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }

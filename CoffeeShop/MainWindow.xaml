@@ -18,6 +18,7 @@
             <NavigationViewItem Content="Dashboard" Icon="Home" Name="dashboard"/>
             <NavigationViewItem Content="Home" Icon="Manage" Name="products"/>
             <NavigationViewItem Content="Settings" Icon="Setting" Name="settings"/>
+            <NavigationViewItem Content="Invoices" Icon="Admin" Name="invoices"/>
         </NavigationView.MenuItems>
         <Frame Name="content"/>
     </NavigationView>
