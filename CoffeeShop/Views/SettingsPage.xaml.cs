@@ -63,6 +63,9 @@ namespace CoffeeShop.Views
                 case "helpDesk":
                     content.Navigate(typeof(Settings.HelpDeskPage));
                     break;
+                case "changeLanguage":
+                    content.Navigate(typeof(Settings.ChangeLanguagePage));
+                    break;
             }
         }
     }

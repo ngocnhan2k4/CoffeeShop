@@ -28,6 +28,7 @@
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\Settings\AboutUsPage.xaml" />
     <None Remove="Views\Settings\AppearancePage.xaml" />
+    <None Remove="Views\Settings\ChangeLanguagePage.xaml" />
     <None Remove="Views\Settings\HelpDeskPage.xaml" />
     <None Remove="Views\Settings\PaymentSettingsPage.xaml" />
     <None Remove="Views\Settings\ProductsManagementPage.xaml" />
@@ -95,6 +96,9 @@
     <None Update="Assets\profile1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Settings\ChangeLanguagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\UserControls\HomePage\DrinkListUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -38,7 +38,7 @@
                     </LinearGradientBrush>
                 </Grid.Background>
 
-                <TextBlock Text="TỔNG TIỀN NHẬP KHO: " 
+                <TextBlock Text="TỔNG TIỀN NHẬP KHO:" 
             FontWeight="Bold" 
             FontSize="25" 
             HorizontalAlignment="Center" Margin="0,30,0,0"/>

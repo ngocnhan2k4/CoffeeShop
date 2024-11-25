@@ -20,6 +20,9 @@
     <Page Update="Views\InvoicePage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Settings\ChangeLanguagePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="DarkTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
