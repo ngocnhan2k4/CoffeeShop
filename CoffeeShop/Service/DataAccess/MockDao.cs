@@ -819,7 +819,10 @@ namespace CoffeeShop.Service.DataAccess
         {
             
         }
+        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice)
+        {
 
+        }
     }
 
 

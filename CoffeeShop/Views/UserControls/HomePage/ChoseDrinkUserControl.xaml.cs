@@ -36,9 +36,11 @@ namespace CoffeeShop.Views.UserControls.HomePage
     {
         public delegate void EventHandler(string recipientEmail, string message);
         public event EventHandler DeliveryClick;
-
+        public delegate void OrderHandler();
+        public event OrderHandler OrderClick;
         public ChoseDrinkViewModel ViewModel { get; set; }
-
+        public Invoice invoice { get; set; }
+        public DeliveryInvoice delivery { get; set; }
         public ChoseDrinkUserControl()
         {
             ViewModel = new ChoseDrinkViewModel();
@@ -72,76 +74,156 @@ namespace CoffeeShop.Views.UserControls.HomePage
 
         private async void OrderButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the checked ToggleButton content
-            var checkedToggleButton = ToggeButtons.Children.OfType<ToggleButton>().FirstOrDefault(tb => tb.IsChecked == true);
-            var checkedContent = checkedToggleButton?.Content.ToString();
-
-            // Get the total price
-            var totalPrice = ViewModel.TotalPrice;
-
-            // Order details message
-            var message = $"Order: {checkedContent}, Total Price: {totalPrice}";
-
-            // Update the ContentDialog content
-            OrderDetailsTextBlock.Text = message;
-
-            // Show the ContentDialog
-            await OrderDetailsDialog.ShowAsync();
-        }
-        private async void DeliveryButton_Click(object sender, RoutedEventArgs e)
-        {
-        //    totalPriceTextBlock.Text = ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"));
-            await DeliveryDialog.ShowAsync();
-       /*     string message = $"Thông tin đơn hàng:<br>Tổng tiền: {ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"))}<br>Chi tiết:<br>";
-            int cnt = 1;
-            foreach (var item in ViewModel.ChosenDrinks)
+            if(ViewModel.ChosenDrinks.Count == 0)
             {
-                message += $"{cnt}. {item.NameDrink} - {item.Size} - {item.Quantity} - {item.Price}<br>";
+                var dialog = new ContentDialog
+                {
+                    Title = "Order Error",
+                    Content = "Hãy chọn nước uống trước khi đặt hàng",
+                    CloseButtonText = "OK",
+                    XamlRoot = this.XamlRoot
+                };
+                await dialog.ShowAsync();
+                return;
             }
-            message += $"Trạng thái: {statusComboBox.SelectedItem}<br>";
-            message += $"<br>Xác nhận địa chỉ giao hàng: {addressTextBox.Text}<br>";
-
-            string email = emailTextBox.Text;
-            SendEmail(email, message);*/
+            totalPriceTextBlock.Text = ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"));
+            await OrderDetailsDialog.ShowAsync();
+            
         }
 
         private void EmailTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             string email = emailTextBox.Text;
+            bool check = IsValidEmail(email);
+            if (!check)
+            {
+                errorTextBlock.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                errorTextBlock.Visibility = Visibility.Collapsed;
+            }
+        }
+        private bool IsValidEmail(string email)
+        {
             bool check;
             if (string.IsNullOrWhiteSpace(email))
                 check = false;
             check = Regex.IsMatch(email,
                 @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            if (!check)
+            return check;
+        }
+        private bool IsValidPhone(string phone)
+        {
+            bool check;
+            if (string.IsNullOrWhiteSpace(phone))
+                check = false;
+            check = Regex.IsMatch(phone,
+                @"0[0-9]{9}",
+                RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            return check;
+        }
+        private void OrderDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            string email = emailTextBox.Text;
+            string name = nameTextBox.Text;
+            string phone = phoneTextBox.Text;
+            string address = addressTextBox.Text;
+            string paymentMethod = paymentMethodComboBox.SelectedItem as string;
+            string shippingMethod = shippingMethodComboBox.SelectedItem as string;
+
+            if (string.IsNullOrWhiteSpace(name) || paymentMethod == null || shippingMethod == null)
             {
-                emailErrorTextBlock.Visibility = Visibility.Visible;
+                errorTextBlock.Text = "Please type and choose all fields.";
+                errorTextBlock.Visibility = Visibility.Visible;
+                args.Cancel = true;
+                return;
+            }
+            // If shipping method is Delivery, check if email, phone, and address are filled and valid
+            if (shippingMethod == "Delivery")
+            {
+                if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(address))
+                {
+                    errorTextBlock.Text = "Please type and choose all fields.";
+                    errorTextBlock.Visibility = Visibility.Visible;
+                    args.Cancel = true;
+                    return;
+                }
+                // Validate email and phone number formats
+                if (!IsValidEmail(email))
+                {
+                    errorTextBlock.Text = "Invalid email format.";
+                    errorTextBlock.Visibility = Visibility.Visible;
+                    args.Cancel = true;
+                    return;
+                }
+
+                if (!IsValidPhone(phone))
+                {
+                    errorTextBlock.Text = "Invalid phone number format.";
+                    errorTextBlock.Visibility = Visibility.Visible;
+                    args.Cancel = true;
+                    return;
+                }
+            }
+            args.Cancel = false;
+            //close Dialog
+            OrderDetailsDialog.Hide();
+            invoice = new Invoice
+            {
+                TotalAmount = ViewModel.TotalPrice,
+                Status = "Wait",
+                CreatedAt = (DateTime.Now).ToString(),
+                PaymentMethod = paymentMethod,
+                CustomerName = name,
+                HasDelivery = shippingMethod== "Delivery" ? "Y" : "N",
+            };
+            delivery = new DeliveryInvoice
+            {
+                Address = address,
+                PhoneNumber = phone,
+                ShippingFee = 10000
+            };
+            if (shippingMethod== "Delivery" && DeliveryClick != null)
+            {
+                string message = $"Thông tin đơn hàng:<br>Tên khách hàng: {name}<br><br>Tổng tiền: {ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"))} + {(10000).ToString("C", new CultureInfo("vi-VN"))} = {(ViewModel.TotalPrice + 10000).ToString("C", new CultureInfo("vi-VN"))}<br>Chi tiết:<br>";
+                int cnt = 1;
+                foreach (var item in ViewModel.ChosenDrinks)
+                {
+                    message += $"{cnt}. {item.NameDrink} - {item.Size} - {item.Quantity} - {item.Price}<br>";
+                }
+                message += $"<br>Phương thức thanh toán: {paymentMethod}<br>";
+                message += $"Trạng thái: Đợi giao hàng<br>";
+                message += $"<br>Số điện thoại: {phone}<br>";
+                message += $"<br>Xác nhận địa chỉ giao hàng: {address}<br>";
+                DeliveryClick.Invoke(email, message);
             }
             else
             {
-                emailErrorTextBlock.Visibility = Visibility.Collapsed;
+                OrderClick.Invoke();
+            }
+            
+        }
+
+        internal void AddInvoice()
+        {
+            ViewModel.AddInvoice(invoice, delivery);
+        }
+        private void ShippingMethodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (shippingMethodComboBox.SelectedItem != null)
+            {
+                bool isDelivery = shippingMethodComboBox.SelectedItem.ToString() == "Delivery";
+                emailTextBox.IsEnabled = isDelivery;
+                addressTextBox.IsEnabled = isDelivery;
+                phoneTextBox.IsEnabled = isDelivery;
             }
         }
 
-
-
-        private void DeliveryDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            totalPriceTextBlock.Text = ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"));
-            string message = $"Thông tin đơn hàng:<br>Tổng tiền: {ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"))}<br>Chi tiết:<br>";
-            int cnt = 1;
-            foreach (var item in ViewModel.ChosenDrinks)
-            {
-                message += $"{cnt}. {item.NameDrink} - {item.Size} - {item.Quantity} - {item.Price}<br>";
-            }
-            message += $"Trạng thái: {statusComboBox.SelectedItem}<br>";
-            message += $"<br>Xác nhận địa chỉ giao hàng: {addressTextBox.Text}<br>";
-            string email = emailTextBox.Text;
-            if (DeliveryClick != null)
-            {
-                DeliveryClick.Invoke(email, message);
-            }
+            ViewModel.CalcTotal();
         }
     }
 }

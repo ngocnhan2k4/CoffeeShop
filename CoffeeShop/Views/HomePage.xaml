@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <user_control:DrinkListUserControl Grid.Row="0" Grid.Column="0" ItemClick="DrinkListUserControl_ItemClick"/>
-        <user_control:ChoseDrinkUserControl Grid.Row="0" Grid.Column="1" x:Name="cart" DeliveryClick="cart_DeliveryClick" />
+        <user_control:ChoseDrinkUserControl Grid.Row="0" Grid.Column="1" x:Name="cart" DeliveryClick="cart_DeliveryClick" OrderClick="cart_OrderClick" />
         <ProgressRing x:Name="EmailProgressRing" IsActive="False" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100"/>
     </Grid>
 </Page>

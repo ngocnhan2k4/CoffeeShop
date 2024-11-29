@@ -23,6 +23,7 @@ using Windows.Foundation.Collections;
 using Size = CoffeeShop.Models.Size;
 using System.Threading.Tasks;
 using CoffeeShop.Helper;
+using CoffeeShop.ViewModels.HomePage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,10 +35,10 @@ namespace CoffeeShop.Views
     /// </summary>
     public sealed partial class HomePage : Page
     {
-    //    public HomeViewModel ViewModel { get; set; }
+        public HomeViewModel ViewModel { get; set; }
         public HomePage()
         {  
-      //      ViewModel = new HomeViewModel();
+            ViewModel = new HomeViewModel();
             this.InitializeComponent();        
         }
 
@@ -50,14 +51,15 @@ namespace CoffeeShop.Views
         {
             SendEmail(recipientEmail, message);
         }
+
         private async void SendEmail(string recipientEmail, string message)
         {
             try
             {
                 EmailProgressRing.IsActive = true;
                 EmailProgressRing.Visibility = Visibility.Visible;
+                cart.AddInvoice();
                 await Task.Run(() => SendEmailHelper.SendEmail(recipientEmail, message));
-                await ShowEmailResultDialog("Success", "Email sent successfully.");
             }
             catch (Exception ex)
             {
@@ -66,9 +68,30 @@ namespace CoffeeShop.Views
             }
             finally
             {
-
                 EmailProgressRing.IsActive = false;
                 EmailProgressRing.Visibility = Visibility.Collapsed;
+                await ShowEmailResultDialog("Success", "Email sent successfully.");
+            }
+        }
+
+        private async void cart_OrderClick()
+        {
+            try
+            {
+                EmailProgressRing.IsActive = true;
+                EmailProgressRing.Visibility = Visibility.Visible;
+                cart.AddInvoice();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error: {ex.Message}");
+
+            }
+            finally
+            {
+                EmailProgressRing.IsActive = false;
+                EmailProgressRing.Visibility = Visibility.Collapsed;
+                await ShowEmailResultDialog("Success", "Order successfully.");
             }
         }
         private async Task ShowEmailResultDialog(string title, string content)
@@ -80,8 +103,15 @@ namespace CoffeeShop.Views
                 CloseButtonText = "OK",
                 XamlRoot = this.XamlRoot
             };
+            dialog.Closed += (sender, args) =>
+            {
+                // Navigate to the Invoice page
+                this.Frame.Navigate(typeof(InvoicePage));
+            };
             await dialog.ShowAsync();
         }
+
+
     }
 
 }

@@ -191,7 +191,7 @@ namespace CoffeeShop.Service.DataAccess
             }
             using var cmd = conn.CreateCommand();
             cmd.CommandText = $"""
-                    SELECT name, category_id, description, image, size, price, stock, (select sum(dd.stock)  from drink dd where d.name = dd.name ) as totalQuantity
+                    SELECT id,name, category_id, description, image, size, price, stock, (select sum(dd.stock)  from drink dd where d.name = dd.name ) as totalQuantity
                     from drink d
                     WHERE name LIKE @keyword AND (@categoryID = -1 OR category_id = @categoryID)
                     {sortClause}
@@ -204,15 +204,16 @@ namespace CoffeeShop.Service.DataAccess
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                var drink = drinks.FirstOrDefault(d => d.Name == reader.GetString(0));
+                var drink = drinks.FirstOrDefault(d => d.Name == reader.GetString(1));
                 if (drink == null)
                 {
                     drink = new Drink
                     {
-                        Name = reader.GetString(0),
-                        CategoryID = reader.GetInt32(1),
-                        Description = reader.GetString(2),
-                        ImageString = reader.GetString(3),
+                        ID = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        CategoryID = reader.GetInt32(2),
+                        Description = reader.GetString(3),
+                        ImageString = reader.GetString(4),
                         Discount = 0,
                         Sizes = new List<Size>()
                     };
@@ -220,9 +221,9 @@ namespace CoffeeShop.Service.DataAccess
                 }
                 drink.Sizes.Add(new Size
                 {
-                    Name = reader.GetString(4),
-                    Price = reader.GetInt32(5),
-                    Stock = reader.GetInt32(6)
+                    Name = reader.GetString(5),
+                    Price = reader.GetInt32(6),
+                    Stock = reader.GetInt32(7)
                 });
             }
 
@@ -431,7 +432,7 @@ namespace CoffeeShop.Service.DataAccess
             using var cmd = new SqlCommand("""
                 SELECT id, created_at, total, method, status, customer_name, has_delivery 
                 FROM invoice 
-                Order by created_at desc
+                Order by id desc
                 """, conn);
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -524,6 +525,62 @@ namespace CoffeeShop.Service.DataAccess
                 }
             }
         }
+        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                // Insert the invoice and get the generated ID
+                using var invoiceCmd = new SqlCommand("""
+                INSERT INTO invoice (created_at, total, method, status, customer_name, has_delivery)
+                VALUES (@created_at, @total, @method, @status, @customer_name, @has_delivery);
+                SELECT SCOPE_IDENTITY();
+                """, conn, transaction);
+                invoiceCmd.Parameters.AddWithValue("@created_at", invoice.CreatedAt);
+                invoiceCmd.Parameters.AddWithValue("@total", invoice.TotalAmount);
+                invoiceCmd.Parameters.AddWithValue("@method", invoice.PaymentMethod);
+                invoiceCmd.Parameters.AddWithValue("@status", invoice.Status);
+                invoiceCmd.Parameters.AddWithValue("@customer_name", invoice.CustomerName);
+                invoiceCmd.Parameters.AddWithValue("@has_delivery", invoice.HasDelivery);
+                int invoiceId = Convert.ToInt32(invoiceCmd.ExecuteScalar());
 
+                // Insert the detail invoices
+                foreach (var detail in detailInvoices)
+                {
+                    using var detailCmd = new SqlCommand("""
+                    INSERT INTO invoice_detail (invoice_id, drink_id, quantity, price)
+                    VALUES (@invoice_id, @drink_id, @quantity, @price);
+                    """, conn, transaction);
+                    detailCmd.Parameters.AddWithValue("@invoice_id", invoiceId);
+                    detailCmd.Parameters.AddWithValue("@drink_id", detail.DrinkId);
+                    detailCmd.Parameters.AddWithValue("@quantity", detail.Quantity);
+                    detailCmd.Parameters.AddWithValue("@price", detail.Price);
+                    detailCmd.ExecuteNonQuery();
+                }
+
+                // Insert the delivery invoice if it exists
+                if (invoice.HasDelivery=="Y")
+                {
+                    using var deliveryCmd = new SqlCommand("""
+                    INSERT INTO delivery_invoice (invoice_id, address, phone, shipping_fee)
+                    VALUES (@invoice_id, @address, @phone, @shipping_fee);
+                    """, conn, transaction);
+                    deliveryCmd.Parameters.AddWithValue("@invoice_id", invoiceId);
+                    deliveryCmd.Parameters.AddWithValue("@address", deliveryInvoice.Address);
+                    deliveryCmd.Parameters.AddWithValue("@phone", deliveryInvoice.PhoneNumber);
+                    deliveryCmd.Parameters.AddWithValue("@shipping_fee", deliveryInvoice.ShippingFee);
+                    deliveryCmd.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
     }
 }

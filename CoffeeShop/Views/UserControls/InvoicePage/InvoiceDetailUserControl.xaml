@@ -82,14 +82,16 @@
 
             <StackPanel Grid.Column="0" Orientation="Vertical">
                 <TextBlock Text="Bill to:" FontSize="20" FontWeight="SemiBold"/>
-                <TextBlock Text="Coffee Shop" FontSize="15"/>
-                <TextBlock Text="123 HTH, TP.HCM" FontSize="15"  />
-                <TextBlock Text="0123456789" FontSize="15"   />
+                <TextBlock Text="{x:Bind ViewModel._invoice.CustomerName , Mode=OneWay}" FontSize="15"/>
+                <TextBlock Text="{x:Bind ViewModel.deliveryInvoice.Address, Mode=OneWay }" FontSize="15"  />
+                <TextBlock Text="{x:Bind ViewModel.deliveryInvoice.PhoneNumber, Mode=OneWay }" FontSize="15"   />
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,5,0,0" >
-                <TextBlock Text="Invoice No. 123" FontSize="15"/>
-                <TextBlock Text="Date" FontSize="15" HorizontalAlignment="Right"/>
+                <TextBlock  FontSize="15">
+                    <Run>Invoice No.</Run> <Run Text="{x:Bind ViewModel._invoice.InvoiceID, Mode=OneWay}"></Run>
+                </TextBlock>
+                <TextBlock Text="{x:Bind ViewModel._invoice.CreatedAt, Mode=OneWay}" FontSize="15" HorizontalAlignment="Right"/>
             </StackPanel>
 
         </Grid>
@@ -111,7 +113,7 @@
 
         <Grid  Grid.Row="4" Grid.Column="0" MaxHeight="230">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="50,0,50,0" >
-                <ItemsControl ItemsSource="{x:Bind ViewModel.detailInvoices}" 
+                <ItemsControl ItemsSource="{x:Bind ViewModel.detailInvoices, Mode=OneWay}" 
                     ItemTemplate="{StaticResource ItemDetail}"
                     HorizontalAlignment="Stretch">
                 </ItemsControl>
@@ -132,16 +134,16 @@
                 <ColumnDefinition Width="15*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="2" FontWeight="SemiBold" Text="Subtotal" FontSize="15" HorizontalAlignment="Center" />
-            <TextBlock Grid.Column="3" Text="500" FontSize="15"  HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="3" Text="{x:Bind ViewModel._invoice.TotalAmount, Mode=OneWay}" FontSize="15"  HorizontalAlignment="Center"/>
 
             <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="2" FontWeight="SemiBold" Text="Ship" FontSize="15" HorizontalAlignment="Center" />
-            <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="3" Text="500" FontSize="15"  HorizontalAlignment="Center"/>
+            <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="3" Text="{x:Bind ViewModel.deliveryInvoice.ShippingFee, Mode=OneWay}" FontSize="15"  HorizontalAlignment="Center"/>
 
             <Border Padding="0,10,0,0" Grid.Row="2" Grid.Column="2" BorderThickness="0,1,0,0" BorderBrush="Black">
                 <TextBlock FontWeight="SemiBold" Text="Total" FontSize="25" HorizontalAlignment="Center" />
             </Border>
             <Border Padding="0,10,0,0" Grid.Row="2" Grid.Column="3" BorderThickness="0,1,0,0" BorderBrush="Black">
-                <TextBlock Text="500" FontSize="25" HorizontalAlignment="Center" />
+                <TextBlock Text="{x:Bind ViewModel.totalAmount, Mode=OneWay}" FontSize="25" HorizontalAlignment="Center" />
             </Border>
         </Grid>
         <StackPanel VerticalAlignment="Bottom" Margin="0,0,50,0"  Grid.Row="6" Grid.Column="0" Orientation="Horizontal" Visibility="{x:Bind ViewModel.ButtonVisibility, Mode=OneWay}" HorizontalAlignment="Right">

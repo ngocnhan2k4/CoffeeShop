@@ -19,6 +19,7 @@ namespace CoffeeShop.ViewModels.InvoicePage
         IDao _dao;
         public Invoice _invoice { get; set; }
         public DeliveryInvoice deliveryInvoice { get; set; }
+        public int totalAmount =>(_invoice != null ? _invoice.TotalAmount : 0) + (deliveryInvoice!=null ? deliveryInvoice.ShippingFee : 0) ;
         public Visibility ButtonVisibility => _invoice?.Status == "Wait" ? Visibility.Visible : Visibility.Collapsed;
 
         public InvoiceDetailViewModel()
@@ -29,8 +30,9 @@ namespace CoffeeShop.ViewModels.InvoicePage
         public void SetDetailInvoices(Invoice invoice)
         {
             _invoice = invoice;
-            var (invoiceDetails,deliveryInvoice ) = _dao.GetDetailInvoicesOfId(invoice.InvoiceID);
+            var (invoiceDetails, deliveryInvoice) = _dao.GetDetailInvoicesOfId(invoice.InvoiceID);
             detailInvoices = new FullObservableCollection<DetailInvoice>(invoiceDetails);
+            this.deliveryInvoice = deliveryInvoice;
         }
         protected void OnPropertyChanged(string propertyName)
         {

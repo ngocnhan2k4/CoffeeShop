@@ -38,5 +38,6 @@ namespace CoffeeShop.Service.DataAccess
         public List<Invoice> GetListInvoiceId();
         public Tuple<List<DetailInvoice>, DeliveryInvoice>  GetDetailInvoicesOfId(int invoiceId);
         public void UpdateInvoiceStatus(int invoiceId, string status);
+        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices,DeliveryInvoice deliveryInvoice);
     }
 }

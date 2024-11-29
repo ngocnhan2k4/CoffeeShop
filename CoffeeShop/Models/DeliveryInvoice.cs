@@ -14,7 +14,7 @@ namespace CoffeeShop.Models
     {
         public int DeliveryInvoiceID {get; set;}
         public string PhoneNumber { get; set; }
-        public double ShippingFee { get; set; }
+        public int ShippingFee { get; set; }
         public string Address { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
