@@ -46,6 +46,42 @@ namespace CoffeeShop.Views
             cart.AddDrink(drink, size);
         }
 
+        private void cart_DeliveryClick(string recipientEmail, string message)
+        {
+            SendEmail(recipientEmail, message);
+        }
+        private async void SendEmail(string recipientEmail, string message)
+        {
+            try
+            {
+                EmailProgressRing.IsActive = true;
+                EmailProgressRing.Visibility = Visibility.Visible;
+                await Task.Run(() => SendEmailHelper.SendEmail(recipientEmail, message));
+                await ShowEmailResultDialog("Success", "Email sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error sending email: {ex.Message}");
+
+            }
+            finally
+            {
+
+                EmailProgressRing.IsActive = false;
+                EmailProgressRing.Visibility = Visibility.Collapsed;
+            }
+        }
+        private async Task ShowEmailResultDialog(string title, string content)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = title,
+                Content = content,
+                CloseButtonText = "OK",
+                XamlRoot = this.XamlRoot
+            };
+            await dialog.ShowAsync();
+        }
     }
 
 }

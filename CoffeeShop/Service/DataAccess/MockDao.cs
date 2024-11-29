@@ -723,14 +723,16 @@ namespace CoffeeShop.Service.DataAccess
         public List<Invoice> GetListInvoiceId()
         {
             return new List<Invoice>
-    {
-        new Invoice { InvoiceID = 1, CreatedAt = "2023-01-01", TotalAmount = 100, PaymentMethod = "Credit Card", Status = "Completed", CustomerName = "John Doe", HasDelivery = "Yes" },
-        new Invoice { InvoiceID = 2, CreatedAt = "2023-02-01", TotalAmount = 200, PaymentMethod = "Cash", Status = "Pending", CustomerName = "Jane Smith", HasDelivery = "No" }
-    };
+            {
+                new Invoice { InvoiceID = 1, CreatedAt = "2023-01-01", TotalAmount = 100, PaymentMethod = "Credit Card", Status = "Paid", CustomerName = "John Doe", HasDelivery = "Y" },
+                new Invoice { InvoiceID = 2, CreatedAt = "2023-02-01", TotalAmount = 200, PaymentMethod = "Cash", Status = "Wait", CustomerName = "Jane Smith", HasDelivery = "N" }
+            };
         }
-        public List<DetailInvoice> GetDetailInvoicesOfId(int invoiceId)
+
+        public Tuple<List<DetailInvoice>, DeliveryInvoice> GetDetailInvoicesOfId(int invoiceId)
         {
-            return new List<DetailInvoice> {
+            var invoiceDetails = new List<DetailInvoice>
+            {
                 //create 5 tiems of Detail Invoice
                 new DetailInvoice {
                     InvoiceID = 1,
@@ -766,8 +768,52 @@ namespace CoffeeShop.Service.DataAccess
                     Quantity = 1,
                     Size = "M",
                     Price = 25000
+                },
+                new DetailInvoice {
+                    InvoiceID = 2,
+                    NameDrink = "Cà Phê Sữa Đá",
+                    Quantity = 1,
+                    Size = "S",
+                    Price = 20000
+                },
+                new DetailInvoice {
+                    InvoiceID = 2,
+                    NameDrink = "Trà Sữa",
+                    Quantity = 1,
+                    Size = "S",
+                    Price = 20000
+                },
+                new DetailInvoice {
+                    InvoiceID = 2,
+                    NameDrink = "Sinh Tố Bơ",
+                    Quantity = 1,
+                    Size = "S",
+                    Price = 20000
+                },
+                new DetailInvoice {
+                    InvoiceID = 2,
+                    NameDrink = "Nước Ép Cam",
+                    Quantity = 1,
+                    Size = "M",
+                    Price = 20000
+                },
+                new DetailInvoice {
+                    InvoiceID = 2,
+                    NameDrink = "Soda Chanh",
+                    Quantity = 1,
+                    Size = "M",
+                    Price = 20000
                 }
-                };
+             };
+
+            var deliveryInvoice = new DeliveryInvoice
+            {
+                DeliveryInvoiceID = invoiceId,
+                PhoneNumber = "0123456789",
+                ShippingFee = 5000,
+                Address = "KTX khu B"
+            };
+            return new Tuple<List<DetailInvoice>, DeliveryInvoice>(invoiceDetails.Where(x => x.InvoiceID == invoiceId).ToList(), deliveryInvoice);
         }
         public void UpdateInvoiceStatus(int invoiceId, string status)
         {

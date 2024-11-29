@@ -113,16 +113,14 @@
         </StackPanel>
 
         <!-- Add the Button to print content -->
-        <Grid Grid.Column="0" Grid.Row="4">
+        <Grid Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Content="Order" Click="OrderButton_Click" Grid.Column="1" Margin="55 10 10 10" HorizontalAlignment="Center"/>
-            <Button Content="Delivery" Grid.Column="3" Margin="10" HorizontalAlignment="Right" Click="DeliveryButton_Click"/>
+            <Button Content="Order" Click="OrderButton_Click" Grid.Column="0" Width="100" HorizontalAlignment="Center"/>
+            <Button Content="Delivery" Grid.Column="1"  Width="100" Margin="10" Click="DeliveryButton_Click" HorizontalAlignment="Center"/>
         </Grid>
         <ContentDialog x:Name="OrderDetailsDialog"
                Title="Order Details"
@@ -134,7 +132,7 @@
         <!--Delivery-->
         <ContentDialog x:Name="DeliveryDialog"
             Title="Delivery"
-            CloseButtonText="Cancel" PrimaryButtonText="Send" IsPrimaryButtonEnabled="True" DefaultButton="Primary" >
+            CloseButtonText="Cancel" PrimaryButtonText="Send" IsPrimaryButtonEnabled="True" DefaultButton="Primary" PrimaryButtonClick="DeliveryDialog_PrimaryButtonClick" >
             <StackPanel Width="500" Height="450" Spacing="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -186,7 +184,6 @@
 
             </StackPanel>
         </ContentDialog>
-        <ProgressRing x:Name="EmailProgressRing" IsActive="False" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100"/>
+        <!--<ProgressRing x:Name="EmailProgressRing" IsActive="False" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100"/>-->
     </Grid>
-
 </UserControl>

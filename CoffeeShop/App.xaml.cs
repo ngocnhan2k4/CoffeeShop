@@ -48,11 +48,12 @@ namespace CoffeeShop
             // Add Syncfusion Community License
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzUzMTEwNkAzMjM3MmUzMDJlMzBSN1dwZm5TQ2xIdUgzMXZFbXV1Q01wQzJFRkdpVXo0SVh0MWo4cXJoYXA0PQ==");
             
-            ServiceFactory.Register(typeof(IDao), typeof(SqlServerDao));
+            ServiceFactory.Register(typeof(IDao), typeof(MockDao));
             ConfigureServices();
 
             // Loading env 
-            DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { ".env" }));
+            DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
+
         }
 
         /// <summary>

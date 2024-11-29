@@ -8,21 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using static CoffeeShop.Service.DataAccess.IDao;
-
+using dotenv.net;
 namespace CoffeeShop.Service.DataAccess
 {
 
     public class SqlServerDao : IDao
     {
-
-        private readonly string server = Environment.GetEnvironmentVariable("SERVER") ?? "127.0.0.1";
-        private readonly string database = Environment.GetEnvironmentVariable("DATABASE") ?? "coffee-shop-test";
-        private readonly string userId = Environment.GetEnvironmentVariable("USERID") ?? "sa";
-        private readonly string password = Environment.GetEnvironmentVariable("PASSWORD") ?? "SqlServer@123";
         private readonly string connectionString;
 
         public SqlServerDao()
         {
+            DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
+            string server = Environment.GetEnvironmentVariable("SERVER") ?? "127.0.0.1";
+            string database = Environment.GetEnvironmentVariable("DATABASE") ?? "coffee-shop-test";
+            string userId = Environment.GetEnvironmentVariable("USERID") ?? "sa";
+            string password = Environment.GetEnvironmentVariable("PASSWORD") ?? "SqlServer@123";
             connectionString = $"Server={server};Database={database};User Id={userId};Password={password};TrustServerCertificate=True";
         }
 
@@ -451,17 +451,17 @@ namespace CoffeeShop.Service.DataAccess
             return invoices;
         }
 
-        public List<DetailInvoice> GetDetailInvoicesOfId(int invoiceId)
+        public Tuple<List<DetailInvoice>, DeliveryInvoice> GetDetailInvoicesOfId(int invoiceId)
         {
             var detailInvoices = new List<DetailInvoice>();
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = new SqlCommand("""
-        SELECT invoice_detail.drink_id, drink.name, invoice_detail.quantity, drink.size, invoice_detail.price
-        FROM invoice_detail
-        JOIN drink ON invoice_detail.drink_id = drink.id
-        WHERE invoice_detail.invoice_id = @invoiceId
-        """, conn);
+                SELECT invoice_detail.drink_id, drink.name, invoice_detail.quantity, drink.size, invoice_detail.price
+                FROM invoice_detail
+                JOIN drink ON invoice_detail.drink_id = drink.id
+                WHERE invoice_detail.invoice_id = @invoiceId
+                """, conn);
             cmd.Parameters.AddWithValue("@invoiceId", invoiceId);
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -476,8 +476,40 @@ namespace CoffeeShop.Service.DataAccess
                 };
                 detailInvoices.Add(di);
             }
-            return detailInvoices;
+            reader.Close();
+            DeliveryInvoice deliveryInvoice = null;
+            // Fetch DeliveryInvoice
+            using var cmd2 = new SqlCommand("""
+            SELECT * FROM delivery_invoice WHERE invoice_id = @invoiceId
+            """, conn);
+            cmd2.Parameters.AddWithValue("@invoiceId", invoiceId);
+            using var reader2 = cmd2.ExecuteReader();
+            if (reader2.Read())
+            {
+                deliveryInvoice = new DeliveryInvoice
+                {
+                    DeliveryInvoiceID = reader2.GetInt32(0),
+                    Address = reader2.GetString(1),
+                    PhoneNumber = reader2.GetString(2),
+                    ShippingFee = reader2.GetInt32(3)
+                };
+            }
+            reader2.Close();
+            // If no DeliveryInvoice is found, create a default one
+            if (deliveryInvoice == null)
+            {
+                deliveryInvoice = new DeliveryInvoice
+                {
+                    DeliveryInvoiceID = invoiceId,
+                    Address = "",
+                    PhoneNumber = "",
+                    ShippingFee = 0
+                };
+            }
+
+            return new Tuple<List<DetailInvoice>, DeliveryInvoice>(detailInvoices, deliveryInvoice);
         }
+    
         public void UpdateInvoiceStatus(int invoiceId, string status)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

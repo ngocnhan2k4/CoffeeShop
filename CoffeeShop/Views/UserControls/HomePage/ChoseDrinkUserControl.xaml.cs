@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CoffeeShop.ViewModels.HomePage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,43 +34,8 @@ namespace CoffeeShop.Views.UserControls.HomePage
 {
     public sealed partial class ChoseDrinkUserControl : UserControl
     {
-        public class ChoseDrinkViewModel : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-            public FullObservableCollection<DetailInvoice> ChosenDrinks { get; set; }
-            public decimal TotalPrice { get; set; }
-
-            public ChoseDrinkViewModel()
-            {
-                ChosenDrinks = new FullObservableCollection<DetailInvoice>();
-            }
-            public void AddDrink(Drink drink, Size size)
-            {
-                var existingInvoice = ChosenDrinks.FirstOrDefault(di => di.NameDrink == drink.Name && di.Size == size.Name);
-                if (existingInvoice != null)
-                {
-                    existingInvoice.Quantity += 1;
-                }
-                else
-                {
-                    var newInvoice = new DetailInvoice
-                    {
-                        NameDrink = drink.Name,
-                        Quantity = 1,
-                        Size = size.Name,
-                        Price = size.Price
-                    };
-                    ChosenDrinks.Add(newInvoice);
-                }
-                TotalPrice = ChosenDrinks.Sum(di => di.Price * di.Quantity);
-            }
-            public void RemoveDrink(DetailInvoice detail)
-            {
-
-                ChosenDrinks.Remove(detail);
-                TotalPrice = ChosenDrinks.Sum(di => di.Price * di.Quantity);
-            }
-        }
+        public delegate void EventHandler(string recipientEmail, string message);
+        public event EventHandler DeliveryClick;
 
         public ChoseDrinkViewModel ViewModel { get; set; }
 
@@ -124,9 +90,9 @@ namespace CoffeeShop.Views.UserControls.HomePage
         }
         private async void DeliveryButton_Click(object sender, RoutedEventArgs e)
         {
-            totalPriceTextBlock.Text = ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"));
+        //    totalPriceTextBlock.Text = ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"));
             await DeliveryDialog.ShowAsync();
-            string message = $"Thông tin đơn hàng:<br>Tổng tiền: {ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"))}<br>Chi tiết:<br>";
+       /*     string message = $"Thông tin đơn hàng:<br>Tổng tiền: {ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"))}<br>Chi tiết:<br>";
             int cnt = 1;
             foreach (var item in ViewModel.ChosenDrinks)
             {
@@ -136,7 +102,7 @@ namespace CoffeeShop.Views.UserControls.HomePage
             message += $"<br>Xác nhận địa chỉ giao hàng: {addressTextBox.Text}<br>";
 
             string email = emailTextBox.Text;
-            SendEmail(email, message);
+            SendEmail(email, message);*/
         }
 
         private void EmailTextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -157,38 +123,25 @@ namespace CoffeeShop.Views.UserControls.HomePage
                 emailErrorTextBlock.Visibility = Visibility.Collapsed;
             }
         }
-        private async void SendEmail(string recipientEmail, string message)
+
+
+
+        private void DeliveryDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            try
+            totalPriceTextBlock.Text = ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"));
+            string message = $"Thông tin đơn hàng:<br>Tổng tiền: {ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"))}<br>Chi tiết:<br>";
+            int cnt = 1;
+            foreach (var item in ViewModel.ChosenDrinks)
             {
-                EmailProgressRing.IsActive = true;
-                EmailProgressRing.Visibility = Visibility.Visible;
-                await Task.Run(() => SendEmailHelper.SendEmail(recipientEmail, message));
-                await ShowEmailResultDialog("Success", "Email sent successfully.");
+                message += $"{cnt}. {item.NameDrink} - {item.Size} - {item.Quantity} - {item.Price}<br>";
             }
-            catch (Exception ex)
+            message += $"Trạng thái: {statusComboBox.SelectedItem}<br>";
+            message += $"<br>Xác nhận địa chỉ giao hàng: {addressTextBox.Text}<br>";
+            string email = emailTextBox.Text;
+            if (DeliveryClick != null)
             {
-                Debug.WriteLine($"Error sending email: {ex.Message}");
-
-            }
-            finally
-            {
-
-                EmailProgressRing.IsActive = false;
-                EmailProgressRing.Visibility = Visibility.Collapsed;
+                DeliveryClick.Invoke(email, message);
             }
         }
-        private async Task ShowEmailResultDialog(string title, string content)
-        {
-            var dialog = new ContentDialog
-            {
-                Title = title,
-                Content = content,
-                CloseButtonText = "OK",
-                XamlRoot = this.XamlRoot
-            };
-            await dialog.ShowAsync();
-        }
-
     }
 }
