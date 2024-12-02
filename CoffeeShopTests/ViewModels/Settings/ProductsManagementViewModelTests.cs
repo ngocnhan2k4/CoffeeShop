@@ -16,6 +16,7 @@ namespace CoffeeShopTests.ViewModels.Settings
         [TestInitialize]
         public void Setup()
         {
+
             _viewModel = new ProductsManagementViewModel();
         }
 
@@ -31,6 +32,8 @@ namespace CoffeeShopTests.ViewModels.Settings
             Assert.IsNotNull(_viewModel.NewCategories);
             Assert.IsNotNull(_viewModel.DrinksByCategoryID);
         }
+
+       
 
         [TestMethod]
         public void AddDrink_WithValidDrink_ReturnsTrue()

@@ -16,7 +16,7 @@ namespace CoffeeShop.Service.DataAccess
     {
 
         private readonly string server = Environment.GetEnvironmentVariable("SERVER") ?? "127.0.0.1";
-        private readonly string database = Environment.GetEnvironmentVariable("DATABASE") ?? "coffee-shop-test";
+        private readonly string database = Environment.GetEnvironmentVariable("DATABASE") ?? "coffee-shop"; // sua
         private readonly string userId = Environment.GetEnvironmentVariable("USERID") ?? "sa";
         private readonly string password = Environment.GetEnvironmentVariable("PASSWORD") ?? "SqlServer@123";
         private readonly string connectionString;
