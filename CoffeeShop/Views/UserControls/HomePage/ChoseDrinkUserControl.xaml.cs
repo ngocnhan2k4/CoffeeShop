@@ -76,15 +76,8 @@ namespace CoffeeShop.Views.UserControls.HomePage
         {
             if(ViewModel.ChosenDrinks.Count == 0)
             {
-                var dialog = new ContentDialog
-                {
-                    Title = "Order Error",
-                    Content = "Hãy chọn nước uống trước khi đặt hàng",
-                    CloseButtonText = "OK",
-                    XamlRoot = this.XamlRoot
-                };
-                await dialog.ShowAsync();
-                return;
+               await OrderErrorDialog.ShowAsync();
+               return;
             }
             totalPriceTextBlock.Text = ViewModel.TotalPrice.ToString("C", new CultureInfo("vi-VN"));
             await OrderDetailsDialog.ShowAsync();
@@ -98,6 +91,7 @@ namespace CoffeeShop.Views.UserControls.HomePage
             if (!check)
             {
                 errorTextBlock.Visibility = Visibility.Visible;
+                errorTextBlock.Text = "Invalid email format.";
             }
             else
             {

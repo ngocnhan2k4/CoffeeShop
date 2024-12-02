@@ -70,7 +70,7 @@ namespace CoffeeShop.Views
             {
                 EmailProgressRing.IsActive = false;
                 EmailProgressRing.Visibility = Visibility.Collapsed;
-                await ShowEmailResultDialog("Success", "Email sent successfully.");
+                await ShowResultDialog("Success", "Email sent successfully.");
             }
         }
 
@@ -91,12 +91,12 @@ namespace CoffeeShop.Views
             {
                 EmailProgressRing.IsActive = false;
                 EmailProgressRing.Visibility = Visibility.Collapsed;
-                await ShowEmailResultDialog("Success", "Order successfully.");
+                await ShowResultDialog("Success", "Order successfully.");
             }
         }
-        private async Task ShowEmailResultDialog(string title, string content)
+        private async Task ShowResultDialog(string title, string content)
         {
-            var dialog = new ContentDialog
+   /*         var dialog = new ContentDialog
             {
                 Title = title,
                 Content = content,
@@ -108,9 +108,18 @@ namespace CoffeeShop.Views
                 // Navigate to the Invoice page
                 this.Frame.Navigate(typeof(InvoicePage));
             };
-            await dialog.ShowAsync();
+            await dialog.ShowAsync();*/
+
+            ResultDialog.Title = title;
+            ResultDialogContent.Text = content;
+            await ResultDialog.ShowAsync();
         }
 
+        private void ResultDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            // Navigate to the Invoice page
+            this.Frame.Navigate(typeof(InvoicePage));
+        }
 
     }
 

@@ -14,9 +14,17 @@
         <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
 
         <DataTemplate x:Name="ItemList" x:DataType="model:Invoice">
-            <StackPanel HorizontalAlignment="Stretch" Padding="10">
-                <TextBlock > <Run Text="Hoá đơn #"/>   <Run Text="{Binding InvoiceID}"/></TextBlock>
-                <TextBlock Text="{Binding Status, Mode=OneWay}" Foreground="{Binding Status, Mode=OneWay, Converter={StaticResource StatusToColorConverter}}" />
+            <StackPanel    Padding="10" >
+                <TextBlock FontWeight="SemiBold" > <Run Text="Hoá đơn #"/>   <Run Text="{Binding InvoiceID}"/></TextBlock>
+                <Border Width="60" HorizontalAlignment="Left"
+                BorderBrush="Black"
+                Background="{Binding Status, Mode=OneWay, Converter={StaticResource StatusToColorConverter}}"
+                BorderThickness="1"
+                CornerRadius="15"
+                Padding="5"
+                Margin="0,2,0,0">
+                    <TextBlock FontWeight="SemiBold" Text="{Binding Status, Mode=OneWay}" Foreground="White" HorizontalAlignment="Center"/>
+                </Border>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
@@ -29,7 +37,6 @@
                        ItemsSource="{x:Bind ViewModel.invoices, Mode=OneWay}"
                        IsItemClickEnabled="True"
                        SelectionMode="Single"
-                    HorizontalAlignment="Stretch"
                   SelectionChanged="InvoiceListView_SelectionChanged">
                 <GridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem" BasedOn="{StaticResource DefaultGridViewItemStyle}">
