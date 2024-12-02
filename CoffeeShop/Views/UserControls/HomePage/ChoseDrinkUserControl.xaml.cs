@@ -200,7 +200,7 @@ namespace CoffeeShop.Views.UserControls.HomePage
             
         }
 
-        internal void AddInvoice()
+        public void AddInvoice()
         {
             ViewModel.AddInvoice(invoice, delivery);
         }

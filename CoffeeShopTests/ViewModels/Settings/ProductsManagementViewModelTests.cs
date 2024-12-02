@@ -5,6 +5,7 @@ using CoffeeShop.Service.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
+using CoffeeShop.Service;
 
 namespace CoffeeShopTests.ViewModels.Settings
 {
@@ -16,6 +17,7 @@ namespace CoffeeShopTests.ViewModels.Settings
         [TestInitialize]
         public void Setup()
         {
+            ServiceFactory.Register(typeof(IDao), typeof(SqlServerDao));
             _viewModel = new ProductsManagementViewModel();
         }
 

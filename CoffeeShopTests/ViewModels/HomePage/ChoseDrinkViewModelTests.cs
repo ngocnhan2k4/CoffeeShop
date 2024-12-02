@@ -15,20 +15,19 @@ namespace CoffeeShop.ViewModels.HomePage.Tests
     public class ChoseDrinkViewModelTests
     {
         [TestMethod()]
-        public void ChoseDrinkViewModelTest()
+        public void ChoseDrinkViewModel_Initialization_SetsDefaultValues()
         {
-            ServiceFactory.Register(typeof(IDao), typeof(SqlServerDao));
             var viewModel = new ChoseDrinkViewModel();
             Assert.IsNotNull(viewModel.ChosenDrinks);
             Assert.AreEqual(0, viewModel.TotalPrice);
         }
 
         [TestMethod()]
-        public void AddDrinkTest()
+        public void AddDrink_WithValidDrinkAndSize_AddsDrinkToChosenDrinks()
         {
             var viewModel = new ChoseDrinkViewModel();
             var drink = new Drink { Name = "Latte" };
-            var size = new Size { Name = "Medium", Price = 5000 };
+            var size = new Size { Name = "Medium", Price = 5000, Stock = 2 };
 
             viewModel.AddDrink(drink, size);
 
@@ -37,8 +36,29 @@ namespace CoffeeShop.ViewModels.HomePage.Tests
             Assert.AreEqual("Medium", viewModel.ChosenDrinks[0].Size);
             Assert.AreEqual(1, viewModel.ChosenDrinks[0].Quantity);
             Assert.AreEqual(5000, viewModel.TotalPrice);
+        }
 
-            // Add the same drink again
+        [TestMethod()]
+        public void AddDrink_WithZeroStock_DoesNotAddDrink()
+        {
+            var viewModel = new ChoseDrinkViewModel();
+            var drink = new Drink { Name = "Latte" };
+            var size = new Size { Name = "Medium", Price = 5000, Stock = 0 };
+
+            viewModel.AddDrink(drink, size);
+
+            Assert.AreEqual(0, viewModel.ChosenDrinks.Count);
+            Assert.AreEqual(0, viewModel.TotalPrice);
+        }
+
+        [TestMethod()]
+        public void AddDrink_WithExistingDrink_IncreasesQuantity()
+        {
+            var viewModel = new ChoseDrinkViewModel();
+            var drink = new Drink { Name = "Latte" };
+            var size = new Size { Name = "Medium", Price = 5000, Stock = 2 };
+
+            viewModel.AddDrink(drink, size);
             viewModel.AddDrink(drink, size);
 
             Assert.AreEqual(1, viewModel.ChosenDrinks.Count);
@@ -47,11 +67,26 @@ namespace CoffeeShop.ViewModels.HomePage.Tests
         }
 
         [TestMethod()]
-        public void RemoveDrinkTest()
+        public void AddDrink_WithExistingDrinkAndMaxStock_DoesNotIncreaseQuantity()
         {
             var viewModel = new ChoseDrinkViewModel();
             var drink = new Drink { Name = "Latte" };
-            var size = new Size { Name = "Medium", Price = 5000 };
+            var size = new Size { Name = "Medium", Price = 5000, Stock = 1 };
+
+            viewModel.AddDrink(drink, size);
+            viewModel.AddDrink(drink, size);
+
+            Assert.AreEqual(1, viewModel.ChosenDrinks.Count);
+            Assert.AreEqual(1, viewModel.ChosenDrinks[0].Quantity);
+            Assert.AreEqual(5000, viewModel.TotalPrice);
+        }
+
+        [TestMethod()]
+        public void RemoveDrink_WithValidDetail_RemovesDrinkFromChosenDrinks()
+        {
+            var viewModel = new ChoseDrinkViewModel();
+            var drink = new Drink { Name = "Latte" };
+            var size = new Size { Name = "Medium", Price = 5000, Stock = 2 };
 
             viewModel.AddDrink(drink, size);
             var detailInvoice = viewModel.ChosenDrinks[0];
@@ -61,5 +96,25 @@ namespace CoffeeShop.ViewModels.HomePage.Tests
             Assert.AreEqual(0, viewModel.ChosenDrinks.Count);
             Assert.AreEqual(0, viewModel.TotalPrice);
         }
+
+        [TestMethod()]
+        public void CalcTotal_WithMultipleDrinks_CalculatesCorrectTotal()
+        {
+            var viewModel = new ChoseDrinkViewModel();
+            var drink1 = new Drink { Name = "Latte" };
+            var size1 = new Size { Name = "Medium", Price = 5000, Stock = 2 };
+            var drink2 = new Drink { Name = "Espresso" };
+            var size2 = new Size { Name = "Small", Price = 3000, Stock = 3 };
+
+            viewModel.AddDrink(drink1, size1);
+            viewModel.AddDrink(drink2, size2);
+            viewModel.AddDrink(drink2, size2);
+
+            Assert.AreEqual(2, viewModel.ChosenDrinks.Count);
+            Assert.AreEqual(11000, viewModel.TotalPrice);
+        }
+
+
     }
+
 }
