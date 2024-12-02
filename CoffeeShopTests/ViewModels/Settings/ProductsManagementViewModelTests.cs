@@ -381,4 +381,6 @@ namespace CoffeeShopTests.ViewModels.Settings
             Assert.AreEqual("", _viewModel.Error);
         }
     }
+
+
 }
