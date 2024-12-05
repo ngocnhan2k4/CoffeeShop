@@ -2,5 +2,6 @@
 - Install dependencies 
     - npm i
 - Install knex global 
-- Create table: knex migrate:latest
-- Add data: knex seed:run
+
+- Make development database: npm run db:dev
+- Make test database: npm run db:test

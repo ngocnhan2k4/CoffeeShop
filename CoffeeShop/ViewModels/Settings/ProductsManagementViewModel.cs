@@ -41,7 +41,7 @@ namespace CoffeeShop.ViewModels.Settings
         public int NewDrinkCategoryID {  get; set; }
 
         public string Error {  get; set; }
-        IDao _dao;
+        public IDao _dao { get; set; }
         public ProductsManagementViewModel()
         {
             LoadData();
@@ -51,8 +51,8 @@ namespace CoffeeShop.ViewModels.Settings
         {
             _selectedCategoryIndex = 0;
             NameSizes = ["S", "M", "L"];
-            //IDao dao = new MockDao();
-            _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            //_dao = new SqlServerDao();
+             _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
             Drinks = _dao.GetDrinks();
             Categories = new (_dao.GetCategories());
             NewDrinks = [];
