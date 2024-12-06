@@ -25,6 +25,7 @@ namespace CoffeeShop.ViewModels.HomePage
         }
         public void AddDrink(Drink drink, Size size)
         {
+            if(size.Stock == 0) return;
             var existingInvoice = ChosenDrinks.FirstOrDefault(di => di.NameDrink == drink.Name && di.Size == size.Name);
             if (existingInvoice != null)
             {

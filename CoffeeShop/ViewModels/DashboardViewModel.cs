@@ -51,6 +51,7 @@ namespace CoffeeShop.ViewModels
 
         public PieChartViewModel()
         {
+            Data = new ObservableCollection<ProductSalesData>();
             foreach (var categoryData in salesService.RevenueByCategory)
             {
 

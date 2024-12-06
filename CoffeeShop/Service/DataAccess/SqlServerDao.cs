@@ -114,6 +114,7 @@ namespace CoffeeShop.Service.DataAccess
                 di.Quantity = reader.GetInt32(2);
                 di.Size = reader.GetString(3);
                 di.Price = reader.GetInt32(4);
+                list.Add(di);
             }
             return list;
         }

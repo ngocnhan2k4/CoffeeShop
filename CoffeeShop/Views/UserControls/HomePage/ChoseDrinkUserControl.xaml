@@ -216,5 +216,11 @@
                 <TextBlock x:Name="errorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Error..." />
             </StackPanel>
         </ContentDialog>
+        <!--Error Dialog-->
+        <ContentDialog x:Name="OrderErrorDialog"
+                       Title = "Order Error"
+                       Content = "Hãy chọn nước uống trước khi đặt hàng"
+                       CloseButtonText="OK">
+        </ContentDialog>
     </Grid>
 </UserControl>
