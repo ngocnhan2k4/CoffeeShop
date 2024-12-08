@@ -12,18 +12,47 @@
 
     <UserControl.Resources>
         <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+
+        <DataTemplate x:Name="ItemList" x:DataType="model:Invoice">
+            <StackPanel    Padding="10" >
+                <TextBlock FontWeight="SemiBold" > <Run Text="Hoá đơn #"/>   <Run Text="{Binding InvoiceID}"/></TextBlock>
+                <Border Width="60" HorizontalAlignment="Left"
+                BorderBrush="Black"
+                Background="{Binding Status, Mode=OneWay, Converter={StaticResource StatusToColorConverter}}"
+                BorderThickness="1"
+                CornerRadius="15"
+                Padding="5"
+                Margin="0,2,0,0">
+                    <TextBlock FontWeight="SemiBold" Text="{Binding Status, Mode=OneWay}" Foreground="White" HorizontalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
+
     <Grid>
-        <ListView x:Name="InvoiceListView" SelectionChanged="InvoiceListView_SelectionChanged"
-                  ItemsSource="{x:Bind ViewModel.invoices, Mode=OneWay}" >
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:Invoice">
-                    <StackPanel>
-                        <TextBlock Text="{Binding InvoiceID}" />
-                        <TextBlock Text="{Binding Status, Mode=OneWay}" Foreground="{Binding Status, Mode=OneWay, Converter={StaticResource StatusToColorConverter}}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" Margin="0,5,20,5" >
+            <GridView
+                       x:Name="InvoiceListView"
+                       ItemTemplate="{StaticResource ItemList}"
+                       ItemsSource="{x:Bind ViewModel.invoices, Mode=OneWay}"
+                       IsItemClickEnabled="True"
+                       SelectionMode="Single"
+                  SelectionChanged="InvoiceListView_SelectionChanged">
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem" BasedOn="{StaticResource DefaultGridViewItemStyle}">
+                        <Setter Property="Margin" Value="5, 5, 5, 5"  />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </GridView.ItemContainerStyle>
+
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
+        </ScrollViewer>
     </Grid>
+
+
 </UserControl>

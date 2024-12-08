@@ -12,7 +12,7 @@
 
     <NavigationView x:Name="NavView" PaneTitle="StreamPOS" IsBackButtonVisible="Collapsed"
                 SelectionChanged="NavView_SelectionChanged" IsSettingsVisible="False" 
-                    Background="{ThemeResource PageBackground}">
+                    Background="{ThemeResource BorderColor}">
 
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Dashboard" Icon="Home" Name="dashboard"/>

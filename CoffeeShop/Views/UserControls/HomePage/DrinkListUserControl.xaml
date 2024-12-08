@@ -85,14 +85,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <!--<SelectorBar x:Name="SelectorBar1" Grid.Column="0" Background="Aquamarine">
-                        <SelectorBarItem Text="Hot Sale" x:Name="SamplePage1Item" />
-                        <SelectorBarItem Text="Coffee" x:Name="SamplePage2Item" />
-                        <SelectorBarItem Text="Tea" x:Name="SamplePage3Item" />
-                        <SelectorBarItem Text="Smoothies" x:Name="SamplePage4Item" />
-                        <SelectorBarItem Text="Juices" x:Name="SamplePage5Item" />
-                        <SelectorBarItem Text="Milkshakes" x:Name="SamplePage6Item" />
-                    </SelectorBar>-->
+                
                 <SelectorBar x:Name="SelectorBar" Grid.Column="0" SelectionChanged="SelectorBar_SelectionChanged">
                     <SelectorBarItem Text="All" Tag="-1" IsSelected="True" />
                 </SelectorBar>
@@ -104,8 +97,8 @@
                     <ComboBoxItem Content="Price: Decrease" Tag="PriceDecrease"/>
                 </ComboBox>
             </Grid>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2">
-                <GridView HorizontalAlignment="Center"
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center">
+                <GridView HorizontalAlignment="Left"
                        x:Name="StyledGrid"
                        ItemTemplate="{StaticResource ChooseDrink}"
                        ItemsSource="{x:Bind ViewModel.Drinks, Mode=OneWay}"
@@ -126,7 +119,7 @@
                     </GridView.ItemsPanel>
                 </GridView>
             </ScrollViewer>
-            <Grid  Padding="10,0,10,0" Grid.Column="0" Grid.Row="3">
+            <Grid  Padding="10,0,10,0" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -134,7 +127,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Previous Page Button -->
-                <Button Grid.Column="0" Content="&#xE72B;" FontFamily="Segoe MDL2 Assets" Click="previousButton_Click" />
+                <Button Grid.Column="0" Content="&#xE72B;" FontFamily="Segoe MDL2 Assets" Click="previousButton_Click" Margin="20,0,20,0" />
 
                 <!-- ComboBox to show current page / total pages -->
                 <ComboBox  HorizontalAlignment="Center" ItemsSource="{x:Bind ViewModel.PageInfos, Mode=OneWay}"
@@ -151,7 +144,7 @@
                 </ComboBox>
 
                 <!-- Next Page Button -->
-                <Button Grid.Column="2" Content="&#xE72A;" FontFamily="Segoe MDL2 Assets" Click="nextButton_Click" />
+                <Button Margin="20,0,20,0" Grid.Column="2" Content="&#xE72A;" FontFamily="Segoe MDL2 Assets" Click="nextButton_Click" />
             </Grid>
         </Grid>
     </Border>
