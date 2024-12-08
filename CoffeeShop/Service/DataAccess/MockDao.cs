@@ -552,11 +552,11 @@ namespace CoffeeShop.Service.DataAccess
         {
             var list = new List<Invoice>()
             {
-                new(){InvoiceID=1, CreatedAt="2024-10-16",TotalAmount=18000, PaymentMethod="Credit Card", CustomerName="Nguyễn Văn A", Status="Paid"},
-                new(){InvoiceID=3, CreatedAt="2024-10-15",TotalAmount=27000, PaymentMethod="Bank Transfer", CustomerName="Phạm Văn C", Status="Pending"},
-                new(){InvoiceID=2, CreatedAt="2024-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="UnPaid"},
-                new(){InvoiceID=4, CreatedAt="2023-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="UnPaid"},
-                new(){InvoiceID=5, CreatedAt="2023-9-16",TotalAmount=27000, PaymentMethod="Cash", CustomerName="Trần Thị C", Status="UnPaid"}
+                new(){InvoiceID=1, CreatedAt="2024-10-16",TotalAmount=18000, PaymentMethod="Credit Card", CustomerName="Nguyễn Văn A", Status="Paid" , HasDelivery = "Y"},
+                new(){InvoiceID=3, CreatedAt="2024-10-15",TotalAmount=27000, PaymentMethod="Bank Transfer", CustomerName="Phạm Văn C", Status="Wait" ,HasDelivery = "N" },
+                new(){InvoiceID=2, CreatedAt="2024-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="Cancel", HasDelivery = "N"},
+                new(){InvoiceID=4, CreatedAt="2023-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="Paid", HasDelivery = "N"},
+                new(){InvoiceID=5, CreatedAt="2023-9-16",TotalAmount=27000, PaymentMethod="Cash", CustomerName="Trần Thị C", Status="Paid",HasDelivery = "Y"}
             };
             return list;
 
@@ -720,14 +720,7 @@ namespace CoffeeShop.Service.DataAccess
         }
 
 
-        public List<Invoice> GetListInvoiceId()
-        {
-            return new List<Invoice>
-            {
-                new Invoice { InvoiceID = 1, CreatedAt = "2023-01-01", TotalAmount = 100, PaymentMethod = "Credit Card", Status = "Paid", CustomerName = "John Doe", HasDelivery = "Y" },
-                new Invoice { InvoiceID = 2, CreatedAt = "2023-02-01", TotalAmount = 200, PaymentMethod = "Cash", Status = "Wait", CustomerName = "Jane Smith", HasDelivery = "N" }
-            };
-        }
+
 
         public Tuple<List<DetailInvoice>, DeliveryInvoice> GetDetailInvoicesOfId(int invoiceId)
         {

@@ -282,7 +282,7 @@ namespace CoffeeShop.Service.DataAccess
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM invoice";
+            cmd.CommandText = "SELECT * FROM invoice Order by id desc";
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -424,33 +424,6 @@ namespace CoffeeShop.Service.DataAccess
         }
 
 
-        public List<Invoice> GetListInvoiceId()
-        {
-            var invoices = new List<Invoice>();
-            using var conn = new SqlConnection(connectionString);
-            conn.Open();
-            using var cmd = new SqlCommand("""
-                SELECT id, created_at, total, method, status, customer_name, has_delivery 
-                FROM invoice 
-                Order by id desc
-                """, conn);
-            using var reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                var invoice = new Invoice
-                {
-                    InvoiceID = reader.GetInt32(0),
-                    CreatedAt = reader.GetDateTime(1).ToString("yyyy-MM-dd"),
-                    TotalAmount = reader.GetInt32(2),
-                    PaymentMethod = reader.GetString(3),
-                    Status = reader.GetString(4),
-                    CustomerName = reader.GetString(5),
-                    HasDelivery = reader.GetString(6)
-                };
-                invoices.Add(invoice);
-            }
-            return invoices;
-        }
 
         public Tuple<List<DetailInvoice>, DeliveryInvoice> GetDetailInvoicesOfId(int invoiceId)
         {
