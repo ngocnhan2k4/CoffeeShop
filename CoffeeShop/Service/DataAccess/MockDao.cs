@@ -553,10 +553,10 @@ namespace CoffeeShop.Service.DataAccess
             var list = new List<Invoice>()
             {
                 new(){InvoiceID=1, CreatedAt="2024-10-16",TotalAmount=18000, PaymentMethod="Credit Card", CustomerName="Nguyễn Văn A", Status="Paid"},
-                new(){InvoiceID=3, CreatedAt="2024-10-15",TotalAmount=27000, PaymentMethod="Bank Transfer", CustomerName="Phạm Văn C", Status="Pending"},
-                new(){InvoiceID=2, CreatedAt="2024-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="UnPaid"},
-                new(){InvoiceID=4, CreatedAt="2023-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="UnPaid"},
-                new(){InvoiceID=5, CreatedAt="2023-9-16",TotalAmount=27000, PaymentMethod="Cash", CustomerName="Trần Thị C", Status="UnPaid"}
+                new(){InvoiceID=3, CreatedAt="2024-10-15",TotalAmount=27000, PaymentMethod="Bank Transfer", CustomerName="Phạm Văn C", Status="Wait"},
+                new(){InvoiceID=2, CreatedAt="2024-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="Paid"},
+                new(){InvoiceID=4, CreatedAt="2023-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="Paid"},
+                new(){InvoiceID=5, CreatedAt="2023-9-16",TotalAmount=27000, PaymentMethod="Cash", CustomerName="Trần Thị C", Status="Paid"}
             };
             return list;
 
@@ -823,7 +823,22 @@ namespace CoffeeShop.Service.DataAccess
         {
 
         }
+
+        public List<Invoice> GetRecentInvoice(int year)
+        {
+            var invoices = GetInvoices();
+            var list = new List<Invoice>();
+
+            list = invoices.Where(invoice => DateTime.Parse(invoice.CreatedAt).Year == year)
+                  .OrderByDescending(invoice => DateTime.Parse(invoice.CreatedAt))
+                  .Take(5)
+                  .ToList();
+
+            return list;
+        }
     }
+
+    
 
 
 }

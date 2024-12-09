@@ -583,5 +583,18 @@ namespace CoffeeShop.Service.DataAccess
                 throw;
             }
         }
+
+        public List<Invoice> GetRecentInvoice(int year)
+        {
+            var invoices = GetInvoices();
+            var list = new List<Invoice>();
+
+            list = invoices.Where(invoice => DateTime.Parse(invoice.CreatedAt).Year == year)
+                   .OrderByDescending(invoice => DateTime.Parse(invoice.CreatedAt))
+                   .Take(5)
+                   .ToList();
+
+            return list;
+        }
     }
 }

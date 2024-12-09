@@ -35,6 +35,7 @@ namespace CoffeeShopTests.ViewModels
             Assert.IsNotNull(viewModel.DetailInvoices);
             Assert.IsNotNull(viewModel.DeliveryInvoices);
             Assert.IsNotNull(viewModel.TopDrink);
+            Assert.IsNotNull(viewModel.RecentInvoices);
         }
 
         [TestMethod]
@@ -70,6 +71,17 @@ namespace CoffeeShopTests.ViewModels
             // Assert
             Assert.IsTrue(topDrinks.Count > 0);
             Assert.IsNotNull(topDrinks[0]); 
+        }
+
+        [TestMethod]
+        public void TestRecentInvoices_Initialized_HasRecentItems()
+        {
+            // Act
+            var recentOrders = viewModel.RecentInvoices;
+
+            // Assert
+            Assert.IsTrue(recentOrders.Count > 0);
+            Assert.IsNotNull(recentOrders[0]);
         }
 
         [TestMethod]
