@@ -105,6 +105,10 @@ namespace CoffeeShop.Views
         {
             // Navigate to the Invoice page
             this.Frame.Navigate(typeof(InvoicePage));
+
+            var mainWindow = App.m_window;
+            mainWindow.UpdateNavigationBar("invoices");
+
         }
 
     }

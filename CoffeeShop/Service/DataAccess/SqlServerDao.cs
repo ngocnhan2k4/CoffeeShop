@@ -470,7 +470,7 @@ namespace CoffeeShop.Service.DataAccess
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = new SqlCommand("""
-                SELECT c.name, SUM(di.Quantity * d.price) AS TotalRevenue
+                SELECT c.name, SUM(di.Quantity * di.price) AS TotalRevenue
                 FROM invoice_detail di
                 JOIN invoice i ON di.Invoice_ID = i.id
                 JOIN drink d ON di.drink_id = d.id

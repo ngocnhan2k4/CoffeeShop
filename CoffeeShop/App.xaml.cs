@@ -94,7 +94,7 @@ namespace CoffeeShop
             }
         }
         public Window MainWindow { get; private set; }
-        public static Window?  m_window { get; set; }
+        public static MainWindow m_window { get; set; }
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
