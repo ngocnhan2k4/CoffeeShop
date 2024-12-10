@@ -202,14 +202,6 @@ namespace CoffeeShop.Views.Settings
 
         }
 
-        private void CloseFlyout_NoButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (sender is FrameworkElement element && element.Parent is Flyout flyout)
-            {
-                flyout.Hide();
-            }
-        }
-
         private void DeleteDiscount_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;

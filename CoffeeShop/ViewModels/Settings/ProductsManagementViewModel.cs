@@ -100,9 +100,10 @@ namespace CoffeeShop.ViewModels.Settings
         public bool AddDrink()
         {
             if (!ValidateDrink(NewDrinkAdded)) return false;
-
+            DiscountManager discountManager = new(Discounts.ToList());
             // Thêm ơ cả DrinksByCategoryID và Drinks 
-            NewDrinkAdded.CategoryID = SelectedCategoryIndex ;
+            NewDrinkAdded.CategoryID = SelectedCategoryIndex;
+            NewDrinkAdded.Discount = discountManager.GetDiscountForCategory(SelectedCategoryIndex);
             DrinksByCategoryID.Add(NewDrinkAdded);
             Drinks.Add(NewDrinkAdded);
 
