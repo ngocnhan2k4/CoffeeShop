@@ -209,16 +209,8 @@ namespace CoffeeShop.ViewModels.Settings
         public bool AddDiscount()
         {
             if (!ValidateDiscount(NewDiscount)) return false;
-
-            Discounts.Add(new Discount
-            {
-                CategoryID = NewDiscount.CategoryID,
-                Name = NewDiscount.Name,
-                DiscountPercent = NewDiscount.DiscountPercent,
-                ValidUntil = NewDiscount.ValidUntil,
-                IsActive = false
-
-            });
+            NewDiscount.CategoryName = Categories.FirstOrDefault(c => c.CategoryID == NewDiscount.CategoryID).CategoryName;
+            Discounts.Add(new Discount(NewDiscount));
             NewDiscount.Reset();
             OnPropertyChanged("HasDiscounts");
             return true;

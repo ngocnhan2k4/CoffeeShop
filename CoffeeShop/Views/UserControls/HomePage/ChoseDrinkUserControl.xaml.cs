@@ -47,19 +47,6 @@ namespace CoffeeShop.Views.UserControls.HomePage
             this.InitializeComponent();
         }
 
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is not ToggleButton checkedToggleButton)
-            {
-                return;
-            }
-
-            foreach (ToggleButton toggleButton in ToggeButtons.Children.OfType<ToggleButton>())
-            {
-                toggleButton.IsChecked = toggleButton == checkedToggleButton;
-                toggleButton.IsHitTestVisible = toggleButton != checkedToggleButton;
-            }
-        }
         public void AddDrink(Drink drink, Size size)
         {
             ViewModel.AddDrink(drink, size);

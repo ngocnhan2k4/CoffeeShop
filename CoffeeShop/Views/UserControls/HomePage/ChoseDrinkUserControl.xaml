@@ -62,21 +62,9 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel  Grid.Column="0" Grid.Row="0"  Padding="10">
-            <TextBlock Margin="10">
+            <TextBlock Margin="10" FontSize="20" FontWeight="SemiBold">
               Order
             </TextBlock>
-            <StackPanel x:Name="ToggeButtons" Orientation="Horizontal" HorizontalAlignment="Center">
-                <ToggleButton Margin="0,0,20,0"
-              IsChecked="True"
-              Checked="ToggleButton_Checked"
-              Content="1" />
-                <ToggleButton Margin="0,0,20,0"
-              Checked="ToggleButton_Checked"
-              Content="2" />
-                <ToggleButton 
-              Checked="ToggleButton_Checked"
-              Content="3" />
-            </StackPanel>
         </StackPanel>
 
         <Grid Grid.Column="0" Grid.Row="1" Margin="10" Padding="10" CornerRadius="5">
@@ -85,7 +73,7 @@
                 <ColumnDefinition Width="15*" />
             </Grid.ColumnDefinitions>
 
-            <Grid  Margin="10">
+            <Grid  Margin="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>

@@ -96,20 +96,6 @@ namespace CoffeeShop.Views
         }
         private async Task ShowResultDialog(string title, string content)
         {
-   /*         var dialog = new ContentDialog
-            {
-                Title = title,
-                Content = content,
-                CloseButtonText = "OK",
-                XamlRoot = this.XamlRoot
-            };
-            dialog.Closed += (sender, args) =>
-            {
-                // Navigate to the Invoice page
-                this.Frame.Navigate(typeof(InvoicePage));
-            };
-            await dialog.ShowAsync();*/
-
             ResultDialog.Title = title;
             ResultDialogContent.Text = content;
             await ResultDialog.ShowAsync();
