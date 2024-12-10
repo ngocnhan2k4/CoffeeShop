@@ -280,7 +280,7 @@
 
                         <ListView x:Name="ExistingDiscountsList"
                             ItemsSource="{x:Bind ViewModel.Discounts, Mode=OneWay}"
-                            Visibility="{x:Bind ViewModel.HasDiscounts, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Visibility="{x:Bind ViewModel.HasDiscounts, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
                             SelectionMode="None">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
