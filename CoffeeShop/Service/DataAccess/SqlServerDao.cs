@@ -277,14 +277,15 @@ namespace CoffeeShop.Service.DataAccess
                 {
                     drink = new Drink
                     {
-                        Name = reader.GetString(0),
-                        CategoryID = reader.GetInt32(1),
-                        Description = reader.GetString(2),
-                        ImageString = reader.GetString(3),
+                        ID = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        CategoryID = reader.GetInt32(2),
+                        Description = reader.GetString(3),
+                        ImageString = reader.GetString(4),
                         Sizes = new List<Size>()
                     };
 
-                    drink.Discount = discountManager.GetDiscountForCategory(reader.GetInt32(1));
+                    drink.Discount = discountManager.GetDiscountForCategory(reader.GetInt32(2));
                     drinks.Add(drink);
                 }
                 drink.Sizes.Add(new Size
