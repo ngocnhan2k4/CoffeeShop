@@ -16,7 +16,7 @@ namespace CoffeeShop.ViewModels.InvoicePage
         public InvoiceListViewModel()
         {
             _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-            invoices = _dao.GetListInvoiceId();
+            invoices = _dao.GetInvoices();
         }
     }
 }

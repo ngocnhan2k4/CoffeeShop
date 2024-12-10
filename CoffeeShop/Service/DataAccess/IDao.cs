@@ -22,6 +22,8 @@ namespace CoffeeShop.Service.DataAccess
         public bool AddDrinks(List<Drink> drinks);
         List<Category> GetCategories();
         public bool AddCategories(List<Category> categories);
+        public List<Discount> GetDiscounts();
+        public bool AddDiscounts(List<Discount> discounts);
         List<DeliveryInvoice> GetDeliveryInvoices();
         List<Invoice> GetInvoices();
         List<DetailInvoice> GetDetailInvoices();
@@ -35,7 +37,6 @@ namespace CoffeeShop.Service.DataAccess
         public List<string> CalculateTopDrinks(int year);
         public Dictionary<string, int> CalculateRevenueCategory(int year);
 
-        public List<Invoice> GetListInvoiceId();
         public Tuple<List<DetailInvoice>, DeliveryInvoice>  GetDetailInvoicesOfId(int invoiceId);
         public void UpdateInvoiceStatus(int invoiceId, string status);
         public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices,DeliveryInvoice deliveryInvoice);

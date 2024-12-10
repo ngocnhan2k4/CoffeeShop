@@ -53,7 +53,6 @@ namespace CoffeeShop
 
             // Loading env 
             DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
-
         }
 
         /// <summary>

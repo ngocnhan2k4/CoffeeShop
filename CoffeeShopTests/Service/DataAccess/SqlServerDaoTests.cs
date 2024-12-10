@@ -176,13 +176,6 @@ namespace CoffeeShopTests.Service.DataAccess
             Assert.IsTrue(revenueCategory.Count > 0);
         }
 
-        [TestMethod]
-        public void GetListInvoiceId_ReturnsValidInvoiceIds()
-        {
-            var invoices = dao.GetListInvoiceId();
-            Assert.IsNotNull(invoices);
-            Assert.IsTrue(invoices.Count > 0);
-        }
 
         [TestMethod]
         public void GetDetailInvoicesOfId_ValidInvoiceId_ReturnsInvoiceDetails()

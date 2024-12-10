@@ -39,7 +39,7 @@ namespace CoffeeShop.Views
         public HomePage()
         {  
             ViewModel = new HomeViewModel();
-            this.InitializeComponent();        
+            this.InitializeComponent();   
         }
 
         private void DrinkListUserControl_ItemClick(Drink drink, Size size)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -54,8 +55,6 @@ namespace CoffeeShop.Views.Settings
 
         private async void SaveChanges_ButtonClick(object sender, RoutedEventArgs e)
         {
-            if(ViewModel.NewCategories.Count == 0 && ViewModel.NewDrinks.Count == 0) return;
-            
             bool result = ViewModel.UpdateDrinksAndCategoriesIntoDB();
             await new ContentDialog()
             {
@@ -186,6 +185,37 @@ namespace CoffeeShop.Views.Settings
                     }
                 }
             }
+        }
+
+        private async void ShowDiscountDialog_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            await ManageDiscountsDialog.ShowAsync();
+        }
+
+        private void ManageDiscountsDialog_SaveButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            args.Cancel = !ViewModel.ApplyDiscounts();
+        }
+
+        private void ManageDiscountsDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+
+        }
+
+        private void DeleteDiscount_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button?.Tag is Discount discountToDelete)
+            {
+                // Gọi hàm xóa trong ViewModel
+                ViewModel.DeleteDiscount(discountToDelete);
+            }
+        }
+
+        private void AddDiscount_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AddDiscount();
         }
     }
 
