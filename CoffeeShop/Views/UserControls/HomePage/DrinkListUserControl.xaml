@@ -7,18 +7,43 @@
     xmlns:model="using:CoffeeShop.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:CoffeeShop.Helper"
     mc:Ignorable="d">
 
 
     <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
         <DataTemplate x:Key="ChooseDrink" x:DataType="model:Drink">
-            <StackPanel Width="180" Padding="20,10,20,10" Background="{ThemeResource ItemBackground}">
-                <Image Source="{Binding Image}" Stretch="Fill" Width="100" Height="100"/>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Padding="5,10,5,1">
+            <Canvas Width="180" Height="290" Background="{ThemeResource ItemBackground}">
+                <!-- Discount Badge -->
+                
+                <Border
+                    Width="70"
+                   Background="{ThemeResource DiscountBadge}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                    Canvas.Left="115"
+                    Canvas.ZIndex="1"
+                   Padding="8,4"
+                   CornerRadius="0,8,0,8"
+                   Visibility="{Binding HasDiscount, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    
+                    <TextBlock FontSize="12">
+                   <Run Text="{Binding DiscountPercentage}"/>
+                   <Run Text="% OFF"/>
+                    </TextBlock>
+                    
+                </Border>
+                <StackPanel Width="180" Height="290" Padding="0,12,0,0">
+                    
+                
+                    <Image Source="{Binding Image}" Stretch="Fill" Width="100" Height="100"/>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Padding="5,10,5,1">
                     <TextBlock TextWrapping="Wrap" Height="38" MaxLines="2" TextTrimming="CharacterEllipsis" Text="{x:Bind Name}" HorizontalAlignment="Center"/>
 
                     <!-- ComboBox for selecting size -->
-                    <ComboBox x:Name="SizeComboBox" SelectedIndex="0" 
+                    <ComboBox x:Name="SizeComboBox" Loaded="SizeComboBox_Loaded"
                       ItemsSource="{x:Bind Sizes}"
                       SelectionChanged="SizeComboBox_SelectionChanged" HorizontalAlignment="Center">
                         <ComboBox.ItemTemplate>
@@ -29,18 +54,31 @@
                     </ComboBox>
 
 
-                    <!-- TextBlock to display the price based on selected size -->
-                    <TextBlock x:Name="PriceTextBlock" Text="{x:Bind Sizes[0].Price}" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                    <TextBlock x:Name="OriginalPriceTextBlock" HorizontalAlignment="Center"
+                        Text="{x:Bind Sizes[0].Price}"
+                        TextDecorations="Strikethrough"
+                        Visibility="{Binding HasDiscount, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Foreground="Gray"/>
+                        
+                    <TextBlock x:Name="DiscountedPriceTextBlock" HorizontalAlignment="Center"
+                        Text="{x:Bind Sizes[0].Price}"
+                        Visibility="{Binding HasDiscount, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Foreground="Red"/>
+                        
+                    <TextBlock x:Name="PriceTextBlock" Margin="0,9,0,9" HorizontalAlignment="Center"
+                        Text="{x:Bind Sizes[0].Price}"
+                        Visibility="{Binding HasDiscount, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
 
                     <TextBlock HorizontalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}"
-                Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">
-                <Run x:Name="StockTextBlock" Text="{Binding Sizes[0].Stock}"/><Run Text=" available"/>
+                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">
+                    <Run x:Name="StockTextBlock" Text="{Binding Sizes[0].Stock}"/><Run Text=" available"/>
                     </TextBlock>
 
-                    <!-- Button to trigger item click behavior -->
+                        <!-- Button to trigger item click behavior -->
                     <Button Content="Add" Click="Button_Click" HorizontalAlignment="Center" Margin="5"/>
                 </StackPanel>
-            </StackPanel>
+                </StackPanel>
+            </Canvas>
         </DataTemplate>
     </UserControl.Resources>
     <Border CornerRadius="10" Background="Transparent" Grid.Column="0">

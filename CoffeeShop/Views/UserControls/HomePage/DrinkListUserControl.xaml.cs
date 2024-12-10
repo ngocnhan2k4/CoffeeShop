@@ -22,6 +22,7 @@ using static CoffeeShop.Service.DataAccess.IDao;
 using Microsoft.UI.Xaml.Documents;
 using Size = CoffeeShop.Models.Size;
 using CoffeeShop.ViewModels.HomePage;
+using System.Reflection;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -122,6 +123,15 @@ namespace CoffeeShop.Views.UserControls.HomePage
                 ItemClick.Invoke(drink, size);
             }
         }
+        private void SizeComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                comboBox.SelectedIndex = 0;
+           }
+        }
+
         private void SizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -131,12 +141,27 @@ namespace CoffeeShop.Views.UserControls.HomePage
                 var stackPanel = comboBox.Parent as StackPanel;
                 if (stackPanel != null)
                 {
+                    var drink = stackPanel.DataContext as Drink;
                     var priceTextBlock = stackPanel.FindName("PriceTextBlock") as TextBlock;
                     var stockTextBlock = stackPanel.FindName("StockTextBlock") as Run;
+                    var originalTextBlock = stackPanel.FindName("OriginalPriceTextBlock") as TextBlock; 
+                    var discountTextBlock = stackPanel.FindName("DiscountedPriceTextBlock") as TextBlock; 
                     if (priceTextBlock != null)
                     {
                         priceTextBlock.Text = selectedSize.Price.ToString();
-                        stockTextBlock.Text = selectedSize.Stock.ToString();
+                    }
+                    if (stockTextBlock != null) 
+                    {
+                         stockTextBlock.Text = selectedSize.Stock.ToString();
+                    }
+                    if (originalTextBlock != null && discountTextBlock != null) 
+                    {
+                        if (drink != null && drink.HasDiscount) 
+                        {
+                            originalTextBlock.Text = selectedSize.Price.ToString(); 
+                            discountTextBlock.Text = drink.GetDiscountedPrice(selectedSize).ToString(); 
+                        }
+                       
                     }
                 }
             }
