@@ -25,6 +25,29 @@ namespace CoffeeShop.Service.DataAccess
             connectionString = $"Server={server};Database={database};User Id={userId};Password={password};TrustServerCertificate=True";
         }
 
+        public List<Discount> GetDiscounts()
+        {
+            var categories = GetCategories();
+            var discounts = new List<Discount>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+
+            using var cmd = new SqlCommand("SELECT * FROM discount", conn);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var discount = new Discount();
+                discount.Name = reader.GetString(0);
+                discount.DiscountPercent = reader.GetDouble(1);
+                discount.ValidUntil = reader.GetDateTime(2);
+                discount.CategoryID = reader.GetInt32(3);
+                discount.IsActive = reader.GetBoolean(4);
+                discount.CategoryName = categories.FirstOrDefault(c => c.CategoryID == discount.CategoryID)?.CategoryName;
+                discounts.Add(discount);
+            }
+            return discounts;
+        }
+
         public List<Category> GetCategories()
         {
             var categories = new List<Category>();
@@ -119,6 +142,8 @@ namespace CoffeeShop.Service.DataAccess
 
         public List<Drink> GetDrinks()
         {
+            var discounts = GetDiscounts();
+            var discountManager = new DiscountManager(discounts);
             var drinks = new List<Drink>();
             using var conn = new SqlConnection(connectionString);
             conn.Open();
@@ -136,9 +161,11 @@ namespace CoffeeShop.Service.DataAccess
                     Description = reader.GetString(2),
                     ImageString = reader.GetString(3),
                     CategoryID = reader.GetInt32(1),
-                    Discount = 0,
                     Sizes = new List<Size>()
                 };
+
+                drink.Discount = discountManager.GetDiscountForCategory(reader.GetInt32(1));
+                
                 drinks.Add(drink);
             }
             reader.Close();
@@ -164,6 +191,8 @@ namespace CoffeeShop.Service.DataAccess
 
         public Tuple<List<Drink>, int> GetDrinks(int page, int rowsPerPage, string keyword, int categoryID, Dictionary<string, IDao.SortType> sortOptions)
         {
+            var discounts = GetDiscounts();
+            var discountManager = new DiscountManager(discounts);
             var drinks = new List<Drink>();
             using var conn = new SqlConnection(connectionString);
             conn.Open();
@@ -197,8 +226,6 @@ namespace CoffeeShop.Service.DataAccess
                     """;
             cmd.Parameters.AddWithValue("@keyword", $"%{keyword}%");
             cmd.Parameters.AddWithValue("@categoryID", categoryID);
-            /*      cmd.Parameters.AddWithValue("@offset", (page - 1) * rowsPerPage);
-                  cmd.Parameters.AddWithValue("@rowsPerPage", rowsPerPage);*/
 
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -212,9 +239,10 @@ namespace CoffeeShop.Service.DataAccess
                         CategoryID = reader.GetInt32(1),
                         Description = reader.GetString(2),
                         ImageString = reader.GetString(3),
-                        Discount = 0,
                         Sizes = new List<Size>()
                     };
+
+                    drink.Discount = discountManager.GetDiscountForCategory(reader.GetInt32(1));
                     drinks.Add(drink);
                 }
                 drink.Sizes.Add(new Size

@@ -20,6 +20,7 @@ namespace CoffeeShop.ViewModels.Settings
         public List<Drink> Drinks { get; set; }
         public FullObservableCollection<Drink> DrinksByCategoryID { get; set; }
         public FullObservableCollection<Category> Categories { get; set; }
+        public FullObservableCollection<Discount> Discounts {get;set;}
         public List<string> NameSizes { get; set; }
 
         // Dùng để theo dõi tabs category đang được chọn
@@ -40,8 +41,12 @@ namespace CoffeeShop.ViewModels.Settings
         public Drink NewDrinkAdded { get; set; }
         public int NewDrinkCategoryID {  get; set; }
 
+        public Discount NewDiscount {get; set;}
+        public bool HasDiscounts => Discounts.Count > 0;
+
         public string Error {  get; set; }
         public IDao _dao { get; set; }
+
         public ProductsManagementViewModel()
         {
             LoadData();
@@ -58,6 +63,8 @@ namespace CoffeeShop.ViewModels.Settings
             NewDrinks = [];
             NewCategories = [];
             DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex));
+            Discounts = new(_dao.GetDiscounts());
+            NewDiscount = new();
         }
 
         public List<Drink> FilterDrinksByCategoryID(int CategoryID)
@@ -192,9 +199,78 @@ namespace CoffeeShop.ViewModels.Settings
             return true;
         }
 
+        public bool AddDiscount()
+        {
+            if (!ValidateDiscount(NewDiscount)) return false;
+
+            Discounts.Add(NewDiscount);
+            NewDiscount.Reset();
+            return true;
+        }
+
+        public bool ValidateDiscount(Discount discount)
+        {
+            if (string.IsNullOrWhiteSpace(discount.Name))
+            {
+                Error = "Name cannot be empty.";
+                return false;
+            }
+
+            if (discount.DiscountPercent < 0 || discount.DiscountPercent > 100)
+            {
+                Error = "Discount percentage must be between 0 and 100.";
+                return false;
+            }
+
+            if (discount.ValidUntil < DateTime.Now)
+            {
+                Error = "Valid until must be greater than current date.";
+                return false;
+            }
+
+            if (discount.CategoryID == -1) 
+            {
+                Error = "Category not selected";
+                return false;
+            }
+
+            ClearError();
+            return true;
+        }
+
+        public void DeleteDiscount(Discount discount)
+        {
+            Discounts.Remove(discount);
+            OnPropertyChanged("HasDiscounts");
+        }
+
+        public void ApplyDiscounts()
+        {
+            //DiscountManager DiscountManager = new(Discounts);
+        }
+
+        public void ToggleDiscountActiveState(Discount selectedDiscount, int categoryID)
+        {
+            foreach (var discount in Discounts)
+            {
+                if (discount.CategoryID == categoryID)
+                {
+                    discount.IsActive = false;
+                }
+            }
+
+            selectedDiscount.IsActive = true;
+        }
+
+
         public void ClearError()
         {
             Error = "";
         }
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }
