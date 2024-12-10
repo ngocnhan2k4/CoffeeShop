@@ -65,6 +65,11 @@ namespace CoffeeShop
                     break;
             }
         }
-
+        public void UpdateNavigationBar(string pageName)
+        {
+            NavView.SelectedItem = NavView.MenuItems
+                .OfType<NavigationViewItem>()
+                .FirstOrDefault(item => item.Name.ToString() == pageName);
+        }
     }
 }
