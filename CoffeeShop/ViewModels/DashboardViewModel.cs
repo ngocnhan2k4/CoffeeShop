@@ -72,6 +72,9 @@ namespace CoffeeShop.ViewModels
         public FullObservableCollection<Invoice> Invoices { get; set; }
         public FullObservableCollection<DetailInvoice> DetailInvoices { get; set; }
         public FullObservableCollection<DeliveryInvoice> DeliveryInvoices { get; set; }
+        public FullObservableCollection<Invoice> RecentInvoices { get; set; }
+
+ 
         IDao _dao;
         public ObservableCollection<string> TopDrink
         {
@@ -101,6 +104,7 @@ namespace CoffeeShop.ViewModels
             SaleService = new SalesService(_dao,year);
          //   TopDrink = new ObservableCollection<string>(SaleService.CalculateTopDrinks(_dao, year));
             TopDrink = new ObservableCollection<string>(_dao.CalculateTopDrinks( year));
+            RecentInvoices = new FullObservableCollection<Invoice>(_dao.GetRecentInvoice(year));
         }
         private void OnPropertyChanged(string propertyName)
         {

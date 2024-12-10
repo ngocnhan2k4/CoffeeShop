@@ -375,11 +375,11 @@ namespace CoffeeShop.Service.DataAccess
         {
             var list = new List<Invoice>()
             {
-                new() { InvoiceID = 1, CreatedAt = "2024-01-16", TotalAmount = 180000, PaymentMethod = "Credit Card", CustomerName = "Nguyễn Văn An", Status = "Paid" },
-                new() { InvoiceID = 2, CreatedAt = "2024-01-15", TotalAmount = 270000, PaymentMethod = "Bank Transfer", CustomerName = "Phạm Văn Cường", Status = "Pending" },
-                new() { InvoiceID = 3, CreatedAt = "2024-01-16", TotalAmount = 150000, PaymentMethod = "Cash", CustomerName = "Trần Thị Bình", Status = "UnPaid" },
-                new() { InvoiceID = 4, CreatedAt = "2023-12-16", TotalAmount = 195000, PaymentMethod = "Cash", CustomerName = "Lê Thị Dung", Status = "Paid" },
-                new() { InvoiceID = 5, CreatedAt = "2023-12-20", TotalAmount = 225000, PaymentMethod = "Credit Card", CustomerName = "Hoàng Văn Em", Status = "Paid" }
+                new(){InvoiceID=1, CreatedAt="2024-10-16",TotalAmount=18000, PaymentMethod="Credit Card", CustomerName="Nguyễn Văn A", Status="Paid"},
+                new(){InvoiceID=3, CreatedAt="2024-10-15",TotalAmount=27000, PaymentMethod="Bank Transfer", CustomerName="Phạm Văn C", Status="Wait"},
+                new(){InvoiceID=2, CreatedAt="2024-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="Paid"},
+                new(){InvoiceID=4, CreatedAt="2023-10-16",TotalAmount=15000, PaymentMethod="Cash", CustomerName="Trần Thị B", Status="Paid"},
+                new(){InvoiceID=5, CreatedAt="2023-9-16",TotalAmount=27000, PaymentMethod="Cash", CustomerName="Trần Thị C", Status="Paid"}
             };
             return list;
         }
@@ -641,5 +641,19 @@ namespace CoffeeShop.Service.DataAccess
         {
 
         }
+
+        public List<Invoice> GetRecentInvoice(int year)
+        {
+            var invoices = GetInvoices();
+            var list = new List<Invoice>();
+
+            list = invoices.Where(invoice => DateTime.Parse(invoice.CreatedAt).Year == year)
+                  .OrderByDescending(invoice => DateTime.Parse(invoice.CreatedAt))
+                  .Take(5)
+                  .ToList();
+
+            return list;
+        }
     }
+
 }

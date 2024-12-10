@@ -12,6 +12,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <helper:IntToVnCurrencyConverter x:Key="currency"/>
+        <helper:StatusToColorConverter x:Key="statusToColorConverter"/>
     </Page.Resources>
     <Grid >
         <Grid.RowDefinitions>
@@ -30,23 +31,48 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions >
 
-            <Grid Grid.Row="0" Grid.Column="0" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
-                <Grid.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#D896FF" Offset="0.0"/>
-                        <GradientStop Color="#B14FFF" Offset="1.0"/>
-                    </LinearGradientBrush>
-                </Grid.Background>
+            <Grid Grid.Row="0" Grid.Column="0" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10" Grid.RowSpan="2">
+                
+                <StackPanel>
+                    <TextBlock Text="Hóa đơn gần đây:" 
+                    FontWeight="Bold" 
+                    FontSize="25" 
+                    HorizontalAlignment="Center" Margin="0,10,0,10"/>
 
-                <TextBlock Text="TỔNG TIỀN NHẬP KHO:" 
-            FontWeight="Bold" 
-            FontSize="25" 
-            HorizontalAlignment="Center" Margin="0,30,0,0"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="ID" FontWeight="Bold" FontSize="20" Margin="10,5,10,5" Grid.Column="0" TextAlignment="Start"/>
+                        <TextBlock Text="Customer" FontWeight="Bold" FontSize="20" Margin="5,5,10,5" Grid.Column="1" TextAlignment="Center"/>
+                        <TextBlock Text="Total" FontWeight="Bold" FontSize="20" Margin="5,5,10,5" Grid.Column="2" TextAlignment="Center"/>
+                        <TextBlock Text="Status" FontWeight="Bold" FontSize="20" Margin="5,5,5,5" Grid.Column="3" TextAlignment="Center"/>
+                    </Grid>
 
-                <TextBlock Text="{x:Bind SalesDashboard.SaleService.TotalCost, Mode=OneWay, Converter={StaticResource currency}}"
-        FontSize="25" 
-        FontWeight="Bold" 
-        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
+                    <ItemsControl ItemsSource="{x:Bind SalesDashboard.RecentInvoices}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding InvoiceID}" FontSize="20" Margin="10,5,10,5" Grid.Column="0" TextAlignment="Start"/>
+                                    <TextBlock Text="{Binding CustomerName}" FontSize="18" Margin="5,5,10,5" Grid.Column="1" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalAmount, Converter={StaticResource currency}}" FontSize="18" Margin="5,5,10,5" Grid.Column="2" TextAlignment="Center"/>
+                                    <Border Grid.Column="3" Margin="5,5,5,5" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="{Binding Status, Converter={StaticResource statusToColorConverter}}">
+                                        <TextBlock Text="{Binding Status}" FontSize="18" TextAlignment="Center" Foreground="White" />
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
             </Grid>
 
 
@@ -75,27 +101,7 @@
 
 
 
-            <Grid Grid.Row="1" Grid.Column="0"  CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
-
-                <Grid.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#FF758C" Offset="0.0"/>
-                        <GradientStop Color="#FF7EB3" Offset="1.0"/>
-                    </LinearGradientBrush>
-
-                </Grid.Background>
-                <TextBlock Text="LỢI NHUẬN: " 
-         FontWeight="Bold" 
-         FontSize="25" 
-         HorizontalAlignment="Center" Margin="0,30,0,0"/>
-
-
-                <TextBlock Text="{x:Bind SalesDashboard.SaleService.Profit, Mode=OneWay, Converter={StaticResource currency}}"
-         FontSize="25" 
-         FontWeight="Bold" 
-         HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
-
-            </Grid>
+            
             <Grid Grid.Row="1" Grid.Column="1"  CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10">
 
                 <Grid.Background>

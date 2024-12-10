@@ -77,8 +77,7 @@ namespace CoffeeShopTests.Service.DataAccess
             Assert.IsTrue(invoices.Count == 5);
         }
 
-
-
+        
         [TestMethod]
         public void CalculateNumberOrders_Year2023_ReturnsValidOrderCount()
         {
@@ -155,6 +154,13 @@ namespace CoffeeShopTests.Service.DataAccess
             Assert.IsNotNull(result.Item2);
         }
 
+        [TestMethod]
+        public void GetRecentInvoices_ReturnsValidRecentInvoices()
+        {
+            var recentInvoices = dao.GetRecentInvoice(2024);
+            Assert.IsNotNull(recentInvoices);
+            Assert.IsTrue(recentInvoices.Count == 3);
+        }
 
     }
 }

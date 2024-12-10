@@ -27,6 +27,7 @@ namespace CoffeeShopTests.Service.DataAccess
             Assert.IsTrue(categories.Count > 0);
         }
 
+
         [TestMethod]
         public void AddCategories_WithValidData_ShouldSucceed()
         {
@@ -218,6 +219,15 @@ namespace CoffeeShopTests.Service.DataAccess
                 ShippingFee = 50
             };
             dao.AddInvoice(invoice, detailInvoices, deliveryInvoice);
+        }
+
+
+        [TestMethod]
+        public void GetRecentInvoices_ReturnsValidRecentInvoices()
+        {
+            var recentInvoices = dao.GetRecentInvoice(2024);
+            Assert.IsNotNull(recentInvoices);
+            Assert.IsTrue(recentInvoices.Count > 0);
         }
     }
 }

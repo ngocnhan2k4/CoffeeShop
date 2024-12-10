@@ -73,13 +73,18 @@ namespace CoffeeShop.Views
             
             RefreshCharts();
             SalesDashboard.TopDrink.Clear();
-        /*    foreach (var drink in SalesDashboard.SaleService.CalculateTopDrinks(SalesDashboard.SaleService.dao, selectedYear))
-            {
-                SalesDashboard.TopDrink.Add(drink); 
-            }*/
+            SalesDashboard.RecentInvoices.Clear();
+            /*    foreach (var drink in SalesDashboard.SaleService.CalculateTopDrinks(SalesDashboard.SaleService.dao, selectedYear))
+                {
+                    SalesDashboard.TopDrink.Add(drink); 
+                }*/
             foreach (var drink in SalesDashboard.SaleService.dao.CalculateTopDrinks( selectedYear))
             {
                 SalesDashboard.TopDrink.Add(drink);
+            }
+            foreach (var invoice in SalesDashboard.SaleService.dao.GetRecentInvoice(selectedYear))
+            {
+                SalesDashboard.RecentInvoices.Add(invoice);
             }
 
         }
