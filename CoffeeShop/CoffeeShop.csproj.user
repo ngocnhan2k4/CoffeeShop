@@ -5,10 +5,22 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
-    <Page Update="DarkTheme.xaml">
+    <Page Update="Views\UserControls\HomePage\DrinkListUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="LightTheme.xaml">
+    <Page Update="Views\UserControls\HomePage\ChoseDrinkUserControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserControls\InvoicePage\InvoiceListUserControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserControls\InvoicePage\InvoiceDetailUserControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\InvoicePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Settings\ChangeLanguagePage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <None Update="MainWindow.xaml">

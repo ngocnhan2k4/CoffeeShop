@@ -52,7 +52,8 @@ namespace CoffeeShop
             ConfigureServices();
 
             // Loading env 
-            DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { ".env" }));
+            DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
+
         }
 
         /// <summary>

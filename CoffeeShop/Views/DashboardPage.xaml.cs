@@ -21,6 +21,7 @@ using CoffeeShop.Service.BusinessLogic;
 using System.ComponentModel;
 using Microsoft.UI;
 using CoffeeShop.Service.DataAccess;
+using CoffeeShop.Views.Settings;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -47,8 +48,14 @@ namespace CoffeeShop.Views
             yearDatePicker.Date = new DateTimeOffset(new DateTime(DateTime.Now.Year, yearDatePicker.Date.Month, yearDatePicker.Date.Day));
            
             RefreshCharts();
-           
+
+            
+
+
         }
+        
+       
+
 
         private  void YearDatePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
         {

@@ -7,13 +7,15 @@
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
+
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->
                 <ResourceDictionary>
+                    
                     <ResourceDictionary.ThemeDictionaries>
                         <ResourceDictionary x:Key="Light">
-                            <SolidColorBrush x:Key="PageBackground" Color="#f3f3f3" />
+                            <SolidColorBrush x:Key="PageBackground" Color="#f3f4f6" />
                             <SolidColorBrush x:Key="PrimaryText" Color="#333333" />
                             <SolidColorBrush x:Key="SecondaryText" Color="#757575" />
                             <SolidColorBrush x:Key="AccentColor" Color="#6200EE  " />
@@ -22,21 +24,25 @@
                             <SolidColorBrush x:Key="ItemBackground" Color="#EEEEEE" />
                             <SolidColorBrush x:Key="InputFieldBackground" Color="#FAFAFA " />
                             <SolidColorBrush x:Key="PlaceholderTextColor" Color="#9E9E9E " />
-                            <SolidColorBrush x:Key="BorderColor" Color="#E0E0E0 " />
+                            <SolidColorBrush x:Key="BorderColor" Color="#f3f4f6" />
+                            <SolidColorBrush x:Key="InvoiceContactColor" Color="#e5e7eb" />
+                            <SolidColorBrush x:Key="BorderContactColor" Color="#9ca3af" />
                         </ResourceDictionary>
 
                         <!-- Dark Mode Colors -->
                         <ResourceDictionary x:Key="Dark">
-                            <SolidColorBrush x:Key="PageBackground" Color="#2C3E50" />
+                            <SolidColorBrush x:Key="PageBackground" Color="#333333" />
                             <SolidColorBrush x:Key="PrimaryText" Color="#ebe9fc" />
                             <SolidColorBrush x:Key="SecondaryText" Color="#A0A0A0" />
                             <SolidColorBrush x:Key="AccentColor" Color="#BB86FC   " />
                             <SolidColorBrush x:Key="ButtonBackground" Color="#3a31d8 " />
                             <SolidColorBrush x:Key="ButtonText" Color="#ebe9fc" />
-                            <SolidColorBrush x:Key="ItemBackground" Color="#242424" />
+                            <SolidColorBrush x:Key="ItemBackground" Color="#404040" />
                             <SolidColorBrush x:Key="InputFieldBackground" Color="#1C1C1C " />
                             <SolidColorBrush x:Key="PlaceholderTextColor" Color="#757575 " />
-                            <SolidColorBrush x:Key="BorderColor" Color="#333333 " />
+                            <SolidColorBrush x:Key="BorderColor" Color="#2e2d2d" />
+                            <SolidColorBrush x:Key="InvoiceContactColor" Color="#404040" />
+                            <SolidColorBrush x:Key="BorderContactColor" Color="#292929" />
                         </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
                 </ResourceDictionary>
