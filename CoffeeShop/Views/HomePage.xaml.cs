@@ -35,10 +35,8 @@ namespace CoffeeShop.Views
     /// </summary>
     public sealed partial class HomePage : Page
     {
-        public HomeViewModel ViewModel { get; set; }
         public HomePage()
         {  
-            ViewModel = new HomeViewModel();
             this.InitializeComponent();   
         }
 
@@ -64,7 +62,6 @@ namespace CoffeeShop.Views
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error sending email: {ex.Message}");
-
             }
             finally
             {

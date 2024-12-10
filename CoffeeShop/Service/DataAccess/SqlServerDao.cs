@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using static CoffeeShop.Service.DataAccess.IDao;
 using dotenv.net;
+using System.Globalization;
 namespace CoffeeShop.Service.DataAccess
 {
 
@@ -470,7 +471,7 @@ namespace CoffeeShop.Service.DataAccess
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = new SqlCommand("""
-                SELECT c.name, SUM(di.Quantity * d.price) AS TotalRevenue
+                SELECT c.name, SUM(di.Quantity * di.price) AS TotalRevenue
                 FROM invoice_detail di
                 JOIN invoice i ON di.Invoice_ID = i.id
                 JOIN drink d ON di.drink_id = d.id
@@ -571,11 +572,19 @@ namespace CoffeeShop.Service.DataAccess
             {
                 // Insert the invoice and get the generated ID
                 using var invoiceCmd = new SqlCommand("""
-                INSERT INTO invoice (created_at, total, method, status, customer_name, has_delivery)
-                VALUES (@created_at, @total, @method, @status, @customer_name, @has_delivery);
-                SELECT SCOPE_IDENTITY();
+                    INSERT INTO invoice (created_at, total, method, status, customer_name, has_delivery)
+                    VALUES (@created_at, @total, @method, @status, @customer_name, @has_delivery);
+                    SELECT SCOPE_IDENTITY();
                 """, conn, transaction);
-                invoiceCmd.Parameters.AddWithValue("@created_at", invoice.CreatedAt);
+                DateTime dateTime;
+
+                string format = "dd/MM/yyyy hh:mm:ss tt";
+
+                CultureInfo provider = new CultureInfo("vi-VN");
+
+                DateTime.TryParseExact(invoice.CreatedAt, format, provider, DateTimeStyles.None, out dateTime);
+
+                invoiceCmd.Parameters.AddWithValue("@created_at", dateTime);
                 invoiceCmd.Parameters.AddWithValue("@total", invoice.TotalAmount);
                 invoiceCmd.Parameters.AddWithValue("@method", invoice.PaymentMethod);
                 invoiceCmd.Parameters.AddWithValue("@status", invoice.Status);

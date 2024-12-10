@@ -2,8 +2,19 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
-exports.seed = async function(knex) {
-  await knex.raw(`
+exports.seed = async function (knex) {
+    // Drop triggers if they already exist
+    await knex.raw(`
+    IF OBJECT_ID('trg_decrease_stock', 'TR') IS NOT NULL
+    DROP TRIGGER trg_decrease_stock;
+  `);
+
+    await knex.raw(`
+    IF OBJECT_ID('trg_increase_stock_on_cancel', 'TR') IS NOT NULL
+    DROP TRIGGER trg_increase_stock_on_cancel;
+  `);
+
+    await knex.raw(`
     CREATE TRIGGER trg_decrease_stock
     ON invoice_detail
     AFTER INSERT
@@ -15,7 +26,7 @@ exports.seed = async function(knex) {
         INNER JOIN inserted ON drink.id = inserted.drink_id
     END;
 `);
-await knex.raw(`
+    await knex.raw(`
     CREATE TRIGGER trg_increase_stock_on_cancel
     ON invoice
     AFTER UPDATE
