@@ -11,12 +11,19 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Size = CoffeeShop.Models.Size;
+using System.Threading.Tasks;
+using CoffeeShop.Helper;
+using CoffeeShop.ViewModels.HomePage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,214 +40,87 @@ namespace CoffeeShop.Views
         {  
             ViewModel = new HomeViewModel();
             this.InitializeComponent();        
-            DateText.Text = DateTime.Now.ToString("dddd, d MMMM yyyy");
-            // SamplePage1Item.IsSelected = true;
-            LoadCategories();
-        }
-        private void LoadCategories()
-        {
-            var categories = ViewModel.Categories;
-            foreach (var category in categories)
-            {
-                SelectorBar.Items.Add(new SelectorBarItem
-                {
-                    Text = category.CategoryName,
-                    Tag = category.CategoryID
-                });
-            }
-        }
-        private void previousButton_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.GoToPreviousPage();
         }
 
-        private void nextButton_Click(object sender, RoutedEventArgs e)
+        private void DrinkListUserControl_ItemClick(Drink drink, Size size)
         {
-            ViewModel.GoToNextPage();
+            cart.AddDrink(drink, size);
         }
 
-        private void pagesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cart_DeliveryClick(string recipientEmail, string message)
         {
-            if (pagesComboBox.SelectedIndex >= 0 && pagesComboBox.SelectedIndex != ViewModel.SelectedPageIndex)
-            {
-                var item = pagesComboBox.SelectedItem as PageInfo;
-                ViewModel.GoToPage(item.Page);
-            }
-        }
-        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedItem = (ComboBoxItem)SortComboBox.SelectedItem;
-            if (selectedItem != null)
-            {
-                var tag = selectedItem.Tag.ToString();
-                ViewModel.SortBy = tag;
-            }
-            // load lại chữ dưới page navigation
-            if(pagesComboBox!= null)
-            {
-                pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
-            }    
-            
-        }
-        private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs e)
-        {
-            var selectedItem = (SelectorBarItem)SelectorBar.SelectedItem;
-            if (selectedItem != null)
-            {
-                var selectedCategoryID = int.Parse(selectedItem.Tag.ToString());
-                Console.WriteLine(selectedCategoryID);
-                // Handle selection change based on selectedCategoryID
-                ViewModel.CategoryID = selectedCategoryID;
-            }
-            // load lại chữ dưới page navigation
-            if (pagesComboBox != null)
-            {
-                pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
-            }
-        }
-        private void Search_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.Search(SearchTextBox.Text);
-            // load lại chữ dưới page navigation
-            pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
-        }
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is not ToggleButton checkedToggleButton)
-            {
-                return;
-            }
-
-            foreach (ToggleButton toggleButton in ToggeButtons.Children.OfType<ToggleButton>())
-            {
-                toggleButton.IsChecked = toggleButton == checkedToggleButton;
-                toggleButton.IsHitTestVisible = toggleButton != checkedToggleButton;
-            }
+            SendEmail(recipientEmail, message);
         }
 
-        private void BackgroundRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-
-
-        private void TrashButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var detailInvoice = button.DataContext as DetailInvoice;
-            if (detailInvoice != null)
-                ViewModel.RemoveDrink(detailInvoice);
-         }
-
-        private void SizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            var selectedSize = comboBox?.SelectedItem as Size;
-            if (comboBox != null && selectedSize != null)
-            {
-                var stackPanel = comboBox.Parent as StackPanel;
-                if (stackPanel != null)
-                {
-                    var priceTextBlock = stackPanel.FindName("PriceTextBlock") as TextBlock;
-                    var stockTextBlock = stackPanel.FindName("StockTextBlock") as Run;
-                    if (priceTextBlock != null)
-                    {
-                        priceTextBlock.Text = selectedSize.Price.ToString();
-                        stockTextBlock.Text = selectedSize.Stock.ToString();
-                    }
-                }
-            }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var drink = button.DataContext as Drink;
-            var stackPanel = button.Parent as StackPanel;
-            var sizeComboBox = stackPanel.FindName("SizeComboBox") as ComboBox;
-            var size = sizeComboBox.SelectedItem as Size;
-            ViewModel.AddDrink(drink, size);
-        }
-        /*    private void OrderButton_Click(object sender, RoutedEventArgs e)
-            {
-                // Get the checked ToggleButton content
-                var checkedToggleButton = ToggeButtons.Children.OfType<ToggleButton>().FirstOrDefault(tb => tb.IsChecked == true);
-                var checkedContent = checkedToggleButton?.Content.ToString();
-
-                // Get the total price
-                var totalPrice = ViewModel.TotalPrice;
-
-                // Order ...
-                var message = $"Order: {checkedContent}, Total Price: {totalPrice}";
-                var dialog = new ContentDialog
-                {
-                    XamlRoot = this.XamlRoot,
-                    Title = "Order Details",
-                    Content = message,
-                    CloseButtonText = "OK"
-                };
-                dialog.ShowAsync();
-            }*/
-        private async void OrderButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Get the checked ToggleButton content
-            var checkedToggleButton = ToggeButtons.Children.OfType<ToggleButton>().FirstOrDefault(tb => tb.IsChecked == true);
-            var checkedContent = checkedToggleButton?.Content.ToString();
-
-            // Get the total price
-            var totalPrice = ViewModel.TotalPrice;
-
-            // Order details message
-            var message = $"Order: {checkedContent}, Total Price: {totalPrice}";
-
-            // Update the ContentDialog content
-            OrderDetailsTextBlock.Text = message;
-
-            // Show the ContentDialog
-            await OrderDetailsDialog.ShowAsync();
-        }
-        private async void ThemeToggleButton_Checked(object sender, RoutedEventArgs e)
+        private async void SendEmail(string recipientEmail, string message)
         {
             try
             {
-                if (Application.Current != null && Dispatcher != null)
-                {
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        // Change to dark theme
-                        Application.Current.RequestedTheme = ApplicationTheme.Dark;
-                    });
-                }
+                EmailProgressRing.IsActive = true;
+                EmailProgressRing.Visibility = Visibility.Visible;
+                cart.AddInvoice();
+                await Task.Run(() => SendEmailHelper.SendEmail(recipientEmail, message));
             }
             catch (Exception ex)
             {
-                // Handle exception (e.g., log the error)
-                Debug.WriteLine($"Error setting theme: {ex.Message}");
+                Debug.WriteLine($"Error sending email: {ex.Message}");
+
+            }
+            finally
+            {
+                EmailProgressRing.IsActive = false;
+                EmailProgressRing.Visibility = Visibility.Collapsed;
+                await ShowResultDialog("Success", "Email sent successfully.");
             }
         }
 
+        private async void cart_OrderClick()
+        {
+            try
+            {
+                EmailProgressRing.IsActive = true;
+                EmailProgressRing.Visibility = Visibility.Visible;
+                cart.AddInvoice();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error: {ex.Message}");
+
+            }
+            finally
+            {
+                EmailProgressRing.IsActive = false;
+                EmailProgressRing.Visibility = Visibility.Collapsed;
+                await ShowResultDialog("Success", "Order successfully.");
+            }
+        }
+        private async Task ShowResultDialog(string title, string content)
+        {
+   /*         var dialog = new ContentDialog
+            {
+                Title = title,
+                Content = content,
+                CloseButtonText = "OK",
+                XamlRoot = this.XamlRoot
+            };
+            dialog.Closed += (sender, args) =>
+            {
+                // Navigate to the Invoice page
+                this.Frame.Navigate(typeof(InvoicePage));
+            };
+            await dialog.ShowAsync();*/
+
+            ResultDialog.Title = title;
+            ResultDialogContent.Text = content;
+            await ResultDialog.ShowAsync();
+        }
+
+        private void ResultDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            // Navigate to the Invoice page
+            this.Frame.Navigate(typeof(InvoicePage));
+        }
 
     }
 
-    //private void StyledGrid_ItemClick(object sender, ItemClickEventArgs e)
-    //{
-    //    //var clickedDrink = e.ClickedItem as Drink;
-    //    //if (clickedDrink != null)
-    //    //{
-    //    //    ViewModel.AddDrink(clickedDrink);
-    //    //}
-    //}
-
-
-    //private void AddButton_Click(object sender, RoutedEventArgs e)
-    //    {
-    //        var button = sender as Button;
-    //        var drink = button.DataContext as Drink;
-    //        var stackPanel = button.Parent as StackPanel;
-    //        var sizeComboBox = stackPanel.FindName("SizeComboBox") as ComboBox;
-    //        var size = sizeComboBox.SelectedItem as Size;
-    //        ViewModel.AddDrink(drink, size);
-    //    }
-    //}
 }
