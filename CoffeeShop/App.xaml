@@ -17,6 +17,7 @@
                             <SolidColorBrush x:Key="PrimaryText" Color="#333333" />
                             <SolidColorBrush x:Key="SecondaryText" Color="#757575" />
                             <SolidColorBrush x:Key="AccentColor" Color="#6200EE  " />
+                            <SolidColorBrush x:Key="DiscountBadge" Color="#EBBCBC" />
                             <SolidColorBrush x:Key="ButtonBackground" Color="#FFFFFF " />
                             <SolidColorBrush x:Key="ButtonText" Color="#6200EE " />
                             <SolidColorBrush x:Key="ItemBackground" Color="#EEEEEE" />
@@ -27,6 +28,7 @@
 
                         <!-- Dark Mode Colors -->
                         <ResourceDictionary x:Key="Dark">
+                            <SolidColorBrush x:Key="DiscountBadge" Color="#ed3124" />
                             <SolidColorBrush x:Key="PageBackground" Color="#2C3E50" />
                             <SolidColorBrush x:Key="PrimaryText" Color="#ebe9fc" />
                             <SolidColorBrush x:Key="SecondaryText" Color="#A0A0A0" />

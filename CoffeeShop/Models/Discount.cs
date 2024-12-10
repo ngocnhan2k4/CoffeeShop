@@ -29,7 +29,7 @@ namespace CoffeeShop.Models
             ValidUntil = DateTime.Now;
             DiscountPercent = 0;
             Name = "";
-            CategoryID = -1;
+            CategoryID = 0;
         }
 
         public bool IsValid()

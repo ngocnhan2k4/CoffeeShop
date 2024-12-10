@@ -36,7 +36,9 @@ namespace CoffeeShop.Views
             DateText.Text = DateTime.Now.ToString("dddd, d MMMM yyyy");
             // SamplePage1Item.IsSelected = true;
             LoadCategories();
+            
         }
+
         private void LoadCategories()
         {
             var categories = ViewModel.Categories;
@@ -48,6 +50,7 @@ namespace CoffeeShop.Views
                     Tag = category.CategoryID
                 });
             }
+            
         }
         private void previousButton_Click(object sender, RoutedEventArgs e)
         {
@@ -132,7 +135,14 @@ namespace CoffeeShop.Views
             if (detailInvoice != null)
                 ViewModel.RemoveDrink(detailInvoice);
          }
-
+        private void SizeComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                comboBox.SelectedIndex = 0;
+            }
+        }
         private void SizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -142,12 +152,26 @@ namespace CoffeeShop.Views
                 var stackPanel = comboBox.Parent as StackPanel;
                 if (stackPanel != null)
                 {
+                    var drink = stackPanel.DataContext as Drink;
                     var priceTextBlock = stackPanel.FindName("PriceTextBlock") as TextBlock;
                     var stockTextBlock = stackPanel.FindName("StockTextBlock") as Run;
+                    var originalTextBlock = stackPanel.FindName("OriginalPriceTextBlock") as TextBlock;
+                    var discountTextBlock = stackPanel.FindName("DiscountedPriceTextBlock") as TextBlock;
                     if (priceTextBlock != null)
                     {
                         priceTextBlock.Text = selectedSize.Price.ToString();
+                    }
+                    if (stockTextBlock != null)
+                    {
                         stockTextBlock.Text = selectedSize.Stock.ToString();
+                    }
+                    if (originalTextBlock != null && discountTextBlock != null)
+                    {
+                        if (drink !=null && drink.HasDiscount)
+                        {
+                            originalTextBlock.Text = selectedSize.Price.ToString();
+                            discountTextBlock.Text = drink.GetDiscountedPrice(selectedSize).ToString();
+                        }
                     }
                 }
             }
