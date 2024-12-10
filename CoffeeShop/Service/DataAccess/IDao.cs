@@ -23,6 +23,7 @@ namespace CoffeeShop.Service.DataAccess
         List<Category> GetCategories();
         public bool AddCategories(List<Category> categories);
         public List<Discount> GetDiscounts();
+        public bool AddDiscounts(List<Discount> discounts);
         List<DeliveryInvoice> GetDeliveryInvoices();
         List<Invoice> GetInvoices();
         List<DetailInvoice> GetDetailInvoices();

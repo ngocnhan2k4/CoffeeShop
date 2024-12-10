@@ -14,13 +14,13 @@ namespace CoffeeShop.Service.DataAccess
     /// </summary>
     public class MockDao : IDao
     {
-        public List<Discount> GetDiscounts() 
+        public List<Discount> GetDiscounts()
         {
             var categories = GetCategories();
-            var list = new List<Discount>() 
+            var list = new List<Discount>()
             {
-                new () 
-                { 
+                new ()
+                {
                     Name = "Khuyến mãi Trà sữa",
                     DiscountPercent = 10,
                     ValidUntil = DateTime.Now.AddDays(30),
@@ -30,7 +30,7 @@ namespace CoffeeShop.Service.DataAccess
                 },
                 new ()
                 {
-                    Name = "Khuyến mãi Cà phê", 
+                    Name = "Khuyến mãi Cà phê",
                     DiscountPercent = 15,
                     ValidUntil = DateTime.Now.AddDays(30),
                     CategoryID = 1,
@@ -41,13 +41,18 @@ namespace CoffeeShop.Service.DataAccess
                 {
                     Name = "Khuyến mãi Nước ép",
                     DiscountPercent = 5,
-                    ValidUntil = DateTime.Now.AddDays(30), 
+                    ValidUntil = DateTime.Now.AddDays(30),
                     CategoryID = 4,
                     CategoryName = categories.Find(c => c.CategoryID == 4).CategoryName,
                     IsActive = true
                 }
             };
             return list;
+        }
+
+        public bool AddDiscounts(List<Discount> Discounts)
+        {
+            return true;
         }
 
         public List<Category> GetCategories()

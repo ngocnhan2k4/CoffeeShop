@@ -137,6 +137,7 @@ namespace CoffeeShop.ViewModels.Settings
         {
             bool isAddedDrinks = _dao.AddDrinks(NewDrinks);
             bool isAddedCategories = _dao.AddCategories(NewCategories.ToList());
+            bool isAddedDiscounts = _dao.AddDiscounts(Discounts.ToList());
 
             if (!isAddedDrinks)
             {
@@ -155,9 +156,14 @@ namespace CoffeeShop.ViewModels.Settings
                 }
             }
 
+            if (!isAddedDiscounts)
+            {
+                Discounts.Clear();
+            }
+
             NewDrinks.Clear();
             NewCategories.Clear();
-            return isAddedDrinks && isAddedCategories;
+            return isAddedDrinks && isAddedCategories  && isAddedDiscounts;
         }
 
         private bool ValidateDrink(Drink drink)
@@ -202,8 +208,8 @@ namespace CoffeeShop.ViewModels.Settings
         public bool AddDiscount()
         {
             if (!ValidateDiscount(NewDiscount)) return false;
-
-            Discounts.Add(NewDiscount);
+            NewDiscount.CategoryName = Categories.FirstOrDefault(c => c.CategoryID == NewDiscount.CategoryID).CategoryName;
+            Discounts.Add(new(NewDiscount));
             NewDiscount.Reset();
             return true;
         }
@@ -244,24 +250,34 @@ namespace CoffeeShop.ViewModels.Settings
             OnPropertyChanged("HasDiscounts");
         }
 
-        public void ApplyDiscounts()
+        public bool ApplyDiscounts()
         {
-            //DiscountManager DiscountManager = new(Discounts);
-        }
-
-        public void ToggleDiscountActiveState(Discount selectedDiscount, int categoryID)
-        {
-            foreach (var discount in Discounts)
+            foreach (var category in Categories)
             {
-                if (discount.CategoryID == categoryID)
+                int count = 0;
+                foreach (var discount in Discounts)
                 {
-                    discount.IsActive = false;
+                    if (discount.CategoryID == category.CategoryID && discount.IsActive)
+                    {
+                        count++;
+                    }
+                }
+                if(count >= 2)
+                {
+                    Error = "Cannot apply more than 2 discounts for a category";
+                    return false;
                 }
             }
 
-            selectedDiscount.IsActive = true;
+            ClearError();
+            DiscountManager discountManager = new(Discounts.ToList());
+            foreach (var drink in Drinks)
+            {
+                drink.Discount = discountManager.GetDiscountForCategory(drink.CategoryID);
+            }
+            DrinksByCategoryID = new(FilterDrinksByCategoryID(SelectedCategoryIndex));
+            return true;
         }
-
 
         public void ClearError()
         {

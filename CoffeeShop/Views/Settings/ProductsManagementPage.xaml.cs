@@ -55,8 +55,6 @@ namespace CoffeeShop.Views.Settings
 
         private async void SaveChanges_ButtonClick(object sender, RoutedEventArgs e)
         {
-            if(ViewModel.NewCategories.Count == 0 && ViewModel.NewDrinks.Count == 0) return;
-            
             bool result = ViewModel.UpdateDrinksAndCategoriesIntoDB();
             await new ContentDialog()
             {
@@ -196,7 +194,7 @@ namespace CoffeeShop.Views.Settings
 
         private void ManageDiscountsDialog_SaveButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            ViewModel.ApplyDiscounts();
+            args.Cancel = !ViewModel.ApplyDiscounts();
         }
 
         private void ManageDiscountsDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -222,18 +220,6 @@ namespace CoffeeShop.Views.Settings
                 ViewModel.DeleteDiscount(discountToDelete);
             }
         }
-
-        private void DiscountToggleSwitch_Toggled(object sender, RoutedEventArgs e)
-        {
-            var toggleSwitch = sender as ToggleSwitch;
-            var discount = toggleSwitch?.DataContext as Discount;
-
-            if (discount != null)
-            {
-                ViewModel.ToggleDiscountActiveState(discount, discount.CategoryID);
-            }
-        }
-
 
         private void AddDiscount_Click(object sender, RoutedEventArgs e)
         {

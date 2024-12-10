@@ -15,7 +15,7 @@ namespace CoffeeShop.Service.DataAccess
     public class SqlServerDao : IDao
     {
         private readonly string server = Environment.GetEnvironmentVariable("SERVER") ?? "127.0.0.1";
-        private readonly string database = Environment.GetEnvironmentVariable("DATABASE") ?? "coffee-shop-test";
+        private readonly string database = Environment.GetEnvironmentVariable("DATABASE") ?? "coffee-shop";
         private readonly string userId = Environment.GetEnvironmentVariable("USERID") ?? "sa";
         private readonly string password = Environment.GetEnvironmentVariable("PASSWORD") ?? "SqlServer@123";
         private readonly string connectionString;
@@ -32,7 +32,7 @@ namespace CoffeeShop.Service.DataAccess
             using var conn = new SqlConnection(connectionString);
             conn.Open();
 
-            using var cmd = new SqlCommand("SELECT * FROM discount", conn);
+            using var cmd = new SqlCommand("SELECT name, discount_percent, valid_until, category_id, is_active FROM discount", conn);
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -46,6 +46,41 @@ namespace CoffeeShop.Service.DataAccess
                 discounts.Add(discount);
             }
             return discounts;
+        }
+
+        public bool AddDiscounts(List<Discount> discounts)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                using var cmd1 = conn.CreateCommand();
+                cmd1.Transaction = transaction;
+                cmd1.CommandText = "DELETE FROM discount";
+                cmd1.ExecuteNonQuery();
+
+                foreach (var discount in discounts)
+                {
+                    using var cmd = conn.CreateCommand();
+                    cmd.Transaction = transaction;
+                    cmd.CommandText = "INSERT INTO discount ( name, discount_percent, valid_until, category_id, is_active)" +
+                        "VALUES (@name, @discountPercent, @validUntil, @categoryId, @isActive)";
+                    cmd.Parameters.AddWithValue("@name", discount.Name);
+                    cmd.Parameters.AddWithValue("@discountPercent", discount.DiscountPercent);
+                    cmd.Parameters.AddWithValue("@validUntil", discount.ValidUntil);
+                    cmd.Parameters.AddWithValue("@categoryId", discount.CategoryID);
+                    cmd.Parameters.AddWithValue("@isActive", discount.IsActive);
+                    cmd.ExecuteNonQuery();
+                }
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                return false;
+            }
         }
 
         public List<Category> GetCategories()

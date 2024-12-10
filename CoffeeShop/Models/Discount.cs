@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using PropertyChanged;
 
 namespace CoffeeShop.Models
 {
@@ -10,9 +11,8 @@ namespace CoffeeShop.Models
         public double DiscountPercent { get; set; }
         public DateTime ValidUntil { get; set; }
         public int CategoryID { get; set; }
-        public string CategoryName { get; set; } 
+        public string CategoryName { get; set; }
         public bool IsActive { get; set; }
-
 
         public Discount()
         {
@@ -20,7 +20,17 @@ namespace CoffeeShop.Models
             ValidUntil = DateTime.Now;
             DiscountPercent = 0;
             Name = "";
-            CategoryID = -1;
+            CategoryID = 0;
+        }
+
+        public Discount(Discount other)
+        {
+            this.Name = other.Name;
+            this.DiscountPercent = other.DiscountPercent;
+            this.IsActive = other.IsActive;
+            this.CategoryID = other.CategoryID;
+            this.CategoryName = other.CategoryName;
+            this.ValidUntil = other.ValidUntil;
         }
 
         public void Reset()
@@ -29,7 +39,7 @@ namespace CoffeeShop.Models
             ValidUntil = DateTime.Now;
             DiscountPercent = 0;
             Name = "";
-            CategoryID = -1;
+            CategoryID = 0;
         }
 
         public bool IsValid()

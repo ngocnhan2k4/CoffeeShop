@@ -322,8 +322,7 @@
                                     <ToggleSwitch Grid.Column="1" 
                                                 IsOn="{Binding IsActive, Mode=TwoWay}"
                                                 OnContent="Active"
-                                                OffContent="Inactive"
-                                                >
+                                                OffContent="Inactive">
                                         <ToggleSwitch.Resources>
                                             <ResourceDictionary>
                                                 <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#9747FF"/>
