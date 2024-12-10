@@ -1,21 +1,12 @@
-﻿using CoffeeShop.Helper;
-using Microsoft.UI.Xaml.Media.Imaging;
+﻿using Microsoft.UI.Xaml.Media.Imaging;
 using PropertyChanged;
 using System;
-
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-using System;
-
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoffeeShop.Models
 {
-
     public class Size : INotifyPropertyChanged
     {
         public string Name { get; set; } // S M L 
@@ -71,7 +62,14 @@ namespace CoffeeShop.Models
                 }
             }
         }
-        public decimal Discount { get; set; } 
+        [DoNotNotify]   
+
+        public Discount Discount { get; set; }
+
+        public bool HasDiscount => Discount != null && Discount.IsValid();
+        
+        public double DiscountPercentage => HasDiscount ? Discount.DiscountPercent : 0;
+        
         public int CategoryID { get; set; }
 
         public Drink()
@@ -80,12 +78,11 @@ namespace CoffeeShop.Models
             Name = "";
             Sizes = [
                 new () { Name = "S", Price = 0, Stock = 0 },
-                    new () { Name = "M", Price = 0, Stock = 0 },
-                    new () { Name = "L", Price = 0, Stock = 0 }
+                new () { Name = "M", Price = 0, Stock = 0 },
+                new () { Name = "L", Price = 0, Stock = 0 }
             ];
             Description = "";
             ImageString = "ms-appx:///Assets/default.jpg";
-            Discount = 0;
             CategoryID = 0;
         }
 
@@ -96,10 +93,15 @@ namespace CoffeeShop.Models
             Description = other.Description;
             Sizes = new (other.Sizes.Select(size => new Size(size))); 
             ImageString = other.ImageString;
-            Discount = other.Discount;
             CategoryID = other.CategoryID;
+            Discount = other.Discount;
         }
 
+        public double GetDiscountedPrice(Size size)
+        {
+            int originalPrice = size.Price;
+            return originalPrice - (originalPrice * DiscountPercentage / 100);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

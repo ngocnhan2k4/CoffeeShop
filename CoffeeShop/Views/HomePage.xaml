@@ -8,7 +8,9 @@
     xmlns:converters="using:CoffeeShop.Helper"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    
+    Background="{ThemeResource PageBackground}">
 
 
     <Grid >
@@ -21,7 +23,13 @@
         </Grid.RowDefinitions>
 
         <user_control:DrinkListUserControl Grid.Row="0" Grid.Column="0" ItemClick="DrinkListUserControl_ItemClick"/>
-
-        <user_control:ChoseDrinkUserControl Grid.Row="0" Grid.Column="1" x:Name="cart"/>
+        <user_control:ChoseDrinkUserControl Grid.Row="0" Grid.Column="1" x:Name="cart" DeliveryClick="cart_DeliveryClick" OrderClick="cart_OrderClick" />
+        <ProgressRing x:Name="EmailProgressRing" IsActive="False" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100"/>
+        <ContentDialog x:Name="ResultDialog"
+                       Title="Result"
+                       CloseButtonText="OK"
+                       Closed="ResultDialog_Closed">
+            <TextBlock x:Name="ResultDialogContent" />
+        </ContentDialog>
     </Grid>
 </Page>

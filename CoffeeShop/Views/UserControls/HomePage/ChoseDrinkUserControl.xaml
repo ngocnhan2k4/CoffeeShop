@@ -32,9 +32,9 @@
                             <TextBlock Text="{Binding NameDrink}"  />
                             <TextBlock Text="{Binding Size}"  Foreground="Gray" FontSize="11"  />
                         </StackPanel>
-                        <NumberBox Grid.Column="1" x:Name="NumberBoxSpinButtonPlacementExample" HorizontalAlignment="Right"
+                        <NumberBox Grid.Column="1" x:Name="NumberBoxSpinButtonPlacementExample" HorizontalAlignment="Right" ValueChanged="NumberBox_ValueChanged"
                  Value="{x:Bind Quantity, Mode=TwoWay}"
-                 Minimum="1"
+                 Minimum="1" Maximum="{x:Bind MaxQuantity}"
                  SpinButtonPlacementMode="Compact"
                  SmallChange="1"/>
                     </Grid>
@@ -62,21 +62,9 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel  Grid.Column="0" Grid.Row="0"  Padding="10">
-            <TextBlock Margin="10">
+            <TextBlock Margin="10" FontSize="20" FontWeight="SemiBold">
               Order
             </TextBlock>
-            <StackPanel x:Name="ToggeButtons" Orientation="Horizontal" HorizontalAlignment="Center">
-                <ToggleButton Margin="0,0,20,0"
-              IsChecked="True"
-              Checked="ToggleButton_Checked"
-              Content="1" />
-                <ToggleButton Margin="0,0,20,0"
-              Checked="ToggleButton_Checked"
-              Content="2" />
-                <ToggleButton 
-              Checked="ToggleButton_Checked"
-              Content="3" />
-            </StackPanel>
         </StackPanel>
 
         <Grid Grid.Column="0" Grid.Row="1" Margin="10" Padding="10" CornerRadius="5">
@@ -85,7 +73,7 @@
                 <ColumnDefinition Width="15*" />
             </Grid.ColumnDefinitions>
 
-            <Grid  Margin="10">
+            <Grid  Margin="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -113,39 +101,36 @@
         </StackPanel>
 
         <!-- Add the Button to print content -->
-        <Grid Grid.Column="0" Grid.Row="4">
+        <Grid Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Content="Order" Click="OrderButton_Click" Grid.Column="1" Margin="55 10 10 10" HorizontalAlignment="Center"/>
-            <Button Content="Delivery" Grid.Column="3" Margin="10" HorizontalAlignment="Right" Click="DeliveryButton_Click"/>
+            <Button Content="Order" Grid.Column="1"  Width="100" Margin="10" Click="OrderButton_Click" HorizontalAlignment="Center"/>
         </Grid>
-        <ContentDialog x:Name="OrderDetailsDialog"
-               Title="Order Details"
-               CloseButtonText="OK" >
-            <StackPanel>
-                <TextBlock x:Name="OrderDetailsTextBlock" Text="Order details" />
-            </StackPanel>
-        </ContentDialog>
+        
         <!--Delivery-->
-        <ContentDialog x:Name="DeliveryDialog"
+        <ContentDialog x:Name="OrderDetailsDialog"
             Title="Delivery"
-            CloseButtonText="Cancel" PrimaryButtonText="Send" IsPrimaryButtonEnabled="True" DefaultButton="Primary" >
-            <StackPanel Width="500" Height="450" Spacing="10">
+            CloseButtonText="Cancel" PrimaryButtonText="Send" IsPrimaryButtonEnabled="True" DefaultButton="Primary" PrimaryButtonClick="OrderDialog_PrimaryButtonClick" >
+            <StackPanel Width="500"  Spacing="12">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="110"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Email customer: " Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
-                    <TextBox x:Name="emailTextBox" Grid.Column="1" PlaceholderText="Enter email" LostFocus="EmailTextBox_LostFocus"/>
+                    <TextBlock Text="Name: " Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox x:Name="nameTextBox" Grid.Column="1" PlaceholderText="Enter name"  />
                 </Grid>
 
-                <TextBlock x:Name="emailErrorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Invalid email format." />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Phone number: " Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox x:Name="phoneTextBox" Grid.Column="1" PlaceholderText="Enter phone number" IsEnabled="False" />
+                </Grid>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -153,40 +138,77 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Address: " Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <TextBox x:Name="addressTextBox" Grid.Column="1" PlaceholderText="Enter address" />
+                    <TextBox x:Name="addressTextBox" Grid.Column="1" PlaceholderText="Enter address" IsEnabled="False" />
                 </Grid>
-                <ComboBox PlaceholderText="Order Status" Width="200" Margin="0 10 0 10" x:Name="statusComboBox">
-                    <x:String>Pending</x:String>
-                    <x:String>Preparing</x:String>
-                    <x:String>Completed</x:String>
-                </ComboBox>
-                <TextBlock Text="Order Detail:" FontWeight="Bold" FontSize="16" />
 
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Name Drink" Width="150" FontWeight="Bold"/>
-                    <TextBlock Text="Size" Width="50" FontWeight="Bold" Margin="6 0 0 0"/>
-                    <TextBlock Text="Quantity" Width="60" FontWeight="Bold"/>
-                    <TextBlock Text="Price" Width="100" FontWeight="Bold"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Email customer: " Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox x:Name="emailTextBox" Grid.Column="1" PlaceholderText="Enter email" IsEnabled="False" LostFocus="EmailTextBox_LostFocus"/>
+                </Grid>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
+                    <ComboBox PlaceholderText="Shipping Method" Width="180" x:Name="shippingMethodComboBox" SelectionChanged="ShippingMethodComboBox_SelectionChanged">
+                        <x:String>Inplace</x:String>
+                        <x:String>Delivery</x:String>
+                    </ComboBox>
+
+                    <ComboBox PlaceholderText="Payment Method" Width="180" x:Name="paymentMethodComboBox">
+                        <x:String>Cash</x:String>
+                        <x:String>Bank</x:String>
+                    </ComboBox>
                 </StackPanel>
+                
+                
+                <TextBlock Text="Order Detail:" FontWeight="Bold" FontSize="16"  />
 
-                <ListView ItemsSource="{x:Bind ViewModel.ChosenDrinks}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:DetailInvoice">
-                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                <TextBlock Text="{x:Bind NameDrink}" Width="150"/>
-                                <TextBlock Text="{x:Bind Size}" Width="50"/>
-                                <TextBlock Text="{x:Bind Quantity}" Width="50"/>
-                                <TextBlock Text="{x:Bind Price}" Width="100"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <TextBlock Text="Total Price:" FontWeight="Bold" FontSize="16" Margin="0 30 0 0"/>
+                <Grid Padding="15,0,6,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Name Drink" FontWeight="Bold" />
+                    <TextBlock Grid.Column="1" Text="Size"  FontWeight="Bold" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Column="2" Text="Quantity"  FontWeight="Bold"  HorizontalAlignment="Center" />
+                    <TextBlock Grid.Column="3" Text="Price"  FontWeight="Bold" HorizontalAlignment="Center" />
+                </Grid>
+   
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="100">
+                    
+                    <ListView ItemsSource="{x:Bind ViewModel.ChosenDrinks}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:DetailInvoice">
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40*"/>
+                                        <ColumnDefinition Width="20*"/>
+                                        <ColumnDefinition Width="20*"/>
+                                        <ColumnDefinition Width="20*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{x:Bind NameDrink}"/>
+                                    <TextBlock Grid.Column="1" Text="{x:Bind Size}" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="{x:Bind Quantity}" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="{x:Bind Price}" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+                <TextBlock Text="Total Price:" FontWeight="Bold" FontSize="16" Margin="0 10 0 0"/>
                 <TextBlock x:Name="totalPriceTextBlock" FontSize="16" Foreground="Gray" />
-
+                <TextBlock x:Name="errorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Error..." />
             </StackPanel>
         </ContentDialog>
-        <ProgressRing x:Name="EmailProgressRing" IsActive="False" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100"/>
+        <!--Error Dialog-->
+        <ContentDialog x:Name="OrderErrorDialog"
+                       Title = "Order Error"
+                       Content = "Hãy chọn nước uống trước khi đặt hàng"
+                       CloseButtonText="OK">
+        </ContentDialog>
     </Grid>
-
 </UserControl>

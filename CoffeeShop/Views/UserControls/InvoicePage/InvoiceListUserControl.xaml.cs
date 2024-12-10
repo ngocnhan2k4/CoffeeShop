@@ -2,6 +2,7 @@ using CoffeeShop.Helper;
 using CoffeeShop.Models;
 using CoffeeShop.Service;
 using CoffeeShop.Service.DataAccess;
+using CoffeeShop.ViewModels.InvoicePage;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -28,16 +29,7 @@ namespace CoffeeShop.Views.UserControls.InvoicePage
         public delegate void EventHandler(Invoice invoice);
         public event EventHandler ItemClick;
 
-        public class InvoiceListViewModel 
-        {
-            public List<Invoice> invoices { get; set; }
-            IDao _dao;
-            public InvoiceListViewModel()
-            {
-                _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-                invoices =_dao.GetListInvoiceId();
-            }
-        }
+  
         InvoiceListViewModel ViewModel { get; set; }
         public InvoiceListUserControl()
         {

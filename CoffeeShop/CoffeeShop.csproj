@@ -20,8 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove=".env" />
-    <None Remove="DarkTheme.xaml" />
-    <None Remove="LightTheme.xaml" />
     <None Remove="Views\DashboardPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\InvoicePage.xaml" />
@@ -121,12 +119,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\InvoicePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="DarkTheme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="LightTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
