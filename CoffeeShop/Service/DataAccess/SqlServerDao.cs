@@ -254,7 +254,7 @@ namespace CoffeeShop.Service.DataAccess
             }
             using var cmd = conn.CreateCommand();
             cmd.CommandText = $"""
-                    SELECT name, category_id, description, image, size, price, stock, (select sum(dd.stock)  from drink dd where d.name = dd.name ) as totalQuantity
+                    SELECT id, name, category_id, description, image, size, price, stock, (select sum(dd.stock)  from drink dd where d.name = dd.name ) as totalQuantity
                     from drink d
                     WHERE name LIKE @keyword AND (@categoryID = -1 OR category_id = @categoryID)
                     {sortClause}
@@ -265,26 +265,27 @@ namespace CoffeeShop.Service.DataAccess
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                var drink = drinks.FirstOrDefault(d => d.Name == reader.GetString(0));
+                var drink = drinks.FirstOrDefault(d => d.Name == reader.GetString(1));
                 if (drink == null)
                 {
                     drink = new Drink
                     {
-                        Name = reader.GetString(0),
-                        CategoryID = reader.GetInt32(1),
-                        Description = reader.GetString(2),
-                        ImageString = reader.GetString(3),
+                        ID = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        CategoryID = reader.GetInt32(2),
+                        Description = reader.GetString(3),
+                        ImageString = reader.GetString(4),
                         Sizes = new List<Size>()
                     };
 
-                    drink.Discount = discountManager.GetDiscountForCategory(reader.GetInt32(1));
+                    drink.Discount = discountManager.GetDiscountForCategory(reader.GetInt32(2));
                     drinks.Add(drink);
                 }
                 drink.Sizes.Add(new Size
                 {
-                    Name = reader.GetString(4),
-                    Price = reader.GetInt32(5),
-                    Stock = reader.GetInt32(6)
+                    Name = reader.GetString(5),
+                    Price = reader.GetInt32(6),
+                    Stock = reader.GetInt32(7)
                 });
             }
 
