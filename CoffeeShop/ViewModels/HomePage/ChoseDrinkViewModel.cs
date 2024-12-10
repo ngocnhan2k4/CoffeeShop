@@ -41,7 +41,7 @@ namespace CoffeeShop.ViewModels.HomePage
                     Quantity = 1,
                     MaxQuantity= size.Stock,
                     Size = size.Name,
-                    Price = size.Price
+                    Price = (int)drink.GetDiscountedPrice(size)
                 };
                 ChosenDrinks.Add(newInvoice);
             }
