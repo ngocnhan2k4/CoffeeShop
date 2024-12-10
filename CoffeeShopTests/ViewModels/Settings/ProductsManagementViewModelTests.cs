@@ -263,6 +263,112 @@ namespace CoffeeShopTests.ViewModels.Settings
         }
 
         [TestMethod]
+        public void AddDiscount_WithValidDiscount_ReturnsTrue()
+        {
+            // Arrange
+            var discount = new Discount
+            {
+                Name = "Test Discount",
+                DiscountPercent = 10,
+                ValidUntil = DateTime.Now.AddDays(1),
+                CategoryID = 1
+            };
+            _viewModel.NewDiscount = discount;
+            _viewModel.Categories.Add(new Category { CategoryID = 1, CategoryName = "Test Category" });
+
+            // Act
+            bool result = _viewModel.AddDiscount();
+
+            // Assert
+            Assert.IsTrue(result);
+            Assert.IsTrue(_viewModel.Discounts.Any(d => d.Name == "Test Discount"));
+        }
+
+        [TestMethod]
+        public void AddDiscount_WithInvalidDiscount_ReturnsFalse()
+        {
+            // Arrange
+            var discount = new Discount
+            {
+                Name = "", // Invalid name
+                DiscountPercent = 10,
+                ValidUntil = DateTime.Now.AddDays(1),
+                CategoryID = 1
+            };
+            _viewModel.NewDiscount = discount;
+
+            // Act
+            bool result = _viewModel.AddDiscount();
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.AreEqual("Name cannot be empty.", _viewModel.Error);
+        }
+
+        [TestMethod]
+        public void DeleteDiscount_RemovesDiscount()
+        {
+            // Arrange
+            var discount = new Discount
+            {
+                Name = "Test Discount",
+                DiscountPercent = 10,
+                ValidUntil = DateTime.Now.AddDays(1),
+                CategoryID = 1
+            };
+            _viewModel.Discounts.Add(discount);
+
+            // Act
+            _viewModel.DeleteDiscount(discount);
+
+            // Assert
+            Assert.IsFalse(_viewModel.Discounts.Contains(discount));
+        }
+
+        [TestMethod]
+        public void ApplyDiscounts_WithMoreThanTwoActiveDiscounts_ReturnsFalse()
+        {
+            // Arrange
+            var category = new Category { CategoryID = 1, CategoryName = "Test Category" };
+            _viewModel.Categories.Add(category);
+
+            var discount1 = new Discount
+            {
+                Name = "Test Discount 1",
+                DiscountPercent = 10,
+                ValidUntil = DateTime.Now.AddDays(1),
+                CategoryID = 1,
+                IsActive = true
+            };
+            var discount2 = new Discount
+            {
+                Name = "Test Discount 2",
+                DiscountPercent = 20,
+                ValidUntil = DateTime.Now.AddDays(1),
+                CategoryID = 1,
+                IsActive = true
+            };
+            var discount3 = new Discount
+            {
+                Name = "Test Discount 3",
+                DiscountPercent = 30,
+                ValidUntil = DateTime.Now.AddDays(1),
+                CategoryID = 1,
+                IsActive = true
+            };
+            _viewModel.Discounts.Add(discount1);
+            _viewModel.Discounts.Add(discount2);
+            _viewModel.Discounts.Add(discount3);
+
+            // Act
+            bool result = _viewModel.ApplyDiscounts();
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.AreEqual("Cannot apply more than 2 discounts for a category", _viewModel.Error);
+        }
+
+        [TestMethod]
         public void UpdateDrinksAndCategoriesIntoDB_Success_ReturnsTrue()
         {
             // Arrange
@@ -336,6 +442,20 @@ namespace CoffeeShopTests.ViewModels.Settings
             Assert.IsFalse(result);
             Assert.IsFalse(_viewModel.Categories.Contains(category));
             Assert.AreEqual(0, _viewModel.NewCategories.Count);
+        }
+
+        [TestMethod]
+        public void UpdateDrinksAndCategoriesIntoDB_FailedToAddDiscount_ReturnsFalse()
+        {
+            // Arrange
+            var discount = new Discount { Name="Test discount",DiscountPercent=50, CategoryID=-1,IsActive=true,ValidUntil=DateTime.Now.AddDays(10)  }; // Use MinValue instead of MaxValue+1
+            _viewModel.Discounts.Add(discount);
+
+            // Act
+            bool result = _viewModel.UpdateDrinksAndCategoriesIntoDB();
+
+            // Assert
+            Assert.IsFalse(result);
         }
 
         [TestMethod]

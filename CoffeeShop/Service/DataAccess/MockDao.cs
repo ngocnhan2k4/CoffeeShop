@@ -389,9 +389,9 @@ namespace CoffeeShop.Service.DataAccess
             var list = new List<DetailInvoice>()
             {
                 new DetailInvoice() { InvoiceID = 1, NameDrink = "Cà Phê Sữa Đá", Quantity = 2, Size = "M" },
-                new DetailInvoice() { InvoiceID = 1, NameDrink = "Trà Sữa Trân Châu Đường Đen", Quantity = 1, Size = "L" },
+                new DetailInvoice() { InvoiceID = 1, NameDrink = "Trà Sữa Trân Châu", Quantity = 1, Size = "L" },
                 new DetailInvoice() { InvoiceID = 2, NameDrink = "Sinh Tố Bơ", Quantity = 3, Size = "M" },
-                new DetailInvoice() { InvoiceID = 3, NameDrink = "Trà Đào", Quantity = 2, Size = "L" },
+                new DetailInvoice() { InvoiceID = 3, NameDrink = "Trà Sữa", Quantity = 2, Size = "L" },
                 new DetailInvoice() { InvoiceID = 4, NameDrink = "Nước Ép Cam", Quantity = 3, Size = "M" }
             };
             return list;
