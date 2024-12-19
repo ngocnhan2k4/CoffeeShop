@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove=".env" />
+    <None Remove="Views\CustomerPage.xaml" />
     <None Remove="Views\DashboardPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\InvoicePage.xaml" />
@@ -94,6 +95,9 @@
     <None Update="Assets\profile1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\CustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Settings\ChangeLanguagePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

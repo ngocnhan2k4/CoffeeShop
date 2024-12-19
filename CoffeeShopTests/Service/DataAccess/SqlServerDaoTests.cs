@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Models;
 using CoffeeShop.Service.DataAccess;
+using CoffeeShop.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -228,6 +229,60 @@ namespace CoffeeShopTests.Service.DataAccess
             var recentInvoices = dao.GetRecentInvoice(2024);
             Assert.IsNotNull(recentInvoices);
             Assert.IsTrue(recentInvoices.Count > 0);
+        }
+
+        [TestMethod]
+        public void GetCustomers_WhenCalled_ReturnsListOfCustomers()
+        {
+            var customers = dao.GetCustomers();
+            Assert.IsNotNull(customers);
+            Assert.IsTrue(customers.Count > 0);
+        }
+
+        [TestMethod]
+        public void GetCustomers_WithPaginationAndKeyword_ReturnsFilteredPaginatedList()
+        {
+            string keyword = "a";
+            int page = 1;
+            int rowsPerPage = 5;
+            var customers = dao.GetCustomers(page, rowsPerPage, keyword);
+            Assert.IsNotNull(customers);
+            Assert.IsTrue(customers.Item2 >= 0);
+        }
+
+        [TestMethod]
+        public void AddCustomer_ValidInput_ReturnsTrue()
+        {
+            var customer = new Customer
+            {
+                customerName = "Test name add",
+                totalMonney = 0,
+                totalPoint = 0,
+                type = "Thẻ thành viên"
+            };
+            var result = dao.AddCustomer(customer);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void UpdateCustomer_ValidInput_ReturnsTrue()
+        {
+            var customers = dao.GetCustomers();
+            var customer = new Customer
+            {
+                customerName = "Test name update",
+                customerID = customers[customers.Count-1].customerID,
+            };
+            var result = dao.UpdateCustomer(customer);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void DeleteCustomer_ValidInput_ReturnsTrue()
+        {
+            var customers = dao.GetCustomers();
+            var result = dao.DeleteCustomer(customers[customers.Count - 1].customerID);
+            Assert.IsTrue(result);
         }
     }
 }

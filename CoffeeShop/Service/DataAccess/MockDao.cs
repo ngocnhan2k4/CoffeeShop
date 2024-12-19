@@ -654,6 +654,178 @@ namespace CoffeeShop.Service.DataAccess
 
             return list;
         }
+        public List<Customer> GetCustomers()
+        {
+            return new List<Customer>
+            {
+                new Customer
+                {
+                    customerID = 1,
+                    customerName = "Nguyễn Văn A",
+                    totalMonney = 100000,
+                    totalPoint = 10,
+                    type = "Thẻ thành viên"
+                },
+                new Customer
+                {
+                    customerID = 2,
+                    customerName = "Trần Thị B",
+                    totalMonney = 200000,
+                    totalPoint = 20,
+                    type = "Thẻ thành viên"
+                },
+                new Customer
+                {
+                    customerID = 3,
+                    customerName = "Phạm Văn C",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ thành viên"
+                },
+                new Customer
+                {
+                    customerID = 4,
+                    customerName = "Phạm Văn D",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                },
+                new Customer
+                {
+                    customerID = 5,
+                    customerName = "Phạm Văn E",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                },
+                new Customer
+                {
+                    customerID = 6,
+                    customerName = "Phạm Văn F",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                },
+                new Customer
+                {
+                    customerID = 7,
+                    customerName = "Phạm Văn G",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                },
+                new Customer
+                {
+                    customerID = 8,
+                    customerName = "Phạm Văn H",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                },
+                new Customer
+                {
+                    customerID = 9,
+                    customerName = "Phạm Văn I",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                },
+                new Customer
+                {
+                    customerID = 10,
+                    customerName = "Phạm Văn K",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                },
+                new Customer
+                {
+                    customerID = 11,
+                    customerName = "Phạm Văn K",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                },
+                new Customer
+                {
+                    customerID = 12,
+                    customerName = "Phạm Văn K",
+                    totalMonney = 300000,
+                    totalPoint = 30,
+                    type = "Thẻ bạc"
+                }
+
+            };
+        }
+        public Tuple<List<Customer>, int> GetCustomers(int page, int rowsPerPage, string keyword)
+        {
+            var customers = GetCustomers();
+            //var query = from c in customers
+            //            select c;
+
+            // Search
+            var query = from c in customers
+                        where c.customerName.ToLower().Contains(keyword.ToLower())
+                        select c;
+
+            //// Filter
+            //if (categoryID != -1)
+            //{
+            //    query = query.Where(e => e.CategoryID == categoryID);
+            //}
+
+            //// Sort
+            //foreach (var option in sortOptions)
+            //{
+            //    if (option.Key == "Price")
+            //    {
+            //        if (option.Value == SortType.Ascending)
+            //        {
+            //            query = query.OrderBy(e => e.GetDiscountedPrice(e.Sizes[0]));
+            //        }
+            //        else
+            //        {
+            //            query = query.OrderByDescending(e => e.GetDiscountedPrice(e.Sizes[0]));
+            //        }
+            //    }
+            //    if (option.Key == "Stock")
+            //    {
+            //        if (option.Value == SortType.Descending)
+            //        {
+            //            query = query.OrderByDescending(e => {
+            //                int sum = 0;
+            //                foreach (var size in e.Sizes)
+            //                {
+            //                    sum += size.Stock;
+            //                }
+            //                return sum;
+            //            });
+            //        }
+            //    }
+            //}
+
+            var result = query
+                .Skip((page - 1) * rowsPerPage)
+                .Take(rowsPerPage);
+
+            return new Tuple<List<Customer>, int>(
+                result.ToList(),
+                query.Count()
+            );
+        }
+
+        public bool AddCustomer(Customer customer)
+        {
+            return true;
+        }
+        
+        public bool UpdateCustomer(Customer customer)
+        {
+            return true;
+        }
+        public bool DeleteCustomer(int customerID) {
+            return true;
+        }
     }
 
 }

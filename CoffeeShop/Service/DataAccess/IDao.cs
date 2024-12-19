@@ -42,5 +42,13 @@ namespace CoffeeShop.Service.DataAccess
         public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices,DeliveryInvoice deliveryInvoice);
 
         public List<Invoice> GetRecentInvoice(int year); // Get recent 5 invoices
+
+        public List<Customer> GetCustomers();
+        public Tuple<List<Customer>, int> GetCustomers(int page, int rowsPerPage, string keyword);
+
+        public bool AddCustomer(Customer customer);
+        public bool UpdateCustomer(Customer customer);
+        public bool DeleteCustomer(int id);
+
     }
 }

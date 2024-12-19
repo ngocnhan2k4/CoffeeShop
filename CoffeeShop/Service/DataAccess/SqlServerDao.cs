@@ -632,5 +632,118 @@ namespace CoffeeShop.Service.DataAccess
 
             return list;
         }
+        public List<Customer> GetCustomers()
+        {
+            var customers = new List<Customer>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = """
+                            SELECT * FROM customer
+                            """;
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var customer = new Customer
+                {
+                    customerID = reader.GetInt32(0),
+                    customerName = reader.GetString(1),
+                    totalMonney = reader.GetDecimal(2),
+                    totalPoint = reader.GetDouble(3),
+                    type = reader.GetString(4)
+                };
+
+                customers.Add(customer);
+            }
+            reader.Close();
+            return customers;
+        }
+        public Tuple<List<Customer>, int> GetCustomers(int page, int rowsPerPage, string keyword)
+        {
+            var customers = GetCustomers();
+            var query = from c in customers
+                        where c.customerName.ToLower().Contains(keyword.ToLower())
+                        select c;
+            
+            var result = query
+                .Skip((page - 1) * rowsPerPage)
+                .Take(rowsPerPage);
+
+            return new Tuple<List<Customer>, int>(
+                result.ToList(),
+                query.Count()
+            );
+        }
+
+        public bool AddCustomer(Customer customer)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                using var cmd = conn.CreateCommand();
+                cmd.Transaction = transaction;
+                cmd.CommandText = "INSERT INTO customer (customer_name, total_money, total_point, customer_type) VALUES (@name, @totalMoney, @totalPoint, @customerType)";
+                cmd.Parameters.AddWithValue("@name", customer.customerName);
+                cmd.Parameters.AddWithValue("@totalMoney", customer.totalMonney);
+                cmd.Parameters.AddWithValue("@totalPoint", customer.totalPoint);
+                cmd.Parameters.AddWithValue("@customerType", customer.type);
+                cmd.ExecuteNonQuery();
+                
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                return false;
+            }
+        }
+
+        public bool UpdateCustomer(Customer customer)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                using var cmd = conn.CreateCommand();
+                cmd.Transaction = transaction;
+                cmd.CommandText = "UPDATE customer SET customer_name = @name WHERE id = @id";
+                cmd.Parameters.AddWithValue("@name", customer.customerName);
+                cmd.Parameters.AddWithValue("@id", customer.customerID);
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                return false;
+            }
+        }
+
+        public bool DeleteCustomer(int id)
+        {
+           using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                using var cmd = conn.CreateCommand();
+                cmd.Transaction = transaction;
+                cmd.CommandText = "DELETE FROM customer WHERE id = @id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                return false;
+            }
+        }
     }
 }
