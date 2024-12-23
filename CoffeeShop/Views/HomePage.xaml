@@ -31,5 +31,14 @@
                        Closed="ResultDialog_Closed">
             <TextBlock x:Name="ResultDialogContent" />
         </ContentDialog>
+
+        <ContentDialog x:Name="QrCodeDialog" Title="Bank Payment"
+               PrimaryButtonText="Cancel"
+               PrimaryButtonClick="QrCodeDialog_CancelClick">
+            <StackPanel>
+                <Image x:Name="QRCodeImage" Width="450" Height="450"/>
+                <TextBlock x:Name="StatusMessage" Text="Waiting for payment..." Margin="0,10,0,0"/>
+            </StackPanel>
+        </ContentDialog>
     </Grid>
 </Page>

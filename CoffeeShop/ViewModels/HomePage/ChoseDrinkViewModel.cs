@@ -57,10 +57,10 @@ namespace CoffeeShop.ViewModels.HomePage
         {
             TotalPrice = ChosenDrinks.Sum(di => di.Price * di.Quantity);
         }
-        internal void AddInvoice(Invoice invoice, DeliveryInvoice delivery)
+        internal Invoice AddInvoice(Invoice invoice, DeliveryInvoice delivery)
         {
             IDao _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-            _dao.AddInvoice(invoice, ChosenDrinks.ToList(), delivery);
+            return _dao.AddInvoice(invoice, ChosenDrinks.ToList(), delivery);
         }
     }
 }

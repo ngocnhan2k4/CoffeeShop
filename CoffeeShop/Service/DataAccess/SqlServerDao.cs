@@ -562,7 +562,7 @@ namespace CoffeeShop.Service.DataAccess
                 }
             }
         }
-        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice)
+        public Invoice AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice)
         {
             using var conn = new SqlConnection(connectionString);
             conn.Open();
@@ -612,6 +612,8 @@ namespace CoffeeShop.Service.DataAccess
                 }
 
                 transaction.Commit();
+                invoice.InvoiceID = invoiceId;
+                return invoice; // Return the inserted invoice
             }
             catch (Exception)
             {
