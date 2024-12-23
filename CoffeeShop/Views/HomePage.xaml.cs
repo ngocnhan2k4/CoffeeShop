@@ -31,6 +31,7 @@ using Windows.Storage.Streams;
 using CoffeeShop.Service.DataAccess;
 using CoffeeShop.Service;
 using System.Reflection;
+using Microsoft.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -43,13 +44,12 @@ namespace CoffeeShop.Views
     public sealed partial class HomePage : Page
     {
         public HomeViewModel ViewModel { get; set; }
-        IDao _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-        private Invoice invoice; // Class-level variable to store the invoice
+
 
         public HomePage()
         {  
             ViewModel = new HomeViewModel();
-            this.InitializeComponent();   
+            this.InitializeComponent();
         }
 
         private void DrinkListUserControl_ItemClick(Drink drink, Size size)
@@ -57,48 +57,24 @@ namespace CoffeeShop.Views
             cart.AddDrink(drink, size);
         }
 
-        private void cart_DeliveryClick(string recipientEmail, string message)
+        private async void cart_DeliveryClick(string recipientEmail, string message)
         {
-            SendEmail(recipientEmail, message);
-        }
-
-        private async void SendEmail(string recipientEmail, string message)
-        {
+            //send email
             try
             {
                 string emailBody = message;
                 EmailProgressRing.IsActive = true;
                 EmailProgressRing.Visibility = Visibility.Visible;
-                invoice = cart.AddInvoice();
-                if(invoice.PaymentMethod== "Bank")
+                ViewModel.invoice = cart.AddInvoice();
+                if (ViewModel.invoice.PaymentMethod == "Bank")
                 {
-                    // Generate the QR code image
-                    string accountNo = "0915680152";
-                    var apiRequest = new ApiReq
-                    {
-                        acqId = 970422,
-                        accountNo = Convert.ToInt64(accountNo),
-                        accountName = "NGUYEN DINH MINH NHAT",
-                        addInfo = Utilities.GenerateRandomString(3),
-                        amount = invoice.TotalAmount,
-                        format = "text",
-                        template = "print"
-                    };
-                    PollPaymentStatus(apiRequest.addInfo, invoice);
-                    string jsonString = JsonSerializer.Serialize(apiRequest);
-
-                    // Check if accountNo length in jsonString is less than the original accountNo string
-                    if (jsonString.Contains($"\"accountNo\":{apiRequest.accountNo}") && apiRequest.accountNo.ToString().Length < accountNo.Length)
-                    {
-                        jsonString = jsonString.Replace($"\"accountNo\":{apiRequest.accountNo}", $"\"accountNo\":\"{accountNo}\"");
-                    }
-                    string qrCodeUrl = $"https://img.vietqr.io/image/{apiRequest.acqId}-{accountNo}-{apiRequest.template}.png?amount={apiRequest.amount}&addInfo={apiRequest.addInfo}&accountName={Uri.EscapeDataString(apiRequest.accountName)}";
-
+                    string qrCodeUrl = ViewModel.GetQrURL(true);
+                    PollPaymentStatus(ViewModel.apiRequest.addInfo, ViewModel.invoice, true);
                     // Embed the QR code image in the email body
                     emailBody = $@"
                     <html>
                     <body>
-                        <p style='color: black; font-size: 1rem;'>{message}</p>
+                        <p style='color: black; font-size: 0.9rem;'>{message}</p>
                         <img src='{qrCodeUrl}' alt='QR Code' />
                     </body>
                     </html>";
@@ -117,25 +93,7 @@ namespace CoffeeShop.Views
                 await ShowResultDialog("Success", "Email sent successfully.");
             }
         }
-
-        public bool checkTThai(int id)
-        {
-            //get the current year
-            int year = DateTime.Now.Year;
-            var dataResult = _dao.GetRecentInvoice(year);
-            foreach(var invoice in dataResult)
-            {
-                if (invoice.InvoiceID == id && invoice.Status == "Cancel") return true;
-            }
-            return false;
-            
-        }
-        public void changeTThai(Invoice a)
-        {
-            _dao.UpdateInvoiceStatus(a.InvoiceID, "Paid");
-       //     return a;
-        }
-
+        
 
         private async void cart_OrderClick()
         {
@@ -144,10 +102,10 @@ namespace CoffeeShop.Views
             {
                 EmailProgressRing.IsActive = true;
                 EmailProgressRing.Visibility = Visibility.Visible;
-                invoice=cart.AddInvoice();
-                if (invoice.PaymentMethod == "Bank")
+                ViewModel.invoice =cart.AddInvoice();
+                if (ViewModel.invoice.PaymentMethod == "Bank")
                 {
-                    result = await ShowQrCodeDialog(invoice);
+                    result = await ShowQrCodeDialog(ViewModel.invoice);
                 }
                 else result = true;
             }
@@ -165,7 +123,7 @@ namespace CoffeeShop.Views
             }
         }
 
-        private async Task<bool> PollPaymentStatus(string content, Invoice invoice)
+        private async Task<bool> PollPaymentStatus(string content, Invoice invoice, bool isDelivery = false)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -173,11 +131,12 @@ namespace CoffeeShop.Views
                 Console.WriteLine("Polling for payment status...");
                 while (true)
                 {
+                    int totalAmount = isDelivery ? invoice.TotalAmount + 10000 : invoice.TotalAmount;
                     try
                     {
-                        //https://my.sepay.vn/userapi/transactions/list?account_number=0915680152&limit=20
-                          var response = await client.GetAsync("http://localhost:3000");
-                   //     var response = await client.GetAsync("https://my.sepay.vn/userapi/transactions/list?account_number=0915680152&limit=20");
+                        //fake api
+                        var response = await client.GetAsync("http://localhost:3000");
+                        //var response = await client.GetAsync("https://my.sepay.vn/userapi/transactions/list?account_number=0915680152&limit=20");
                         response.EnsureSuccessStatusCode();
                         var responseContent = await response.Content.ReadAsStringAsync();
                         var statusResult = JsonSerializer.Deserialize<TransactionRes>(responseContent);
@@ -189,20 +148,25 @@ namespace CoffeeShop.Views
                                 var transaction = new List<Transaction>(statusResult.transactions);
                                 statusResult.transactions.ToList().ForEach((transaction) =>
                                 {
-                                    if ((int)Convert.ToDouble(transaction.amount_in) == invoice.TotalAmount && transaction.transaction_content == content)
+                                    if ((int)Convert.ToDouble(transaction.amount_in) >= totalAmount && transaction.transaction_content == content)
                                     {
+                                        
                                         StatusMessage.Text = "Payment Success";
+                                        StatusMessage.Foreground = new SolidColorBrush(Colors.Green);
+
                                         has = true;
                                     }
                                 });
                                 if (has)
                                 {
-                                    changeTThai(invoice);
+                                    ViewModel.changeTThai(invoice);
+                                    QrCodeDialog.Closing -= QrCodeDialog_Closing;
                                     QrCodeDialog.Hide();
                                     return true;
                                 }
-                                else if (!has && checkTThai(invoice.InvoiceID))
+                                else if (!has && ViewModel.checkTThai(invoice.InvoiceID))
                                 {
+                                    QrCodeDialog.Closing -= QrCodeDialog_Closing;
                                     QrCodeDialog.Hide();
                                     return false;
                                 }
@@ -215,6 +179,7 @@ namespace CoffeeShop.Views
                         }
                         else
                         {
+                            StatusMessage.Foreground = new SolidColorBrush(Colors.Gray);
                             StatusMessage.Text = "No Payment";
                         }
                     }
@@ -228,51 +193,6 @@ namespace CoffeeShop.Views
                 }
             }
         }
-     
-        private async Task<bool> ShowQrCodeDialog(Invoice invoice)
-        {
-            string accountNo = "0915680152";
-            var apiRequest = new ApiReq
-            {
-                acqId = 970422,
-                accountNo = Convert.ToInt64(accountNo),
-                accountName = "NGUYEN DINH MINH NHAT",
-                addInfo = Utilities.GenerateRandomString(3),
-                amount = invoice.TotalAmount,
-                format = "text",
-                template = "print"
-            };
-
-            string jsonString = JsonSerializer.Serialize(apiRequest);
-
-            // Check if accountNo length in jsonString is less than the original accountNo string
-            if (jsonString.Contains($"\"accountNo\":{apiRequest.accountNo}") && apiRequest.accountNo.ToString().Length < accountNo.Length)
-            {
-                jsonString = jsonString.Replace($"\"accountNo\":{apiRequest.accountNo}", $"\"accountNo\":\"{accountNo}\"");
-            }
-
-            using (HttpClient client = new HttpClient())
-            {
-                var content = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("https://api.vietqr.io/v2/generate", content);
-                response.EnsureSuccessStatusCode();
-
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var dataResult = JsonSerializer.Deserialize<ApiRes>(responseContent);
-
-                var image = Utilities.Base64ToImage(dataResult.data.qrDataURL.Replace("data:image/png;base64,", ""));
-                QRCodeImage.Source = image;
-
-                // Start polling for payment status
-                var pollingTask = PollPaymentStatus(apiRequest.addInfo, invoice);
-
-                // Show the dialog
-                await QrCodeDialog.ShowAsync();
-
-                bool res = await pollingTask;
-                return res;
-            }
-        }
         private async Task ShowResultDialog(string title, string content)
         {
             ResultDialog.Title = title;
@@ -281,17 +201,33 @@ namespace CoffeeShop.Views
         }
         private void QrCodeDialog_CancelClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            // Prevent the dialog from closing
-            args.Cancel = true;
-            _dao.UpdateInvoiceStatus(invoice.InvoiceID, "Cancel");
+            // Disable the primary buttons
+            sender.IsPrimaryButtonEnabled = false;
+
+            ViewModel._dao.UpdateInvoiceStatus(ViewModel.invoice.InvoiceID, "Cancel");
             // Update the status message
             StatusMessage.Text = "Canceling...";
+            StatusMessage.Foreground = new SolidColorBrush(Colors.Red);
+        }
+        private void QrCodeDialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        {
+            // Prevent the dialog from closing
+            args.Cancel = true;
+        }
+        private async Task<bool> ShowQrCodeDialog(Invoice invoice)
+        {
+            QRCodeImage.Source = new BitmapImage(new Uri(ViewModel.GetQrURL()));
+            // Start polling for payment status
+            var pollingTask = PollPaymentStatus(ViewModel.apiRequest.addInfo, invoice);
+            // Show the dialog
+            await QrCodeDialog.ShowAsync();
+            bool res = await pollingTask;
+            return res;
         }
         private void ResultDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
             // Navigate to the Invoice page
             this.Frame.Navigate(typeof(InvoicePage));
-
             var mainWindow = App.m_window;
             mainWindow.UpdateNavigationBar("invoices");
         }

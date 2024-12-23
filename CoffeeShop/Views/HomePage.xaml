@@ -34,10 +34,12 @@
 
         <ContentDialog x:Name="QrCodeDialog" Title="Bank Payment"
                PrimaryButtonText="Cancel"
-               PrimaryButtonClick="QrCodeDialog_CancelClick">
+               PrimaryButtonClick="QrCodeDialog_CancelClick"
+               Closing="QrCodeDialog_Closing">
             <StackPanel>
                 <Image x:Name="QRCodeImage" Width="450" Height="450"/>
-                <TextBlock x:Name="StatusMessage" Text="Waiting for payment..." Margin="0,10,0,0"/>
+                <TextBlock x:Name="StatusMessage" Text="Waiting for payment..." HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="16"
+                           />
             </StackPanel>
         </ContentDialog>
     </Grid>
