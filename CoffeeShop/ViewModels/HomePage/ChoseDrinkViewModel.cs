@@ -36,7 +36,7 @@ namespace CoffeeShop.ViewModels.HomePage
             {
                 var newInvoice = new DetailInvoice
                 {
-                    DrinkId = drink.ID,
+                    DrinkId = size.ID,
                     NameDrink = drink.Name,
                     Quantity = 1,
                     MaxQuantity= size.Stock,
@@ -49,7 +49,6 @@ namespace CoffeeShop.ViewModels.HomePage
         }
         public void RemoveDrink(DetailInvoice detail)
         {
-
             ChosenDrinks.Remove(detail);
             CalcTotal();
         }

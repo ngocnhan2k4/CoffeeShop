@@ -8,18 +8,22 @@ using System.Threading.Tasks;
 
 namespace CoffeeShop.Helper
 {
-    public class TotalPriceConverter : IValueConverter
+    public class NameNoteDrinkConverter : IValueConverter
     {
-        private readonly IntToVnCurrencyNoDConverter _currencyConverter = new IntToVnCurrencyNoDConverter();
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is DetailInvoice detailInvoice)
             {
-                double totalPrice = detailInvoice.Quantity * detailInvoice.Price;
-                return _currencyConverter.Convert(totalPrice, targetType, parameter, language);
+                var nameDrink = detailInvoice.NameDrink;
+                var note = detailInvoice.Note;
+
+                if (string.IsNullOrEmpty(note))
+                {
+                    return nameDrink;
+                }
+                return $"{nameDrink} - ({note})";
             }
-            return _currencyConverter.Convert(0, targetType, parameter, language);
+            return string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -27,4 +31,6 @@ namespace CoffeeShop.Helper
             throw new NotImplementedException();
         }
     }
+
+    
 }

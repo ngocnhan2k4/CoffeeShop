@@ -285,6 +285,7 @@ namespace CoffeeShop.Service.DataAccess
                 }
                 drink.Sizes.Add(new Size
                 {
+                    ID = reader.GetInt32(0),
                     Name = reader.GetString(5),
                     Price = reader.GetInt32(6),
                     Stock = reader.GetInt32(7)
@@ -495,7 +496,7 @@ namespace CoffeeShop.Service.DataAccess
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = new SqlCommand("""
-                SELECT invoice_detail.drink_id, drink.name, invoice_detail.quantity, drink.size, invoice_detail.price
+                SELECT invoice_detail.drink_id, drink.name, invoice_detail.quantity, drink.size, invoice_detail.price, invoice_detail.note
                 FROM invoice_detail
                 JOIN drink ON invoice_detail.drink_id = drink.id
                 WHERE invoice_detail.invoice_id = @invoiceId
@@ -510,7 +511,8 @@ namespace CoffeeShop.Service.DataAccess
                     NameDrink = reader.GetString(1),
                     Quantity = reader.GetInt32(2),
                     Size = reader.GetString(3),
-                    Price = reader.GetInt32(4)
+                    Price = reader.GetInt32(4),
+                    Note = reader.IsDBNull(5) ? string.Empty : reader.GetString(5)
                 };
                 detailInvoices.Add(di);
             }
@@ -587,13 +589,14 @@ namespace CoffeeShop.Service.DataAccess
                 foreach (var detail in detailInvoices)
                 {
                     using var detailCmd = new SqlCommand("""
-                    INSERT INTO invoice_detail (invoice_id, drink_id, quantity, price)
-                    VALUES (@invoice_id, @drink_id, @quantity, @price);
+                    INSERT INTO invoice_detail (invoice_id, drink_id, quantity, price, note)
+                    VALUES (@invoice_id, @drink_id, @quantity, @price, @note);
                     """, conn, transaction);
                     detailCmd.Parameters.AddWithValue("@invoice_id", invoiceId);
                     detailCmd.Parameters.AddWithValue("@drink_id", detail.DrinkId);
                     detailCmd.Parameters.AddWithValue("@quantity", detail.Quantity);
                     detailCmd.Parameters.AddWithValue("@price", detail.Price);
+                    detailCmd.Parameters.AddWithValue("@note", detail.Note ?? string.Empty);
                     detailCmd.ExecuteNonQuery();
                 }
 

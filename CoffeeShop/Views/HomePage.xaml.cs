@@ -145,18 +145,21 @@ namespace CoffeeShop.Views
                             bool has = false;
                             try
                             {
+                                int money_in = 0;
                                 var transaction = new List<Transaction>(statusResult.transactions);
                                 statusResult.transactions.ToList().ForEach((transaction) =>
                                 {
-                                    if ((int)Convert.ToDouble(transaction.amount_in) >= totalAmount && transaction.transaction_content == content)
-                                    {
-                                        
-                                        StatusMessage.Text = "Payment Success";
-                                        StatusMessage.Foreground = new SolidColorBrush(Colors.Green);
-
-                                        has = true;
+                                    if (transaction.transaction_content == content)
+                                    {           
+                                       money_in += (int)Convert.ToDouble(transaction.amount_in);      
                                     }
                                 });
+                                if(money_in >= totalAmount)
+                                {
+                                    StatusMessage.Text = "Payment Success";
+                                    StatusMessage.Foreground = new SolidColorBrush(Colors.Green);
+                                    has = true;
+                                }
                                 if (has)
                                 {
                                     ViewModel.changeTThai(invoice);

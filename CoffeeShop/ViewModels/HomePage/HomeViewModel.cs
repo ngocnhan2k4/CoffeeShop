@@ -55,7 +55,7 @@ namespace CoffeeShop.ViewModels.HomePage
         }
         public string GetQrURL(bool isDelivery = false)
         {
-            string addInfo = Utilities.GenerateRandomString(3);
+            string addInfo = Utilities.GenerateRandomString(8);
             apiRequest = new ApiReq
             {
                 acqId = 970422,

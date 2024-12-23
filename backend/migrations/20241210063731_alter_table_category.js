@@ -38,6 +38,7 @@ exports.up = async function (knex) {
             drink_id int not null,
             quantity int not null,
             price int not null,
+            note nvarchar(100),
             primary key(invoice_id, drink_id),
             foreign key(invoice_id) references invoice(id) on delete cascade ON UPDATE CASCADE,
             foreign key(drink_id) references drink(id) on delete cascade ON UPDATE CASCADE
