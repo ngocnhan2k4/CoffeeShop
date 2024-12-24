@@ -84,7 +84,7 @@ namespace CoffeeShop.Service.DataAccess
             return list;
         }
 
-       public List<Drink> GetDrinks()
+        public List<Drink> GetDrinks()
         {
             DiscountManager _discountManager = new DiscountManager(GetDiscounts());
             List<Drink> list = new List<Drink>()
@@ -100,7 +100,7 @@ namespace CoffeeShop.Service.DataAccess
                             },
                             Description = "Cà phê sữa đá thơm ngon.",
                             ImageString = "ms-appx:///Assets/images.jpeg",
-                            CategoryID = 1, 
+                            CategoryID = 1,
                             Discount = _discountManager.GetDiscountForCategory(1)
                         },
                         new ()
@@ -317,8 +317,8 @@ namespace CoffeeShop.Service.DataAccess
 
             // Search
             var query = from e in drinks
-                       where e.Name.ToLower().Contains(keyword.ToLower())
-                       select e;
+                        where e.Name.ToLower().Contains(keyword.ToLower())
+                        select e;
 
             // Filter
             if (categoryID != -1)
@@ -344,7 +344,8 @@ namespace CoffeeShop.Service.DataAccess
                 {
                     if (option.Value == SortType.Descending)
                     {
-                        query = query.OrderByDescending(e => {
+                        query = query.OrderByDescending(e =>
+                        {
                             int sum = 0;
                             foreach (var size in e.Sizes)
                             {
@@ -403,7 +404,7 @@ namespace CoffeeShop.Service.DataAccess
             var invoices = GetInvoices();
             foreach (var invoice in invoices)
             {
-                if (Convert.ToDateTime(invoice.CreatedAt).Year == year && invoice.Status!="Cancel")
+                if (Convert.ToDateTime(invoice.CreatedAt).Year == year && invoice.Status != "Cancel")
                 {
                     total++;
                 }
@@ -635,9 +636,9 @@ namespace CoffeeShop.Service.DataAccess
         }
         public void UpdateInvoiceStatus(int invoiceId, string status)
         {
-            
+
         }
-        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice)
+        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice, int customerID)
         {
 
         }
@@ -818,14 +819,52 @@ namespace CoffeeShop.Service.DataAccess
         {
             return true;
         }
-        
+
         public bool UpdateCustomer(Customer customer)
         {
             return true;
         }
-        public bool DeleteCustomer(int customerID) {
+        public bool DeleteCustomer(int customerID)
+        {
             return true;
         }
+        public string getCustomerType(int customerID)
+        {
+            List<Customer> customers = GetCustomers();
+            Customer customer = customers.FirstOrDefault(c => c.customerID == customerID);
+            if (customer == null)
+            {
+                return "";
+            }
+            return customer.type;
+        }
+        public int getCustomerIDFromInvoice(int invoiceID) => 0;
+
+        public int getTotalAmountOfInvoice(int invoiceID) => 0;
+
+        public List<MemberCard> GetMemberCards()
+        {
+            List<MemberCard> memberCards = new List<MemberCard>
+            {
+                new MemberCard
+                {
+                    CardName = "Thẻ thành viên",
+                    Discount = 5
+                },
+                new MemberCard
+                {
+                    CardName = "Thẻ bạc",
+                    Discount = 10
+                },
+                new MemberCard
+                {
+                    CardName = "Thẻ vàng",
+                    Discount = 15
+                }
+            };
+            return memberCards;
+        }
+        public bool UpdateMemberCard(int member, int silver, int gold) => true;
     }
 
 }

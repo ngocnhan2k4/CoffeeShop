@@ -25,8 +25,24 @@ namespace CoffeeShop.ViewModels
         public CustomerViewModel()
         {
             _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-            //Customers = new FullObservableCollection<Customer>(_dao.GetCustomers());
-            RowsPerPage = 8;
+            List<MemberCard> memberCards = _dao.GetMemberCards();
+            foreach (var memberCard in memberCards)
+            {
+                if (memberCard.CardName == "Thẻ thành viên")
+                {
+                    MemberCardDiscount = memberCard.Discount;
+                }
+                else if (memberCard.CardName == "Thẻ bạc")
+                {
+                    SilverCardDiscount = memberCard.Discount;
+                }
+                else if (memberCard.CardName == "Thẻ vàng")
+                {
+                    GoldCardDiscount = memberCard.Discount;
+                }
+            }
+                //Customers = new FullObservableCollection<Customer>(_dao.GetCustomers());
+                RowsPerPage = 8;
             CurrentPage = 1;
             LoadData();
         }
@@ -37,6 +53,10 @@ namespace CoffeeShop.ViewModels
         public int TotalPages { get; set; }
         public int TotalCustomers { get; set; }
         public int RowsPerPage { get; set; }
+
+        public int MemberCardDiscount { get; set; }
+        public int SilverCardDiscount { get; set; }
+        public int GoldCardDiscount { get; set; }
         public void LoadData()
         {
             var (items, count) = _dao.GetCustomers(CurrentPage, RowsPerPage, Keyword);
@@ -111,6 +131,11 @@ namespace CoffeeShop.ViewModels
             {
                 LoadData();
             }
+        }
+
+        public bool UpdateMemberCard()
+        {
+            return _dao.UpdateMemberCard(MemberCardDiscount, SilverCardDiscount, GoldCardDiscount);
         }
     }
 }

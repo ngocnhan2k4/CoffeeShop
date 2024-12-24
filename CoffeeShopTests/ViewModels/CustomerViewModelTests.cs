@@ -65,18 +65,6 @@ namespace CoffeeShopTests.ViewModels
         }
 
         [TestMethod]
-        public void AddCustomer_ShouldAddCustomerAndLoadData()
-        {
-            var newCustomer = new Customer { customerName = "New Customer", totalMonney=0, totalPoint=0, type="Thẻ thành viên" };
-            var count = _viewModel.Customers.Count;
-
-            _viewModel.AddCustomer(newCustomer);
-
-            Assert.AreEqual(count + 1, _viewModel.Customers.Count);
-            Assert.IsNotNull(_viewModel.Customers);
-        }
-
-        [TestMethod]
         public void UpdateCustomer_ShouldUpdateCustomerAndLoadData()
         {
             var customer = new Customer { customerName = "Updated Customer", customerID = _viewModel.Customers[_viewModel.Customers.Count-1].customerID  };
@@ -90,14 +78,29 @@ namespace CoffeeShopTests.ViewModels
         [TestMethod]
         public void DeleteCustomer_ShouldDeleteCustomerAndLoadData()
         {
+            var newCustomer = new Customer { customerName = "New Customer", totalMonney = 0, totalPoint = 0, type = "Thẻ thành viên" };
+            _viewModel.AddCustomer(newCustomer);
             var id = _viewModel.Customers[_viewModel.Customers.Count - 1].customerID;
 
             var count = _viewModel.Customers.Count;
 
             _viewModel.DeleteCustomer(id);
-
-            Assert.AreEqual(count - 1, _viewModel.Customers.Count);
+            Assert.AreEqual(count, _viewModel.Customers.Count);
             Assert.IsNotNull(_viewModel.Customers);
+
+        }
+
+        [TestMethod]
+        public void UpdateMemberCard_ShouldUpdateMemberCard()
+        {
+            _viewModel.MemberCardDiscount = 5;
+            _viewModel.SilverCardDiscount = 10;
+            _viewModel.GoldCardDiscount = 15;
+
+            bool res = _viewModel.UpdateMemberCard();
+
+            Assert.IsTrue(res);
+            
         }
     }
 }

@@ -7,9 +7,12 @@
     xmlns:model="using:CoffeeShop.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="using:CoffeeShop.Models"
+    xmlns:converters="using:CoffeeShop.Helper"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <converters:DecimalToVnCurrencyConverter x:Key="DecimalToVnCurrencyConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -37,10 +40,16 @@
                 <TextBox Width="500" Height="40" 
              PlaceholderText="Tìm kiếm..." Margin="0" VerticalAlignment="Center" x:Name="searchBox" />
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
+                    <Button Content="Add Customer" Width="Auto" Foreground="White" Click="addButton_Click"/>
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
-                <Button Content="Add" Width="100" Foreground="White" Click="addButton_Click"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
+                    <Button Content="Discount Setting" Width="Auto" Foreground="White" Click="discountButton_Click"/>
+                </StackPanel>
             </StackPanel>
+
         </StackPanel>
 
         <Grid Grid.Row="1" Padding="0 20 0 0" >
@@ -104,14 +113,27 @@
                             <ColumnDefinition Width="1.5*"/>
                             <ColumnDefinition Width="1.5*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{x:Bind customerID}" Grid.Column="0" HorizontalAlignment="Center" Margin="0 10 0 0"/>
-                        <TextBlock Text="{x:Bind customerName}" Grid.Column="1" HorizontalAlignment="Center" Margin="0 8 0 0"/>
-                        <TextBlock Text="{x:Bind totalMonney}" Grid.Column="2" HorizontalAlignment="Center" Margin="0 8 0 0"/>
-                        <TextBlock Text="{x:Bind totalPoint}" Grid.Column="3" HorizontalAlignment="Center" Margin="0 8 0 0"/>
-                        <TextBlock Text="{x:Bind type}" Grid.Column="4" HorizontalAlignment="Center" Margin="10 8 0 0"/>
-                        <Button Content="Edit" Grid.Column="5" HorizontalAlignment="Center" Margin="20 0 15 0" Click="editButton_Click"/>
+                        <Border BorderBrush="LightGray" BorderThickness="0,0,1,0">
+                            <TextBlock Text="{x:Bind customerID}" Grid.Column="0" HorizontalAlignment="Center" Margin="0 10 0 0"/>
+                        </Border>
+                        <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="1,0,1,0">
+                            <TextBlock Text="{x:Bind customerName}" HorizontalAlignment="Center" Margin="0 8 0 0"/>
+                        </Border>
+                        <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="1,0,1,0">
+                            <TextBlock Text="{x:Bind totalMonney, Converter={StaticResource DecimalToVnCurrencyConverter}}" HorizontalAlignment="Center" Margin="0 8 0 0"/>
+                        </Border>
+                        <Border Grid.Column="3" BorderBrush="LightGray" BorderThickness="1,0,1,0">
+                            <TextBlock Text="{x:Bind totalPoint}" HorizontalAlignment="Center" Margin="0 8 0 0"/>
+                        </Border>
+                        <Border Grid.Column="4" BorderBrush="LightGray" BorderThickness="1,0,1,0">
+                            <TextBlock Text="{x:Bind type}" HorizontalAlignment="Center" Margin="10 8 0 0"/>
+                        </Border>
+                        <Border Grid.Column="5" BorderBrush="LightGray" BorderThickness="1,0,0,0">
+                            <Button Content="Edit" HorizontalAlignment="Center" Margin="20 0 15 0" Click="editButton_Click"/>
+                        </Border>
                     </Grid>
                 </DataTemplate>
+
             </ListView.ItemTemplate>
         </ListView>
 
@@ -161,6 +183,43 @@
                 <TextBlock x:Name="EditCustomerErrorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Customer name cannot be empty."/>
                 <Button Content="Delete" Click="DeleteCustomerButton_Click" Foreground="Red" Margin="0 20 0 0"/>
             </StackPanel>
+        </ContentDialog>
+
+        <ContentDialog x:Name="DiscountSettingDialog"
+                Title="Discount Setting"
+                PrimaryButtonText="Save"
+                SecondaryButtonText="Cancel"
+                PrimaryButtonClick="DiscountSettingDialog_PrimaryButtonClick">
+            <StackPanel>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="178px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Member Card Discount (%)" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="MemberCardDiscountTextBox" Text="{x:Bind ViewModel.MemberCardDiscount, Mode=OneWay}" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="178px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Silver Card Discount (%)" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="SilverCardDiscountTextBox" Text="{x:Bind ViewModel.SilverCardDiscount, Mode=OneWay}" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="178px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Gold Card Discount (%)" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="GoldCardDiscountTextBox" Text="{x:Bind ViewModel.GoldCardDiscount, Mode=OneWay}" Grid.Column="1"/>
+                </Grid>
+                <TextBlock x:Name="ErrorTextBlock" Foreground="Red" Margin="0,10,0,0" Text="" Visibility="Collapsed"/>
+            </StackPanel>
+
         </ContentDialog>
 
 

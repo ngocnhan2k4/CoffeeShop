@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <converters:TotalPriceConverter x:Key="TotalPriceConverter"/>
-
+        <converters:CurrencyConverter x:Key="CurrencyConverter"/>
 
         <DataTemplate x:Key="ItemOrder" x:DataType="model:DetailInvoice">
             <Grid Margin="10" Padding="10" CornerRadius="5" Background="{ThemeResource ItemBackground}">
@@ -149,7 +149,22 @@
                     <TextBlock Text="Email customer: " Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
                     <TextBox x:Name="emailTextBox" Grid.Column="1" PlaceholderText="Enter email" IsEnabled="False" LostFocus="EmailTextBox_LostFocus"/>
                 </Grid>
+
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Apply Member" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <ToggleSwitch x:Name="applyMemberInfoSwitch" Grid.Column="1" Toggled="ApplyMemberInfoSwitch_Toggled" />
+                    <TextBlock Text="ID customer: " Grid.Column="2" VerticalAlignment="Center" />
+                    <TextBox x:Name="idTextBox" Grid.Column="3" PlaceholderText="Enter ID" TextChanged="IdTextBox_TextChanged" IsEnabled="False"/>
+                </Grid>
+
                 
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
                     <ComboBox PlaceholderText="Shipping Method" Width="180" x:Name="shippingMethodComboBox" SelectionChanged="ShippingMethodComboBox_SelectionChanged">
                         <x:String>Inplace</x:String>
@@ -200,8 +215,11 @@
                     </ListView>
                 </ScrollViewer>
                 <TextBlock Text="Total Price:" FontWeight="Bold" FontSize="16" Margin="0 10 0 0"/>
-                <TextBlock x:Name="totalPriceTextBlock" FontSize="16" Foreground="Gray" />
-                <TextBlock x:Name="errorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Error..." />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="totalPriceTextBlock" FontSize="16" Foreground="Gray"/>
+                    <TextBlock x:Name="discountTextBlock" FontSize="16" Foreground="Red" Text="{x:Bind ViewModel.TotalPriceAfterDiscount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" Margin="10 0 0 0" Visibility="Collapsed"/>
+                </StackPanel>
+                <TextBlock x:Name="errorTextBlock" Foreground="Red" Visibility="Collapsed"/>
             </StackPanel>
         </ContentDialog>
         <!--Error Dialog-->

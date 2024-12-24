@@ -202,7 +202,7 @@ namespace CoffeeShop.Service.DataAccess
                 };
 
                 drink.Discount = discountManager.GetDiscountForCategory(reader.GetInt32(1));
-                
+
                 drinks.Add(drink);
             }
             reader.Close();
@@ -547,7 +547,7 @@ namespace CoffeeShop.Service.DataAccess
 
             return new Tuple<List<DetailInvoice>, DeliveryInvoice>(detailInvoices, deliveryInvoice);
         }
-    
+
         public void UpdateInvoiceStatus(int invoiceId, string status)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -560,9 +560,60 @@ namespace CoffeeShop.Service.DataAccess
                     command.Parameters.AddWithValue("@InvoiceID", invoiceId);
                     command.ExecuteNonQuery();
                 }
+                int customerID = getCustomerIDFromInvoice(invoiceId);
+                
+                if (status == "Paid" && customerID != 0)
+                {
+                    string customerType = getCustomerType(customerID);
+                    int totalAmount = getTotalAmountOfInvoice(invoiceId);
+                    List<MemberCard> memberCards = GetMemberCards();
+                    int discount = 0;
+                    foreach (var memberCard in memberCards)
+                    {
+                        if (memberCard.CardName == customerType)
+                        {
+                            discount = memberCard.Discount;
+                        }
+                    }
+                    using (SqlCommand command = new SqlCommand("UPDATE customer SET total_money = total_money + @TotalMoney WHERE id = @CustomerID", connection))
+                    {
+                        command.Parameters.AddWithValue("@TotalMoney", totalAmount / (1-discount/100));
+                        command.Parameters.AddWithValue("@CustomerID", customerID);
+                        command.ExecuteNonQuery();
+                    }
+                    //if (customerType == "Thẻ thành viên")
+                    //{
+                    //    using (SqlCommand command = new SqlCommand("UPDATE customer SET total_money = total_money + @TotalMoney WHERE id = @CustomerID", connection))
+                    //    {
+                    //        command.Parameters.AddWithValue("@TotalMoney", totalAmount/0.95);
+                    //        command.Parameters.AddWithValue("@CustomerID", customerID);
+                    //        command.ExecuteNonQuery();
+                    //    }
+                    //}
+                    //else if (customerType == "Thẻ bạc")
+                    //{
+                    //    using (SqlCommand command = new SqlCommand("UPDATE customer SET total_money = total_money + @TotalMoney WHERE id = @CustomerID", connection))
+                    //    {
+                    //        command.Parameters.AddWithValue("@TotalMoney", totalAmount/0.9);
+                    //        command.Parameters.AddWithValue("@CustomerID", customerID);
+                    //        command.ExecuteNonQuery();
+                    //    }
+                    //}
+                    //else if (customerType == "Thẻ vàng")
+                    //{
+                    //    using (SqlCommand command = new SqlCommand("UPDATE customer SET total_money = total_money + @TotalMoney WHERE id = @CustomerID", connection))
+                    //    {
+                    //        command.Parameters.AddWithValue("@TotalMoney", totalAmount / 0.85);
+                    //        command.Parameters.AddWithValue("@CustomerID", customerID);
+                    //        command.ExecuteNonQuery();
+                    //    }
+                    //}
+
+                }
+
             }
         }
-        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice)
+        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice, int customerID)
         {
             using var conn = new SqlConnection(connectionString);
             conn.Open();
@@ -571,8 +622,8 @@ namespace CoffeeShop.Service.DataAccess
             {
                 // Insert the invoice and get the generated ID
                 using var invoiceCmd = new SqlCommand("""
-                INSERT INTO invoice (created_at, total, method, status, customer_name, has_delivery)
-                VALUES (@created_at, @total, @method, @status, @customer_name, @has_delivery);
+                INSERT INTO invoice (created_at, total, method, status, customer_name, has_delivery, member_card_id)
+                VALUES (@created_at, @total, @method, @status, @customer_name, @has_delivery, @member_card_id);
                 SELECT SCOPE_IDENTITY();
                 """, conn, transaction);
                 invoiceCmd.Parameters.AddWithValue("@created_at", invoice.CreatedAt);
@@ -581,6 +632,7 @@ namespace CoffeeShop.Service.DataAccess
                 invoiceCmd.Parameters.AddWithValue("@status", invoice.Status);
                 invoiceCmd.Parameters.AddWithValue("@customer_name", invoice.CustomerName);
                 invoiceCmd.Parameters.AddWithValue("@has_delivery", invoice.HasDelivery);
+                invoiceCmd.Parameters.AddWithValue("@member_card_id", customerID);
                 int invoiceId = Convert.ToInt32(invoiceCmd.ExecuteScalar());
 
                 // Insert the detail invoices
@@ -598,7 +650,7 @@ namespace CoffeeShop.Service.DataAccess
                 }
 
                 // Insert the delivery invoice if it exists
-                if (invoice.HasDelivery=="Y")
+                if (invoice.HasDelivery == "Y")
                 {
                     using var deliveryCmd = new SqlCommand("""
                     INSERT INTO delivery_invoice (invoice_id, address, phone, shipping_fee)
@@ -664,7 +716,7 @@ namespace CoffeeShop.Service.DataAccess
             var query = from c in customers
                         where c.customerName.ToLower().Contains(keyword.ToLower())
                         select c;
-            
+
             var result = query
                 .Skip((page - 1) * rowsPerPage)
                 .Take(rowsPerPage);
@@ -690,7 +742,7 @@ namespace CoffeeShop.Service.DataAccess
                 cmd.Parameters.AddWithValue("@totalPoint", customer.totalPoint);
                 cmd.Parameters.AddWithValue("@customerType", customer.type);
                 cmd.ExecuteNonQuery();
-                
+
                 transaction.Commit();
                 return true;
             }
@@ -726,7 +778,7 @@ namespace CoffeeShop.Service.DataAccess
 
         public bool DeleteCustomer(int id)
         {
-           using var conn = new SqlConnection(connectionString);
+            using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var transaction = conn.BeginTransaction();
             try
@@ -736,6 +788,91 @@ namespace CoffeeShop.Service.DataAccess
                 cmd.CommandText = "DELETE FROM customer WHERE id = @id";
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                return false;
+            }
+        }
+        public string getCustomerType(int customerID)
+        {
+            List<Customer> customers = GetCustomers();
+            Customer customer = customers.FirstOrDefault(c => c.customerID == customerID);
+            if (customer == null)
+            {
+                return "";
+            }
+            return customer.type;
+        }
+        public int getCustomerIDFromInvoice(int invoiceID)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT member_card_id FROM invoice WHERE id = @invoiceID
+                """, conn);
+            cmd.Parameters.AddWithValue("@invoiceID", invoiceID);
+            return (int)cmd.ExecuteScalar();
+        }
+        public int getTotalAmountOfInvoice(int invoiceID)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("""
+                SELECT total FROM invoice WHERE id = @invoiceID
+                """, conn);
+            cmd.Parameters.AddWithValue("@invoiceID", invoiceID);
+            return (int)cmd.ExecuteScalar();
+        }
+        public List<MemberCard> GetMemberCards()
+        {
+            List<MemberCard> memberCards = new List<MemberCard>();
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new SqlCommand("SELECT * FROM member_card", conn);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var memberCard = new MemberCard
+                {
+                    CardName = reader.GetString(0),
+                    Discount = reader.GetInt32(1)
+                };
+                memberCards.Add(memberCard);
+            }
+            return memberCards;
+        }
+        public bool UpdateMemberCard(int member, int silver, int gold)
+        {
+            using var conn = new SqlConnection(connectionString);
+            conn.Open();
+            using var transaction = conn.BeginTransaction();
+            try
+            {
+                using var cmd = conn.CreateCommand();
+                cmd.Transaction = transaction;
+                cmd.CommandText = "UPDATE member_card SET discount = @discount WHERE card_name = @cardName";
+                cmd.Parameters.AddWithValue("@discount", member);
+                cmd.Parameters.AddWithValue("@cardName", "Thẻ thành viên");
+                cmd.ExecuteNonQuery();
+
+                using var cmd2 = conn.CreateCommand();
+                cmd2.Transaction = transaction;
+                cmd2.CommandText = "UPDATE member_card SET discount = @discount WHERE card_name = @cardName";
+                cmd2.Parameters.AddWithValue("@discount", silver);
+                cmd2.Parameters.AddWithValue("@cardName", "Thẻ bạc");
+                cmd2.ExecuteNonQuery();
+
+                using var cmd3 = conn.CreateCommand();
+                cmd3.Transaction = transaction;
+                cmd3.CommandText = "UPDATE member_card SET discount = @discount WHERE card_name = @cardName";
+                cmd3.Parameters.AddWithValue("@discount", gold);
+                cmd3.Parameters.AddWithValue("@cardName", "Thẻ vàng");
+                cmd3.ExecuteNonQuery();
+
                 transaction.Commit();
                 return true;
             }

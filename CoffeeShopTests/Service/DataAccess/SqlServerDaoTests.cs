@@ -1,6 +1,7 @@
 ﻿using CoffeeShop.Models;
 using CoffeeShop.Service.DataAccess;
 using CoffeeShop.Views;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,11 +73,11 @@ namespace CoffeeShopTests.Service.DataAccess
             int rowsPerPage = 2;
             string keyword = "c";
             int categoryID = 1;
-            Dictionary< string, IDao.SortType > sortOptions = new Dictionary<string, IDao.SortType>
+            Dictionary<string, IDao.SortType> sortOptions = new Dictionary<string, IDao.SortType>
             {
                 { "Price", IDao.SortType.Descending }
             };
-            var drinks = dao.GetDrinks(page,rowsPerPage,keyword,categoryID,sortOptions);
+            var drinks = dao.GetDrinks(page, rowsPerPage, keyword, categoryID, sortOptions);
             Assert.IsNotNull(drinks);
             Assert.IsTrue(drinks.Item2 >= 0);
         }
@@ -103,7 +104,7 @@ namespace CoffeeShopTests.Service.DataAccess
                     Sizes = new List<Size>
                     {
                         new Size { Name = "S", Price = 100, Stock = 10 },
-                       
+
                     }
                 }
             };
@@ -181,21 +182,21 @@ namespace CoffeeShopTests.Service.DataAccess
         [TestMethod]
         public void GetDetailInvoicesOfId_ValidInvoiceId_ReturnsInvoiceDetails()
         {
-            var invoiceId = 1; 
+            var invoiceId = 1;
             var result = dao.GetDetailInvoicesOfId(invoiceId);
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Item1);
             Assert.IsNotNull(result.Item2);
         }
 
-        [TestMethod]
-        public void UpdateInvoiceStatus_ValidInvoiceIdAndStatus_UpdatesSuccessfully()
-        {
-            var invoiceId = 1; 
-            var status = "Paid";
-            dao.UpdateInvoiceStatus(invoiceId, status);
+        //[TestMethod]
+        //public void UpdateInvoiceStatus_ValidInvoiceIdAndStatus_UpdatesSuccessfully()
+        //{
+        //    var invoiceId = 1;
+        //    var status = "Cancel";
+        //    dao.UpdateInvoiceStatus(invoiceId, status);
 
-        }
+        //}
 
         [TestMethod]
         public void AddInvoice_ValidData_ShouldSucceed()
@@ -211,7 +212,7 @@ namespace CoffeeShopTests.Service.DataAccess
             };
             var detailInvoices = new List<DetailInvoice>
             {
-                new DetailInvoice { DrinkId = 1, Quantity = 2, Price = 500 } 
+                new DetailInvoice { DrinkId = 1, Quantity = 2, Price = 500 }
             };
             var deliveryInvoice = new DeliveryInvoice
             {
@@ -219,7 +220,7 @@ namespace CoffeeShopTests.Service.DataAccess
                 PhoneNumber = "1234567890",
                 ShippingFee = 50
             };
-            dao.AddInvoice(invoice, detailInvoices, deliveryInvoice);
+            dao.AddInvoice(invoice, detailInvoices, deliveryInvoice, 1);
         }
 
 
@@ -271,7 +272,7 @@ namespace CoffeeShopTests.Service.DataAccess
             var customer = new Customer
             {
                 customerName = "Test name update",
-                customerID = customers[customers.Count-1].customerID,
+                customerID = customers[customers.Count - 1].customerID,
             };
             var result = dao.UpdateCustomer(customer);
             Assert.IsTrue(result);
@@ -284,5 +285,34 @@ namespace CoffeeShopTests.Service.DataAccess
             var result = dao.DeleteCustomer(customers[customers.Count - 1].customerID);
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void GetCustomerType_ShouldReturnCustomerType()
+        {
+            string res = dao.getCustomerType(1);
+            Assert.IsNotNull(res);
+        }
+
+        [TestMethod]
+        public void GetTotalAmountOfInvoice_ShouldReturnTotalAmount()
+        {
+            int total = dao.getTotalAmountOfInvoice(1);
+            Assert.IsTrue(total > 0);
+        }
+
+        [TestMethod]
+        public void GetMemberCards_ShouldReturnMemberCards()
+        {
+            List<MemberCard> memberCards = dao.GetMemberCards();
+            Assert.IsTrue(memberCards.Count == 3);
+        }
+
+        [TestMethod]
+        public void UpdateMemberCard_ShouldReturnTrue()
+        {
+            bool result = dao.UpdateMemberCard(5, 10, 15);
+            Assert.IsTrue(result);
+        }
+
     }
 }

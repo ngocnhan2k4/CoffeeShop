@@ -140,6 +140,34 @@ namespace CoffeeShop.Views
             EditCustomerDialog.Hide();
         }
 
+        private async void discountButton_Click(object sender, RoutedEventArgs e)
+        {
+            await DiscountSettingDialog.ShowAsync();
+        }
 
+        private void DiscountSettingDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            ErrorTextBlock.Visibility = Visibility.Collapsed;
+            ErrorTextBlock.Text = "";
+
+            if (int.TryParse(MemberCardDiscountTextBox.Text, out int memberCardDiscount) &&
+                int.TryParse(SilverCardDiscountTextBox.Text, out int silverCardDiscount) &&
+                int.TryParse(GoldCardDiscountTextBox.Text, out int goldCardDiscount))
+            {
+                
+                ViewModel.MemberCardDiscount = memberCardDiscount;
+                ViewModel.SilverCardDiscount = silverCardDiscount;
+                ViewModel.GoldCardDiscount = goldCardDiscount;
+
+                ViewModel.UpdateMemberCard();
+            }
+            else
+            {
+                args.Cancel = true;
+                ErrorTextBlock.Text = "Please enter valid discount percentages.";
+                ErrorTextBlock.Visibility = Visibility.Visible;
+               
+            }
+        }
     }
 }

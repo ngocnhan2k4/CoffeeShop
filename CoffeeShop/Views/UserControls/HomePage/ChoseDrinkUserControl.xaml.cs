@@ -26,6 +26,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CoffeeShop.ViewModels.HomePage;
+using Windows.UI.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -113,8 +114,9 @@ namespace CoffeeShop.Views.UserControls.HomePage
             string address = addressTextBox.Text;
             string paymentMethod = paymentMethodComboBox.SelectedItem as string;
             string shippingMethod = shippingMethodComboBox.SelectedItem as string;
+            string memberID = idTextBox.Text;
 
-            if (string.IsNullOrWhiteSpace(name) || paymentMethod == null || shippingMethod == null)
+            if (string.IsNullOrWhiteSpace(name) || paymentMethod == null || shippingMethod == null || memberID==null)
             {
                 errorTextBlock.Text = "Please type and choose all fields.";
                 errorTextBlock.Visibility = Visibility.Visible;
@@ -148,6 +150,27 @@ namespace CoffeeShop.Views.UserControls.HomePage
                     return;
                 }
             }
+
+            if (!int.TryParse(memberID, out int memberId) && applyMemberInfoSwitch.IsOn)
+            {
+                errorTextBlock.Text = "Member ID must be an integer.";
+                errorTextBlock.Visibility = Visibility.Visible;
+                args.Cancel = true;
+                return;
+            }
+
+            List<Customer> customers = ViewModel.GetCustomers();
+            List<int> validMemberIds = customers.Select(c => c.customerID).ToList();
+
+            if (!validMemberIds.Contains(memberId) && applyMemberInfoSwitch.IsOn)
+            {
+                errorTextBlock.Text = "Invalid member ID.";
+                errorTextBlock.Visibility = Visibility.Visible;
+                args.Cancel = true;
+                return;
+            }
+            ViewModel.SetCustomerId(memberId);
+
             args.Cancel = false;
             //close Dialog
             OrderDetailsDialog.Hide();
@@ -205,6 +228,44 @@ namespace CoffeeShop.Views.UserControls.HomePage
         private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             ViewModel.CalcTotal();
+        }
+
+        private void ApplyMemberInfoSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (applyMemberInfoSwitch.IsOn)
+            {
+                idTextBox.IsEnabled= true;
+                totalPriceTextBlock.TextDecorations = TextDecorations.Strikethrough;
+                discountTextBlock.Visibility = Visibility.Visible;
+                ViewModel.TotalPriceAfterDiscount = ViewModel.TotalPrice - ViewModel.Discount;
+                discountTextBlock.Text = ViewModel.TotalPriceAfterDiscount.ToString("C", new CultureInfo("vi-VN"));
+                //discountTextBlock.Text = ViewModel.Discount.ToString("C", new CultureInfo("vi-VN"));
+            }
+            else
+            {
+                idTextBox.IsEnabled = false;
+                idTextBox.Text = "";
+                totalPriceTextBlock.TextDecorations = TextDecorations.None;
+                discountTextBlock.Visibility = Visibility.Collapsed;
+
+            }
+        }
+
+        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(idTextBox.Text))
+            {
+                ViewModel.SetCustomerId(0);
+            }
+            if (int.TryParse(idTextBox.Text, out int memberId))
+            {
+                ViewModel.SetCustomerId(memberId);
+                totalPriceTextBlock.TextDecorations = TextDecorations.Strikethrough;
+            }
+            else
+            {
+                ViewModel.SetCustomerId(0); 
+            }
         }
     }
 }
