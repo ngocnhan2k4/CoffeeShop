@@ -12,11 +12,13 @@ namespace CoffeeShop.Models
         public string Name { get; set; } // S M L 
         public int Price { get; set; }
         public int Stock { get; set; }
+        public int ID { get; set; }
 
         public Size() {}
 
         public Size(Size other)
         {
+            ID = other.ID;
             Name = other.Name;
             Price = other.Price;
             Stock = other.Stock;

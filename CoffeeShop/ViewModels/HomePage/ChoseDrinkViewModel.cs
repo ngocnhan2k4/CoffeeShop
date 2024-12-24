@@ -36,7 +36,7 @@ namespace CoffeeShop.ViewModels.HomePage
             {
                 var newInvoice = new DetailInvoice
                 {
-                    DrinkId = drink.ID,
+                    DrinkId = size.ID,
                     NameDrink = drink.Name,
                     Quantity = 1,
                     MaxQuantity= size.Stock,
@@ -49,7 +49,6 @@ namespace CoffeeShop.ViewModels.HomePage
         }
         public void RemoveDrink(DetailInvoice detail)
         {
-
             ChosenDrinks.Remove(detail);
             CalcTotal();
         }
@@ -57,10 +56,10 @@ namespace CoffeeShop.ViewModels.HomePage
         {
             TotalPrice = ChosenDrinks.Sum(di => di.Price * di.Quantity);
         }
-        internal void AddInvoice(Invoice invoice, DeliveryInvoice delivery)
+        internal Invoice AddInvoice(Invoice invoice, DeliveryInvoice delivery)
         {
             IDao _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-            _dao.AddInvoice(invoice, ChosenDrinks.ToList(), delivery);
+            return _dao.AddInvoice(invoice, ChosenDrinks.ToList(), delivery);
         }
     }
 }
