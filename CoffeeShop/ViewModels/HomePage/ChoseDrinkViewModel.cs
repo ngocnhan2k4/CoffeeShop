@@ -87,10 +87,11 @@ namespace CoffeeShop.ViewModels.HomePage
             TotalPriceAfterDiscount = TotalPrice;
 
         }
-        internal void AddInvoice(Invoice invoice, DeliveryInvoice delivery)
+        internal Invoice AddInvoice(Invoice invoice, DeliveryInvoice delivery)
         {
             IDao _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
-            _dao.AddInvoice(invoice, ChosenDrinks.ToList(), delivery, CustomerId);
+            return _dao.AddInvoice(invoice, ChosenDrinks.ToList(), delivery, CustomerId);
+
         }
 
         public List<Customer> GetCustomers()

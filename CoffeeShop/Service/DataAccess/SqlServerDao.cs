@@ -615,7 +615,7 @@ namespace CoffeeShop.Service.DataAccess
 
             }
         }
-        public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice, int customerID)
+        public Invoice AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice, int customerID)
         {
             using var conn = new SqlConnection(connectionString);
             conn.Open();
