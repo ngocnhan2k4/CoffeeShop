@@ -640,7 +640,7 @@ namespace CoffeeShop.Service.DataAccess
         }
         public void AddInvoice(Invoice invoice, List<DetailInvoice> detailInvoices, DeliveryInvoice deliveryInvoice, int customerID)
         {
-
+            return invoice;
         }
 
         public List<Invoice> GetRecentInvoice(int year)

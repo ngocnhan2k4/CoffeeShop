@@ -16,6 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\backgroundaboutus.jpg" />
+    <Content Remove="Assets\placeholder.jpg" />
     <Content Remove="Assets\profile1.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +93,9 @@
     <Content Update="Assets\default.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Update="Assets\placeholder.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\profile1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

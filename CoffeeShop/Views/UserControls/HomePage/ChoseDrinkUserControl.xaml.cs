@@ -210,9 +210,9 @@ namespace CoffeeShop.Views.UserControls.HomePage
             
         }
 
-        public void AddInvoice()
+        public Invoice AddInvoice(string status = "Wait")
         {
-            ViewModel.AddInvoice(invoice, delivery);
+            return ViewModel.AddInvoice(invoice, delivery);
         }
         private void ShippingMethodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

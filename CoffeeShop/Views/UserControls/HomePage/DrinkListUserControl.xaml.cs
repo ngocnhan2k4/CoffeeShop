@@ -23,6 +23,7 @@ using Microsoft.UI.Xaml.Documents;
 using Size = CoffeeShop.Models.Size;
 using CoffeeShop.ViewModels.HomePage;
 using System.Reflection;
+using System.Globalization;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -145,10 +146,10 @@ namespace CoffeeShop.Views.UserControls.HomePage
                     var priceTextBlock = stackPanel.FindName("PriceTextBlock") as TextBlock;
                     var stockTextBlock = stackPanel.FindName("StockTextBlock") as Run;
                     var originalTextBlock = stackPanel.FindName("OriginalPriceTextBlock") as TextBlock; 
-                    var discountTextBlock = stackPanel.FindName("DiscountedPriceTextBlock") as TextBlock; 
+                    var discountTextBlock = stackPanel.FindName("DiscountedPriceTextBlock") as TextBlock;
                     if (priceTextBlock != null)
                     {
-                        priceTextBlock.Text = selectedSize.Price.ToString();
+                        priceTextBlock.Text = selectedSize.Price.ToString("#,##0", new CultureInfo("vi-VN"));
                     }
                     if (stockTextBlock != null) 
                     {
@@ -158,10 +159,10 @@ namespace CoffeeShop.Views.UserControls.HomePage
                     {
                         if (drink != null && drink.HasDiscount) 
                         {
-                            originalTextBlock.Text = selectedSize.Price.ToString(); 
-                            discountTextBlock.Text = drink.GetDiscountedPrice(selectedSize).ToString(); 
+                            originalTextBlock.Text = selectedSize.Price.ToString("#,##0", new CultureInfo("vi-VN"));
+                            discountTextBlock.Text = drink.GetDiscountedPrice(selectedSize).ToString("#,##0", new CultureInfo("vi-VN"));
                         }
-                       
+
                     }
                 }
             }

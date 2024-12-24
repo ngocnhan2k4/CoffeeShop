@@ -19,6 +19,7 @@ namespace CoffeeShop.Models
         public string Size { get; set; }
         public int MaxQuantity { get; set; }
         public int Price { get; set; }
+        public string Note { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
