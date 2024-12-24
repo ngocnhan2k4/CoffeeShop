@@ -5,6 +5,9 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="Views\CustomerPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\UserControls\HomePage\DrinkListUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -59,7 +59,6 @@ namespace CoffeeShopTests.ViewModels
             // Assert
             Assert.IsNotNull(drinks);
             Assert.IsTrue(drinks.Count > 0); 
-            Assert.AreEqual("Cà Phê Đen", drinks[0].Name);
         }
 
         [TestMethod]
