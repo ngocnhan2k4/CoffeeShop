@@ -8,23 +8,70 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel>
-        <TextBlock Text="Theme"/>
-        <StackPanel Orientation="Horizontal">
+    <StackPanel Margin="20">
+        <!-- Section Title -->
+        <TextBlock Text="{StaticResource AppearanceSettings}" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Theme Selection -->
+        <TextBlock Text="{StaticResource Theme}" Margin="0,10,0,5" FontWeight="Medium"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <RadioButton
+                Name="LightThemeRadioButton"
+                Command="{x:Bind ViewModel.SetThemeCommand}"
+                CommandParameter="Light"
+                Content="{StaticResource Light}"
+                GroupName="ThemeSelection"/>
+            <RadioButton
+                Name="DarkThemeRadioButton"
+                Command="{x:Bind ViewModel.SetThemeCommand}"
+                CommandParameter="Dark"
+                Content="{StaticResource Dark}"
+                GroupName="ThemeSelection"
+                Margin="20,0,0,0"/>
+        </StackPanel>
+
+        <!-- Font Size Adjustment -->
+        <TextBlock Text="{StaticResource FontSize}" Margin="0,10,0,5" FontWeight="Medium"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20" VerticalAlignment="Bottom" Height="50">
+            <Slider
+                x:Name="FontSizeSlider"
+                Minimum="12"
+                Maximum="30"
+                Value="{x:Bind ViewModel.EditedConfig.FontSize, Mode=TwoWay}"
+                HorizontalAlignment="Stretch"
+                Width="300" Height="30"/>
             <TextBlock
-          Margin="10,5,5,5"
-          VerticalAlignment="Center"
-          Text="Select your side: " />
-            <RadioButton
-          Name="LightThemeRadioButton"
-          Command="{x:Bind ViewModel.SetThemeCommand}"
-          CommandParameter="Light"
-          Content="Light" />
-            <RadioButton
-          Name="DarkThemeRadioButton"
-          Command="{x:Bind ViewModel.SetThemeCommand}"
-          CommandParameter="Dark"
-          Content="Dark" />
+                Text="{StaticResource SampleText}"
+                FontSize="{x:Bind ViewModel.EditedConfig.FontSize, Mode=TwoWay}"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Language Selection -->
+        <TextBlock Text="{StaticResource Language}" Margin="0,10,0,5" FontWeight="Medium"/>
+        <ComboBox
+            x:Name="LanguageComboBox"
+            SelectedValue="{x:Bind ViewModel.EditedConfig.Language, Mode=TwoWay}"
+            ItemsSource="{x:Bind ViewModel.AvailableLanguages}"
+            PlaceholderText="{StaticResource SelectLanguage}"
+            Margin="0,0,0,20"/>
+
+        <!-- Reset to Default Button -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="4">
+            <Button
+                Content="{StaticResource Reset}"
+                Click="ButtonReset_Click"
+                Background="Red"
+                Foreground="White"
+                HorizontalAlignment="Center"/>
+
+            <Button
+                Content="{StaticResource SaveChanges}"
+                Click="ButtonSaveChanges_Click"
+                Background="Green"
+                Foreground="White"
+                HorizontalAlignment="Center"/>
+
         </StackPanel>
     </StackPanel>
 </Page>

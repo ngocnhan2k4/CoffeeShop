@@ -11,11 +11,15 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Settings" FontWeight="Bold" FontSize="32" Margin="16"/>
+        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}" Margin="16,0,16,8">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Settings" FontWeight="Bold" FontSize="32"/>
+            </StackPanel>
+        </Border>
 
         <Grid Grid.Row="1" Margin="16 0 16 16">
             <Grid.ColumnDefinitions>
@@ -23,7 +27,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <NavigationView x:Name="NavView" PaneDisplayMode="Left" 
+            <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}">
+                <NavigationView x:Name="NavView" PaneDisplayMode="Left" 
                             IsBackButtonVisible="Collapsed" 
                             IsPaneToggleButtonVisible="False"
                             SelectionChanged="NavView_SelectionChanged" 
@@ -31,72 +36,72 @@
                          
                             CornerRadius="20"
                             VerticalAlignment="Stretch">
-                <NavigationView.Resources>
-                    <Style TargetType="NavigationViewItem">
-                        <Setter Property="Foreground" Value="{ThemeResource PrimaryText}"/>
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="MinHeight" Value="70"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="NavigationViewItem">
-                                    <Grid Background="{TemplateBinding Background}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <FontIcon Glyph="{TemplateBinding Icon}" 
+                    <NavigationView.Resources>
+                        <Style TargetType="NavigationViewItem">
+                            <Setter Property="Foreground" Value="{ThemeResource PrimaryText}"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="MinHeight" Value="70"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="NavigationViewItem">
+                                        <Grid Background="{TemplateBinding Background}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <FontIcon Glyph="{TemplateBinding Icon}" 
                                                           Foreground="White" 
                                                           FontSize="24" 
                                                           Margin="0,0,10,0"/>
-                                            <StackPanel>
-                                                <TextBlock Text="{TemplateBinding Content}" 
+                                                <StackPanel>
+                                                    <TextBlock Text="{TemplateBinding Content}" 
                                                                FontWeight="SemiBold" 
                                                                Foreground="{ThemeResource PrimaryText}"/>
-                                                <TextBlock Text="{TemplateBinding Tag}" 
+                                                    <TextBlock Text="{TemplateBinding Tag}" 
                                                                Foreground="{ThemeResource PrimaryText}" 
                                                                FontSize="14" 
                                                                Opacity="0.7" 
                                                                Margin="0,4,0,0"/>
+                                                </StackPanel>
                                             </StackPanel>
-                                        </StackPanel>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </NavigationView.Resources>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </NavigationView.Resources>
 
-                <NavigationView.MenuItems>
-                    <NavigationViewItem Content="Appearance" Name="appearance" Tag="Dark and Light mode, Font size">
-                        <NavigationViewItem.Icon>
-                            <FontIcon Glyph="Manage" />
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
-                    <NavigationViewItem Content="Payment Settings" Name="paymentSettings" Tag="Payment gateways">
-                        <NavigationViewItem.Icon>
-                            <FontIcon Glyph="Manage" />
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
-                    <NavigationViewItem Content="Products Management" Name="productsManagement" Tag="Manage your product, pricing, etc">
-                        <NavigationViewItem.Icon>
-                            <FontIcon Glyph="Manage" />
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
-                    <NavigationViewItem Content="About Us" Name="aboutUs" Tag="Find out more about Mono, Visa, etc">
-                        <NavigationViewItem.Icon>
-                            <FontIcon Glyph="Manage" />
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
-                    <NavigationViewItem Content="Help Desk" Name="helpDesk" Tag="Technical support">
-                        <NavigationViewItem.Icon>
-                            <FontIcon Glyph="Manage" />
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
-                    <NavigationViewItem Content="Change Language" Name="changeLanguage" Tag="Technical support">
-                        <NavigationViewItem.Icon>
-                            <FontIcon Glyph="Manage" />
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
-                </NavigationView.MenuItems>
-            </NavigationView>
-
+                    <NavigationView.MenuItems>
+                        <NavigationViewItem Content="Appearance" Name="appearance" Tag="Dark and Light mode, Font size">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="Manage" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Payment Settings" Name="paymentSettings" Tag="Payment gateways">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="Manage" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Products Management" Name="productsManagement" Tag="Manage your product, pricing, etc">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="Manage" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="About Us" Name="aboutUs" Tag="Find out more about Mono, Visa, etc">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="Manage" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Help Desk" Name="helpDesk" Tag="Technical support">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="Manage" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Change Language" Name="changeLanguage" Tag="Technical support">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="Manage" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationView.MenuItems>
+                </NavigationView>
+            </Border>
             <Frame Grid.Column="1" Name="content" Margin="16,0,0,0"/>
         </Grid>
     </Grid>

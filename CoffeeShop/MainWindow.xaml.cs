@@ -28,15 +28,29 @@ namespace CoffeeShop
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-     //   public MainViewModel ViewModel { get; set; }
+        public MainViewModel ViewModel { get; set; }
         public MainWindow()
         {
-            
+            ViewModel = Ioc.Default.GetService<MainViewModel>();
             this.InitializeComponent();
-
-       //     ViewModel = Ioc.Default.GetService<MainViewModel>();
-
+            this.Activated += MainWindow_Activated;
+            this.Closed += MainWindow_Closed;
             config();
+        }
+
+        private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            ViewModel.ApplyTheme();
+            ViewModel.ApplyLanguage();
+        }
+
+        private void MainWindow_Closed(object sender, WindowEventArgs args)
+        {
+            this.Activated -= MainWindow_Activated;
+            this.Closed -= MainWindow_Closed;
+            content?.ClearValue(Frame.ContentProperty);
+            content = null;
+            ViewModel = null;
         }
 
         private void config()

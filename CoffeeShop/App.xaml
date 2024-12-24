@@ -12,7 +12,6 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->
                 <ResourceDictionary>
-                    
                     <ResourceDictionary.ThemeDictionaries>
                         <ResourceDictionary x:Key="Light">
                             <SolidColorBrush x:Key="PageBackground" Color="#f3f4f6" />
@@ -28,6 +27,23 @@
                             <SolidColorBrush x:Key="BorderColor" Color="#f3f4f6" />
                             <SolidColorBrush x:Key="InvoiceContactColor" Color="#e5e7eb" />
                             <SolidColorBrush x:Key="BorderContactColor" Color="#9ca3af" />
+
+                            <!-- Navigation chính -->
+                            <SolidColorBrush x:Key="MainNavBackground" Color="#FFFFFF" />
+                            <SolidColorBrush x:Key="MainNavItemBackground" Color="#F5F5F5" />
+                            <SolidColorBrush x:Key="MainNavItemHover" Color="#E0E0E0" />
+                            <SolidColorBrush x:Key="MainNavItemSelected" Color="#D1C4E9" />
+                            <SolidColorBrush x:Key="MainNavItemText" Color="#333333" />
+
+                            <!-- Navigation phụ -->
+                            <SolidColorBrush x:Key="SubNavBackground" Color="#FAFAFA" />
+                            <SolidColorBrush x:Key="SubNavItemBackground" Color="#EEEEEE" />
+                            <SolidColorBrush x:Key="SubNavItemHover" Color="#DADADA" />
+                            <SolidColorBrush x:Key="SubNavItemSelected" Color="#B39DDB" />
+                            <SolidColorBrush x:Key="SubNavItemText" Color="#424242" />
+                            <SolidColorBrush x:Key="TitleBackground" Color="#F8F9FC" />
+                            <SolidColorBrush x:Key="TitleTextColor" Color="#1F2937" />
+
                         </ResourceDictionary>
 
                         <!-- Dark Mode Colors -->
@@ -45,8 +61,25 @@
                             <SolidColorBrush x:Key="BorderColor" Color="#2e2d2d" />
                             <SolidColorBrush x:Key="InvoiceContactColor" Color="#404040" />
                             <SolidColorBrush x:Key="BorderContactColor" Color="#292929" />
+
+                            <!-- Navigation chính -->
+                            <SolidColorBrush x:Key="MainNavBackground" Color="#292929" />
+                            <SolidColorBrush x:Key="MainNavItemBackground" Color="#3A3A3A" />
+                            <SolidColorBrush x:Key="MainNavItemHover" Color="#4A4A4A" />
+                            <SolidColorBrush x:Key="MainNavItemSelected" Color="#616161" />
+                            <SolidColorBrush x:Key="MainNavItemText" Color="#FFFFFF" />
+
+                            <!-- Navigation phụ -->
+                            <SolidColorBrush x:Key="SubNavBackground" Color="#404040" />
+                            <SolidColorBrush x:Key="SubNavItemBackground" Color="#505050" />
+                            <SolidColorBrush x:Key="SubNavItemHover" Color="#5A5A5A" />
+                            <SolidColorBrush x:Key="SubNavItemSelected" Color="#7E57C2" />
+                            <SolidColorBrush x:Key="SubNavItemText" Color="#FFFFFF" />
+                            <SolidColorBrush x:Key="TitleBackground" Color="#1F2937" />
+                            <SolidColorBrush x:Key="TitleTextColor" Color="#F8F9FC" />
                         </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
+                    
                 </ResourceDictionary>
               
             </ResourceDictionary.MergedDictionaries>

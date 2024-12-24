@@ -25,18 +25,38 @@ namespace CoffeeShop.Views.Settings
     /// </summary>
     public sealed partial class AppearancePage : Page
     {
-        public MainViewModel ViewModel { get; set; }
+        public AppearanceViewModel ViewModel { get; set; }
         public AppearancePage()
         {
-            ViewModel = Ioc.Default.GetService<MainViewModel>();
+            ViewModel = Ioc.Default.GetService<AppearanceViewModel>();
             this.InitializeComponent();
-            if(ViewModel.GetTheme() == ElementTheme.Dark) {
-                DarkThemeRadioButton.IsChecked = true;
-            }
-            else
+            UpdateUI();
+        }
+        public void UpdateUI()
+        {
+            LightThemeRadioButton.IsChecked = (ViewModel.GetTheme() == ElementTheme.Light);
+            DarkThemeRadioButton.IsChecked = (ViewModel.GetTheme() == ElementTheme.Dark);
+        }
+
+        private void ButtonReset_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ResetSettings();
+            UpdateUI();
+        }
+
+        private async void ButtonSaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SaveChanges();
+            await new ContentDialog()
             {
-                LightThemeRadioButton.IsChecked = true;
-            }
+                XamlRoot = XamlRoot,
+                Content = new TextBlock()
+                {
+                    Text = "Save changes successfully",
+                    FontSize = 20
+                },
+                CloseButtonText = "Close"
+            }.ShowAsync();
         }
     }
 }

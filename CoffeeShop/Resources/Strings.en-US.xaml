@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Common -->
+    <x:String x:Key="AppearanceSettings">Appearance Settings</x:String>
+    <x:String x:Key="Theme">Theme</x:String>
+    <x:String x:Key="Light">Light</x:String>
+    <x:String x:Key="Dark">Dark</x:String>
+    <x:String x:Key="FontSize">Font Size</x:String>
+    <x:String x:Key="SampleText">Sample Text</x:String>
+    <x:String x:Key="Language">Language</x:String>
+    <x:String x:Key="SelectLanguage">Select Language</x:String>
+    <x:String x:Key="SaveChanges">Save Changes</x:String>
+    <x:String x:Key="Reset">Reset</x:String>
+
+    <!-- Dashboard -->
+    <x:String x:Key="Dashboard">Dashboard</x:String>
+    <x:String x:Key="Revenue">Revenue</x:String>
+    <x:String x:Key="Sales">Sales</x:String>
+    <x:String x:Key="Orders">Orders</x:String>
+    <x:String x:Key="TopProducts">Top Products</x:String>
+    <x:String x:Key="RecentOrders">Recent Orders</x:String>
+
+    <!-- Home/Products -->
+    <x:String x:Key="Products">Products</x:String>
+    <x:String x:Key="Search">Search</x:String>
+    <x:String x:Key="AddToCart">Add to Cart</x:String>
+    <x:String x:Key="Price">Price</x:String>
+    <x:String x:Key="Category">Category</x:String>
+
+    <!-- Invoice -->
+    <x:String x:Key="Invoices">Invoices</x:String>
+    <x:String x:Key="InvoiceDetails">Invoice Details</x:String>
+    <x:String x:Key="OrderDate">Order Date</x:String>
+    <x:String x:Key="Status">Status</x:String>
+    <x:String x:Key="Total">Total</x:String>
+    <x:String x:Key="Customer">Customer</x:String>
+
+    <!-- Settings -->
+    <x:String x:Key="Settings">Settings</x:String>
+    <x:String x:Key="General">General</x:String>
+    <x:String x:Key="Appearance">Appearance</x:String>
+    <x:String x:Key="ProductsManagement">Products Management</x:String>
+    <x:String x:Key="PaymentSettings">Payment Settings</x:String>
+</ResourceDictionary>

@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Windowing;
+using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -48,7 +48,7 @@ namespace CoffeeShop
             // Add Syncfusion Community License
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzUzMTEwNkAzMjM3MmUzMDJlMzBSN1dwZm5TQ2xIdUgzMXZFbXV1Q01wQzJFRkdpVXo0SVh0MWo4cXJoYXA0PQ==");
             
-            ServiceFactory.Register(typeof(IDao), typeof(SqlServerDao));
+            ServiceFactory.Register(typeof(IDao), typeof(MockDao));
             ConfigureServices();
 
             // Loading env 
@@ -99,6 +99,8 @@ namespace CoffeeShop
         {
             var services = new ServiceCollection();
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            services.AddSingleton<ILanguageSelectorService, LanguageSelectorService>();
+            services.AddSingleton<AppearanceViewModel>();
             services.AddSingleton<MainViewModel>();
             return services.BuildServiceProvider();
         }

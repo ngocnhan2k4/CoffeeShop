@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Common -->
+    <x:String x:Key="AppearanceSettings">Cài đặt giao diện</x:String>
+    <x:String x:Key="Theme">Chủ đề</x:String>
+    <x:String x:Key="Light">Sáng</x:String>
+    <x:String x:Key="Dark">Tối</x:String>
+    <x:String x:Key="FontSize">Cỡ chữ</x:String>
+    <x:String x:Key="SampleText">Văn bản mẫu</x:String>
+    <x:String x:Key="Language">Ngôn ngữ</x:String>
+    <x:String x:Key="SelectLanguage">Chọn ngôn ngữ</x:String>
+    <x:String x:Key="SaveChanges">Lưu thay đổi</x:String>
+    <x:String x:Key="Reset">Đặt lại</x:String>
+
+    <!-- Dashboard -->
+    <x:String x:Key="Dashboard">Bảng điều khiển</x:String>
+    <x:String x:Key="Revenue">Doanh thu</x:String>
+    <x:String x:Key="Sales">Bán hàng</x:String>
+    <x:String x:Key="Orders">Đơn hàng</x:String>
+    <x:String x:Key="TopProducts">Sản phẩm bán chạy</x:String>
+    <x:String x:Key="RecentOrders">Đơn hàng gần đây</x:String>
+
+    <!-- Home/Products -->
+    <x:String x:Key="Products">Sản phẩm</x:String>
+    <x:String x:Key="Search">Tìm kiếm</x:String>
+    <x:String x:Key="AddToCart">Thêm vào giỏ</x:String>
+    <x:String x:Key="Price">Giá</x:String>
+    <x:String x:Key="Category">Danh mục</x:String>
+
+    <!-- Invoice -->
+    <x:String x:Key="Invoices">Hóa đơn</x:String>
+    <x:String x:Key="InvoiceDetails">Chi tiết hóa đơn</x:String>
+    <x:String x:Key="OrderDate">Ngày đặt</x:String>
+    <x:String x:Key="Status">Trạng thái</x:String>
+    <x:String x:Key="Total">Tổng cộng</x:String>
+    <x:String x:Key="Customer">Khách hàng</x:String>
+
+    <!-- Settings -->
+    <x:String x:Key="Settings">Cài đặt</x:String>
+    <x:String x:Key="General">Chung</x:String>
+    <x:String x:Key="Appearance">Giao diện</x:String>
+    <x:String x:Key="ProductsManagement">Quản lý sản phẩm</x:String>
+    <x:String x:Key="PaymentSettings">Cài đặt thanh toán</x:String>
+</ResourceDictionary>

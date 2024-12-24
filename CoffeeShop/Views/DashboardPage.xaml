@@ -13,6 +13,11 @@
     <Page.Resources>
         <helper:IntToVnCurrencyConverter x:Key="currency"/>
         <helper:StatusToColorConverter x:Key="statusToColorConverter"/>
+        <x:String x:Key="Revenue">DOANH THU:</x:String>
+        <x:String x:Key="Sales">SỐ LƯỢNG ĐƠN HÀNG:</x:String>
+        <x:String x:Key="Orders">TOP ĐỒ UỐNG BÁN CHẠY:</x:String>
+        <x:String x:Key="TopProducts">TOP ĐỒ UỐNG BÁN CHẠY:</x:String>
+        <x:String x:Key="RecentOrders">HÓA ĐƠN GẦN ĐÂY:</x:String>
     </Page.Resources>
     <Grid >
         <Grid.RowDefinitions>
@@ -34,7 +39,7 @@
             <Grid Grid.Row="0" Grid.Column="0" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="10" Grid.RowSpan="2">
                 
                 <StackPanel>
-                    <TextBlock Text="Hóa đơn gần đây:" 
+                    <TextBlock Text="{StaticResource RecentOrders}" 
                     FontWeight="Bold" 
                     FontSize="25" 
                     HorizontalAlignment="Center" Margin="0,10,0,10"/>
@@ -85,7 +90,7 @@
                     </LinearGradientBrush>
 
                 </Grid.Background>
-                <TextBlock Text="DOANH THU: " 
+                <TextBlock Text="{StaticResource Revenue}" 
          FontWeight="Bold" 
          FontSize="25" 
          HorizontalAlignment="Center" Margin="0,30,0,0"/>
@@ -112,7 +117,7 @@
 
 
                 </Grid.Background>
-                <TextBlock Text="SỐ LƯỢNG ĐƠN HÀNG: " 
+                <TextBlock Text="{StaticResource Sales}" 
          FontWeight="Bold" 
          FontSize="25" 
          HorizontalAlignment="Center" Margin="0,30,0,0"/>
@@ -137,7 +142,6 @@
           DayVisible="False" MonthVisible="False"  DateChanged="YearDatePicker_DateChanged"/>
 
 
-
                 <StackPanel Orientation="Vertical"  Canvas.Top="97" Padding="20 3 20 20" Height="192" Width="385" HorizontalAlignment="Center"  Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
                     <StackPanel.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -147,7 +151,7 @@
                         </LinearGradientBrush>
 
                     </StackPanel.Background>
-                    <TextBlock Text="TOP ĐỒ UỐNG BÁN CHẠY: " 
+                    <TextBlock Text="{StaticResource Orders}" 
               FontWeight="Bold" 
               FontSize="25" 
               HorizontalAlignment="Center"/>
@@ -164,7 +168,7 @@
 
 
             <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
-                <chart:SfCartesianChart Header="DOANH THU THEO THÁNG" x:Name="RevenueChart">
+                <chart:SfCartesianChart Header="{StaticResource Revenue}" x:Name="RevenueChart">
                     <chart:SfCartesianChart.Legend>
                         <chart:ChartLegend/>
                     </chart:SfCartesianChart.Legend>
@@ -187,7 +191,7 @@
             </Border>
 
             <Border Grid.Row="2" Grid.Column="2" Background="LightPink" Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
-                <chart:SfCircularChart Header="DOANH THU THEO TỪNG LOẠI ĐỒ UỐNG" x:Name="CategoryRevenueChart">
+                <chart:SfCircularChart Header="{StaticResource TopProducts}" x:Name="CategoryRevenueChart">
                     <chart:SfCircularChart.Legend>
                         <chart:ChartLegend/>
                     </chart:SfCircularChart.Legend>
@@ -204,7 +208,6 @@
                 </chart:SfCircularChart>
             </Border>
         </Grid>
-    
     
     </Grid>
    
