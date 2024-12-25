@@ -19,6 +19,9 @@
     <x:String x:Key="Orders">Orders</x:String>
     <x:String x:Key="TopProducts">Top Products</x:String>
     <x:String x:Key="RecentOrders">Recent Orders</x:String>
+    <x:String x:Key="Customer">Customer</x:String>
+    <x:String x:Key="Total">Total</x:String>
+    <x:String x:Key="Status">Status</x:String>
 
     <!-- Home/Products -->
     <x:String x:Key="Products">Products</x:String>
@@ -31,14 +34,48 @@
     <x:String x:Key="Invoices">Invoices</x:String>
     <x:String x:Key="InvoiceDetails">Invoice Details</x:String>
     <x:String x:Key="OrderDate">Order Date</x:String>
-    <x:String x:Key="Status">Status</x:String>
-    <x:String x:Key="Total">Total</x:String>
-    <x:String x:Key="Customer">Customer</x:String>
 
     <!-- Settings -->
     <x:String x:Key="Settings">Settings</x:String>
     <x:String x:Key="General">General</x:String>
     <x:String x:Key="Appearance">Appearance</x:String>
+    <x:String x:Key="AppearanceTag">Dark and Light mode, Font size</x:String>
     <x:String x:Key="ProductsManagement">Products Management</x:String>
+    <x:String x:Key="ProductsManagementTag">Manage your product, pricing, etc</x:String>
     <x:String x:Key="PaymentSettings">Payment Settings</x:String>
+    <x:String x:Key="PaymentSettingsTag">Payment gateways</x:String>
+    <x:String x:Key="AboutUs">About Us</x:String>
+    <x:String x:Key="AboutUsTag">Find out more about Mono, Visa, etc</x:String>
+    <x:String x:Key="EditDish">Edit Dish</x:String>
+    <x:String x:Key="ManageCategories">Manage Categories</x:String>
+    <x:String x:Key="ManageDiscounts">Manage Discounts</x:String>
+    <x:String x:Key="AddDrink">Add Drink</x:String>
+    <x:String x:Key="Cups">Cups</x:String>
+    <x:String x:Key="DiscardChanges">Discard Changes</x:String>
+    <x:String x:Key="EditDrink">Edit Drink</x:String>
+    <x:String x:Key="Save">Save</x:String>
+    <x:String x:Key="Cancel">Cancel</x:String>
+    <x:String x:Key="NameDrink">Name Drink</x:String>
+    <x:String x:Key="Description">Description</x:String>
+    <x:String x:Key="Sizes">Sizes</x:String>
+    <x:String x:Key="Stock">Stock</x:String>
+    <x:String x:Key="ChooseImage">Choose Image</x:String>
+    <x:String x:Key="ExistingCategories">Existing Categories</x:String>
+    <x:String x:Key="AddCategory">Add Category</x:String>
+    <x:String x:Key="EnterCategoryName">Enter category name</x:String>
+    <x:String x:Key="ActiveDiscounts">Active Discounts</x:String>
+    <x:String x:Key="AddDiscount">Add Discount</x:String>
+    <x:String x:Key="NameDiscount">Discount Name</x:String>
+    <x:String x:Key="DiscountPercentage">Discount Percentage</x:String>
+    <x:String x:Key="ValidUntil">Valid Until</x:String>
+    <x:String x:Key="ApplyToCategory">Apply to Category</x:String>
+    <!-- About  -->
+    <x:String x:Key="COFFEESHOPPOSSYSTEM">Coffee Shop POS System</x:String>
+    <x:String x:Key="DescCoffeePos">Coffee shop POS system is an application developed using Microsoft's WINUI3 technology that helps you easily manage sales and track the store's profit statistics.</x:String>
+    <x:String x:Key="AboutUsDesc">We are studying the Windows Programming course taught by Trần Duy Quang, in the Faculty of Information Technology at the University of Science,
+        Vietnam National University, Ho Chi Minh City.</x:String>
+    <x:String x:Key="Contact">Contact</x:String>
+    <x:String x:Key="ContactDesc">For any inquiries about the application, please contact nhan@gmail.com.</x:String>
+    <x:String x:Key="OpenSource">Open Source</x:String>
+
 </ResourceDictionary>

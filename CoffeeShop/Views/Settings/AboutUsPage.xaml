@@ -17,22 +17,10 @@
                 --><!-- Màu nâu sẫm hơn -->
             </LinearGradientBrush>
         </StackPanel.Background>
-        <TextBlock FontSize="25" Margin="10 10 0 15" FontStyle="Italic" FontWeight="Bold">
-        ABOUT COFFEE SHOP POS SYSTEM
-        </TextBlock>
-
-        <TextBlock Margin="10 0 0 10"  FontSize="15" TextWrapping="Wrap" FontWeight="SemiBold">
-        Coffee shop POS system is an application developed using Microsoft's WINUI3 technology that helps you easily manage sales and track the store's profit statistics.
-        </TextBlock>
-
-        <TextBlock  FontSize="25" Margin="10 10 0 20"  FontStyle="Italic" FontWeight="Bold">
-        ABOUT US
-        </TextBlock>
-
-        <TextBlock Margin="10 0 0 20" FontSize="15" TextWrapping="Wrap"  FontWeight="SemiBold">
-        We are studying the Windows Programming course taught by Trần Duy Quang, in the Faculty of Information Technology at the University of Science,
-        Vietnam National University, Ho Chi Minh City.
-        </TextBlock>
+        <TextBlock FontSize="25" Margin="10 10 0 15" FontStyle="Italic" FontWeight="Bold" Text="{StaticResource COFFEESHOPPOSSYSTEM}"/>
+        <TextBlock Margin="10 0 0 10"  FontSize="15" TextWrapping="Wrap" FontWeight="SemiBold" Text="{StaticResource DescCoffeePos}"/>
+        <TextBlock  FontSize="25" Margin="10 10 0 20"  FontStyle="Italic" FontWeight="Bold" Text="{StaticResource AboutUs}"/>
+        <TextBlock Margin="10 0 0 20" FontSize="15" TextWrapping="Wrap"  FontWeight="SemiBold" Text="{StaticResource AboutUsDesc}"/>
 
         <Grid Margin="10 0 0 0">
             <Grid.ColumnDefinitions>
@@ -79,20 +67,12 @@
 
         </Grid>
 
-        <TextBlock FontSize="25" Margin="10 20 0 20"  FontStyle="Italic" FontWeight="Bold">
-         CONTACT
-        </TextBlock>
+        <TextBlock FontSize="25" Margin="10 20 0 20"  FontStyle="Italic" FontWeight="Bold" Text="{StaticResource Contact}"/>
+        <TextBlock Margin="10 0 0 20" FontSize="15"  FontWeight="SemiBold" Text="{StaticResource ContactDesc}"/>
 
-        <TextBlock Margin="10 0 0 20" FontSize="15"  FontWeight="SemiBold">
-        For any inquiries about the application, please contact nhan@gmail.com.
-        </TextBlock>
-
-        <TextBlock FontSize="25" Margin="10 0 0 20"  FontStyle="Italic" FontWeight="Bold">
-        OPEN SOURCE
-        </TextBlock>
-
+        <TextBlock FontSize="25" Margin="10 0 0 20"  FontStyle="Italic" FontWeight="Bold" Text="{StaticResource OpenSource}"/>
         <TextBlock FontSize="15" Margin="10 0 0 20"  FontWeight="SemiBold">
-        https://github.com/TranNgocNhan/CoffeeShop
+            https://github.com/TranNgocNhan/CoffeeShop
         </TextBlock>
 
     </StackPanel>

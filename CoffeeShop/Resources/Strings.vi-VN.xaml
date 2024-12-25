@@ -19,6 +19,9 @@
     <x:String x:Key="Orders">Đơn hàng</x:String>
     <x:String x:Key="TopProducts">Sản phẩm bán chạy</x:String>
     <x:String x:Key="RecentOrders">Đơn hàng gần đây</x:String>
+    <x:String x:Key="Customer">Khách hàng</x:String>
+    <x:String x:Key="Total">Tổng cộng</x:String>
+    <x:String x:Key="Status">Trạng thái</x:String>
 
     <!-- Home/Products -->
     <x:String x:Key="Products">Sản phẩm</x:String>
@@ -31,14 +34,48 @@
     <x:String x:Key="Invoices">Hóa đơn</x:String>
     <x:String x:Key="InvoiceDetails">Chi tiết hóa đơn</x:String>
     <x:String x:Key="OrderDate">Ngày đặt</x:String>
-    <x:String x:Key="Status">Trạng thái</x:String>
-    <x:String x:Key="Total">Tổng cộng</x:String>
-    <x:String x:Key="Customer">Khách hàng</x:String>
 
     <!-- Settings -->
     <x:String x:Key="Settings">Cài đặt</x:String>
     <x:String x:Key="General">Chung</x:String>
     <x:String x:Key="Appearance">Giao diện</x:String>
+    <x:String x:Key="AppearanceTag">Chế độ tối và sáng, cỡ chữ</x:String>
     <x:String x:Key="ProductsManagement">Quản lý sản phẩm</x:String>
+    <x:String x:Key="ProductsManagementTag">Quản lý sản phẩm, giá cả, v.v. của bạn</x:String>
     <x:String x:Key="PaymentSettings">Cài đặt thanh toán</x:String>
+    <x:String x:Key="PaymentSettingsTag">Cổng thanh toán</x:String>
+    <x:String x:Key="AboutUs">Giới thiệu</x:String>
+    <x:String x:Key="AboutUsTag">Tìm hiểu thêm về Mono, Visa, v.v.</x:String>
+    <x:String x:Key="EditDish">Sửa món</x:String>
+    <x:String x:Key="ManageCategories">Quản lý loại món</x:String>
+    <x:String x:Key="ManageDiscounts">Quản lí khuyến mãi</x:String>
+    <x:String x:Key="AddDrink">Thêm món</x:String>
+    <x:String x:Key="DiscardChanges">Huỷ thay đổi</x:String>
+    <x:String x:Key="Cups">Ly</x:String>
+    <x:String x:Key="EditDrink">Sửa món</x:String>
+    <x:String x:Key="Save">Lưu</x:String>
+    <x:String x:Key="Cancel">Hủy</x:String>
+    <x:String x:Key="NameDrink">Tên món</x:String>
+    <x:String x:Key="Description">Mô tả</x:String>
+    <x:String x:Key="Sizes">Kích thước</x:String>
+    <x:String x:Key="Stock">Số lượng</x:String>
+    <x:String x:Key="ChooseImage">Chọn ảnh</x:String>
+    <x:String x:Key="ExistingCategories">Danh mục đã có</x:String>
+    <x:String x:Key="AddCategory">Thêm danh mục</x:String>
+    <x:String x:Key="EnterCategoryName">Nhập tên danh mục</x:String>
+    <x:String x:Key="ActiveDiscounts">Khuyến mãi hiện tại</x:String>
+    <x:String x:Key="AddDiscount">Thêm khuyến mái</x:String>
+    <x:String x:Key="NameDiscount">Tên khuyến mái</x:String>
+    <x:String x:Key="DiscountPercentage">Phân trăm giảm giá</x:String>
+    <x:String x:Key="ValidUntil">Thời hạn</x:String>
+    <x:String x:Key="ApplyToCategory">Áp dụng cho loại món</x:String>
+    <!-- About -->
+    <x:String x:Key="COFFEESHOPPOSSYSTEM">Cafe Shop POS System</x:String>
+    <x:String x:Key="DescCoffeePos">Hệ thống POS cho quán cà phê là ứng dụng được phát triển bằng công nghệ WINUI3 của Microsoft giúp bạn dễ dàng quản lý doanh số và theo dõi số liệu thống kê lợi nhuận của cửa hàng.</x:String>
+    <x:String x:Key="AboutUsDesc">Chúng tôi đang học khóa Lập trình Windows do Trần Duy Quang giảng dạy tại Khoa Công nghệ thông tin, Đại học Khoa học Tự nhiên,
+Đại học Quốc gia Thành phố Hồ Chí Minh.</x:String>
+    <x:String x:Key="Contact">Liên hệ</x:String>
+    <x:String x:Key="ContactDesc">Mọi thắc mắc về ứng dụng, vui lòng liên hệ nhan@gmail.com.</x:String>
+    <x:String x:Key="OpenSource">Mã nguồn mở</x:String>
+
 </ResourceDictionary>

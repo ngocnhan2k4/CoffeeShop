@@ -69,32 +69,22 @@
                     </NavigationView.Resources>
 
                     <NavigationView.MenuItems>
-                        <NavigationViewItem Content="Appearance" Name="appearance" Tag="Dark and Light mode, Font size">
+                        <NavigationViewItem Content="{StaticResource Appearance}" Name="appearance" Tag="{StaticResource AppearanceTag}">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="Manage" />
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        <NavigationViewItem Content="Payment Settings" Name="paymentSettings" Tag="Payment gateways">
+                        <NavigationViewItem Content="{StaticResource PaymentSettings}" Name="paymentSettings" Tag="{StaticResource PaymentSettingsTag}">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="Manage" />
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        <NavigationViewItem Content="Products Management" Name="productsManagement" Tag="Manage your product, pricing, etc">
+                        <NavigationViewItem Content="{StaticResource ProductsManagement}" Name="productsManagement" Tag="{StaticResource ProductsManagementTag}">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="Manage" />
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        <NavigationViewItem Content="About Us" Name="aboutUs" Tag="Find out more about Mono, Visa, etc">
-                            <NavigationViewItem.Icon>
-                                <FontIcon Glyph="Manage" />
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-                        <NavigationViewItem Content="Help Desk" Name="helpDesk" Tag="Technical support">
-                            <NavigationViewItem.Icon>
-                                <FontIcon Glyph="Manage" />
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-                        <NavigationViewItem Content="Change Language" Name="changeLanguage" Tag="Technical support">
+                        <NavigationViewItem Content="{StaticResource AboutUs}" Name="aboutUs" Tag="{StaticResource AboutUsTag}">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="Manage" />
                             </NavigationViewItem.Icon>

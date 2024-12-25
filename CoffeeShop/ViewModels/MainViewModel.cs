@@ -90,7 +90,7 @@ namespace CoffeeShop.ViewModels
 
         public void ApplyLanguage()
         {
-            _languageService.SetLanguage("Vietnamese");
+            _languageService.SetLanguage(_config.Language);
         }
     }
 }

@@ -15,10 +15,10 @@
                     Background="{ThemeResource BorderColor}">
 
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Dashboard" Icon="Home" Name="dashboard" />
-            <NavigationViewItem Content="Home" Icon="Manage" Name="products" />
-            <NavigationViewItem Content="Settings" Icon="Setting" Name="settings" />
-            <NavigationViewItem Content="Invoices" Icon="Admin" Name="invoices" />
+            <NavigationViewItem Content="{StaticResource Dashboard}" Icon="Home" Name="dashboard" />
+            <NavigationViewItem Content="{StaticResource Products}" Icon="Manage" Name="products" />
+            <NavigationViewItem Content="{StaticResource Settings}" Icon="Setting" Name="settings" />
+            <NavigationViewItem Content="{StaticResource Invoices}" Icon="Admin" Name="invoices" />
         </NavigationView.MenuItems>
         <Frame Name="content"/>
     </NavigationView>

@@ -44,12 +44,12 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock>
-                                    <Run Text="{Binding Name}"/> - <Run Text="{Binding Price}"/> đ - <Run Text="{Binding Stock}"/> Cups
+                                    <Run Text="{Binding Name}"/> - <Run Text="{Binding Price}"/> đ - <Run Text="{Binding Stock}"/> <Run Text="{StaticResource Cups}"/>
                                 </TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <Button Grid.Row="4" Content="Edit dish" Margin="0,8,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="EditDishButton_Click"/>
+                <Button Grid.Row="4" Content="{StaticResource EditDish}" Margin="0,8,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="EditDishButton_Click"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -72,12 +72,12 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <TextBlock Text="Products Management" FontWeight="Bold" FontSize="20" />
-                <Button Content="Manage Categories" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                <TextBlock Text="{StaticResource ProductsManagement}" FontWeight="Bold" FontSize="20" />
+                <Button Content="{StaticResource ManageCategories}" HorizontalAlignment="Right" VerticalAlignment="Center" 
                     Background="Transparent" BorderBrush="{ThemeResource PrimaryText}" 
                     BorderThickness="2" Width="160" Height="40" Click="ShowDialogManageCategory_ButtonClick"
                         Foreground="{ThemeResource PrimaryText}"/>
-                <Button Content="Manage Discounts" HorizontalAlignment="Right" VerticalAlignment="Center"
+                <Button Content="{StaticResource ManageDiscounts}" HorizontalAlignment="Right" VerticalAlignment="Center"
                     Background="Transparent" BorderBrush="{ThemeResource PrimaryText}" BorderThickness="2"
                     Width="160" Height="40" Margin="0,0,180,0" Click="ShowDiscountDialog_ButtonClick"
                     Foreground="{ThemeResource PrimaryText}"/>
@@ -109,9 +109,9 @@
             <!-- Save/Discard Buttons -->
             <StackPanel Grid.Row="3" Padding="0,20,0,0" Background="Gray">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Click="ShowDialogAddDrink_ButttonClick" Content="Add Drink"/>
-                    <Button Content="Discard Changes" Click="DiscardChanges_ButtonClick" Margin="10,0,10,0"/>
-                    <Button Content="Save Changes" Click="SaveChanges_ButtonClick" Background="Blue" Foreground="White"/>
+                    <Button Click="ShowDialogAddDrink_ButttonClick" Content="{StaticResource AddDrink}"/>
+                    <Button Content="{StaticResource DiscardChanges}" Click="DiscardChanges_ButtonClick" Margin="10,0,10,0"/>
+                    <Button Content="{StaticResource SaveChanges}" Click="SaveChanges_ButtonClick" Background="Blue" Foreground="White"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -120,9 +120,9 @@
         <ContentDialog
             Grid.Row="1"
             x:Name="EditDrinkDialog"
-            Title="Edit Drink"
-            PrimaryButtonText="Save"
-            SecondaryButtonText="Cancel"
+            Title="{StaticResource EditDrink}"
+            PrimaryButtonText="{StaticResource Save}"
+            SecondaryButtonText="{StaticResource Cancel}"
             PrimaryButtonClick="EditDrinkDialog_SaveButtonClick"
             CloseButtonClick="EditDrinkDialog_CloseButtonClick"
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -135,15 +135,15 @@
                              Width="80" Height="80"/>
                     </Border>
 
-                    <Button Click="ChooseImageEditDrink_buttonClick">Thay đổi ảnh</Button>
+                    <Button Click="ChooseImageEditDrink_buttonClick" Content="{StaticResource ChooseImage}"/>
                 </StackPanel>
-                <TextBox Header="Name" Text="{x:Bind ViewModel.SelectedEditDrink.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Header="Description" Text="{x:Bind ViewModel.SelectedEditDrink.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Header="{StaticResource NameDrink}" Text="{x:Bind ViewModel.SelectedEditDrink.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Header="{StaticResource Description}" Text="{x:Bind ViewModel.SelectedEditDrink.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <StackPanel Orientation="Horizontal" Margin="24,0,0,0">
-                    <TextBlock Text="Sizes" FontWeight="Bold" Width="100"/>
-                    <TextBlock Text="Price" FontWeight="Bold" Width="100"/>
-                    <TextBlock Text="Stock" FontWeight="Bold" Width="100"/>
+                    <TextBlock Text="{StaticResource Sizes}" FontWeight="Bold" Width="100"/>
+                    <TextBlock Text="{StaticResource Price}" FontWeight="Bold" Width="100"/>
+                    <TextBlock Text="{StaticResource Stock}" FontWeight="Bold" Width="100"/>
                 </StackPanel>
                 <ListView 
                     ItemsSource="{x:Bind ViewModel.SelectedEditDrink.Sizes, Mode=OneWay}">
@@ -165,9 +165,9 @@
         <ContentDialog
             Grid.Row="2"
             x:Name="NewDrinkDialog"
-            Title="Add Drink"
-            PrimaryButtonText="Save"
-            SecondaryButtonText="Cancel"
+            Title="{StaticResource AddDrink}"
+            PrimaryButtonText="{StaticResource Save}"
+            SecondaryButtonText="{StaticResource Cancel}"
             PrimaryButtonClick="NewDrinkDialog_SaveButtonClick"
             CloseButtonClick="NewDrinkDialog_CloseButtonClick"
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -180,14 +180,14 @@
                             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="80" Height="80"/>
                     </Border>
 
-                    <Button Click="ChooseImageAddDrink_buttonClick">Chọn ảnh</Button>
+                    <Button Click="ChooseImageAddDrink_buttonClick" Content="{StaticResource ChooseImage}"/>
                 </StackPanel>
 
-                <TextBox Text="{x:Bind ViewModel.NewDrinkAdded.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Name" />
-                <TextBox Text="{x:Bind ViewModel.NewDrinkAdded.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Description"/>
+                <TextBox Text="{x:Bind ViewModel.NewDrinkAdded.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{StaticResource NameDrink}" />
+                <TextBox Text="{x:Bind ViewModel.NewDrinkAdded.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{StaticResource Description}"/>
 
                 <StackPanel Orientation="Horizontal" Spacing="16">
-                    <TextBlock Text="Category" VerticalAlignment="Center"/>
+                    <TextBlock Text="{StaticResource Category}" VerticalAlignment="Center"/>
                     <ComboBox ItemsSource="{x:Bind ViewModel.Categories, Mode=OneWay}"
                          SelectedIndex="{x:Bind ViewModel.NewDrinkCategoryID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Margin="5" Name="pagesComboBox" Padding="12">
@@ -200,9 +200,9 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="24,0,0,0">
-                    <TextBlock Text="Sizes" FontWeight="Bold" Width="100"/>
-                    <TextBlock Text="Price" FontWeight="Bold" Width="100"/>
-                    <TextBlock Text="Stock" FontWeight="Bold" Width="100"/>
+                    <TextBlock Text="{StaticResource Sizes}" FontWeight="Bold" Width="100"/>
+                    <TextBlock Text="{StaticResource Price}" FontWeight="Bold" Width="100"/>
+                    <TextBlock Text="{StaticResource Stock}" FontWeight="Bold" Width="100"/>
                 </StackPanel>
 
                 <ListView
@@ -224,9 +224,9 @@
         <!--Dialog dùng để hiển thị các category-->
         <ContentDialog
             x:Name="ManageCategoriesDialog"
-            Title="Manage Categories"
-            PrimaryButtonText="Save"
-            SecondaryButtonText="Cancel"
+            Title="{StaticResource ManageCategories}"
+            PrimaryButtonText="{StaticResource Save}"
+            SecondaryButtonText="{StaticResource Cancel}"
             PrimaryButtonClick="ManageCategoriesDialog_SaveButtonClick"
             CloseButtonClick="ManageCategoriesDialog_CloseButtonClick"
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -234,7 +234,7 @@
 
             <StackPanel Spacing="8" Width="350">
                 <!-- List of existing categories -->
-                <TextBlock Text="Existing Categories" FontWeight="Bold"/>
+                <TextBlock Text="{StaticResource ExistingCategories}" FontWeight="Bold"/>
                 <ScrollViewer Height="250">
                     <ListView ItemsSource="{x:Bind ViewModel.NewCategories, Mode=OneWay}">
                         <ListView.ItemTemplate>
@@ -246,9 +246,9 @@
                 </ScrollViewer>
 
                 <!-- Add new category -->
-                <TextBlock Text="Add New Category" FontWeight="Bold" Margin="0,16,0,0"/>
-                <TextBox x:Name="NewCategoryNameTextBox" PlaceholderText="Enter category name" />
-                <Button Content="Add Category" Click="AddCategoryButton_Click" Background="Green" Foreground="White" Margin="0,8,0,0"/>
+                <TextBlock Text="{StaticResource AddCategory}" FontWeight="Bold" Margin="0,16,0,0"/>
+                <TextBox x:Name="NewCategoryNameTextBox" PlaceholderText="{StaticResource EnterCategoryName}" />
+                <Button Content="{StaticResource AddCategory}" Click="AddCategoryButton_Click" Background="Green" Foreground="White" Margin="0,8,0,0"/>
 
                 <!-- Error message display -->
                 <TextBlock Text="{x:Bind ViewModel.Error, Mode=OneWay}" Foreground="Red"/>
@@ -258,9 +258,9 @@
         <!-- Dialog to add Discount -->
         <ContentDialog
             x:Name="ManageDiscountsDialog"
-            Title="Manage Discounts"
-            PrimaryButtonText="Save"
-            SecondaryButtonText="Cancel"
+            Title="{StaticResource ManageDiscounts}"
+            PrimaryButtonText="{StaticResource Save}"
+            SecondaryButtonText="{StaticResource Cancel}"
             PrimaryButtonClick="ManageDiscountsDialog_SaveButtonClick"
             CloseButtonClick="ManageDiscountsDialog_CloseButtonClick"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -268,7 +268,7 @@
 
             <StackPanel Spacing="16" Width="400">
                 <!-- Existing Discounts -->
-                <TextBlock Text="Active Discounts" FontWeight="Bold"/>
+                <TextBlock Text="{StaticResource ActiveDiscounts}" FontWeight="Bold"/>
                 <ScrollViewer Height="220">
                     <StackPanel>
                         <TextBlock Text="Hiện tại không có khuyến mãi" 
@@ -369,25 +369,25 @@
                 </ScrollViewer>
 
                 <!-- Add New Discount -->
-                <TextBlock Text="Add New Discount" FontWeight="Bold" Margin="0,16,0,0"/>
+                <TextBlock Text="{StaticResource AddDiscount}" FontWeight="Bold" Margin="0,16,0,0"/>
                 <StackPanel Spacing="8">
-                    <TextBox Header="Discount Name" 
+                    <TextBox Header="{StaticResource NameDiscount}" 
                              PlaceholderText="Summer Sale"
                              Text="{x:Bind ViewModel.NewDiscount.Name, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" Spacing="16">
-                        <NumberBox Header="Discount Percentage"
+                        <NumberBox Header="{StaticResource DiscountPercentage}" 
                                   Minimum="0"
                                   Maximum="100"
                                   SpinButtonPlacementMode="Compact"
                                   Value="{x:Bind ViewModel.NewDiscount.DiscountPercent, Mode=TwoWay}"/>
 
-                        <CalendarDatePicker Header="Valid Until"
+                        <CalendarDatePicker Header="{StaticResource ValidUntil}"
                                            Date="{x:Bind ViewModel.NewDiscount.ValidUntil, 
                             Mode=TwoWay, Converter={StaticResource DateTimeToDateTimeOffsetConverter}}" Foreground="Black"
                             PlaceholderText="Select expiration date"/>
                     </StackPanel>
 
-                    <ComboBox Header="Apply to Category"
+                    <ComboBox Header="{StaticResource ApplyToCategory}"
                               ItemsSource="{x:Bind ViewModel.Categories}"
                               SelectedValue="{x:Bind ViewModel.NewDiscount.CategoryID, Mode=TwoWay}"
                               SelectedValuePath="CategoryID">
@@ -402,7 +402,7 @@
                     <TextBlock Text="{x:Bind ViewModel.Error, Mode=OneWay}" 
                             Foreground="Red"/>
 
-                    <Button Content="Add Discount"
+                    <Button Content="{StaticResource AddDiscount}"
                             Click="AddDiscount_Click"
                             Background="{ThemeResource SystemAccentColor}"
                             Foreground="White"

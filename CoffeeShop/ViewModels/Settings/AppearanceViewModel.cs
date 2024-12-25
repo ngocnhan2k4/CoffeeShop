@@ -1,4 +1,4 @@
-﻿using CoffeeShop.Views.Settings;
+using CoffeeShop.Views.Settings;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Newtonsoft.Json;
@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CoffeeShop.Models;
+using CoffeeShop.Service;
 
 namespace CoffeeShop.ViewModels
 {
@@ -26,10 +27,10 @@ namespace CoffeeShop.ViewModels
             new ObservableCollection<string> { "English", "Vietnamese" };
 
         private readonly IThemeSelectorService _themeSelectorService;
-
+        private readonly ILanguageSelectorService _languageService;
         public ICommand SetThemeCommand { get; }
 
-        public AppearanceViewModel(IThemeSelectorService themeSelectorService)
+        public AppearanceViewModel(IThemeSelectorService themeSelectorService, ILanguageSelectorService languageService)
         {
               SetThemeCommand = new RelayCommand<string>(value =>
               {
@@ -37,8 +38,8 @@ namespace CoffeeShop.ViewModels
                   UpdateTheme(value);
               });
             _themeSelectorService = themeSelectorService;
+            _languageService = languageService;
             EditedConfig = LoadSettings();
-            UpdateTheme(EditedConfig.Theme);
         }
 
         public void ResetSettings()
@@ -60,6 +61,10 @@ namespace CoffeeShop.ViewModels
         {
             return _themeSelectorService.GetTheme();
         }
+        private void UpdateLanguage(string language)
+        {
+            _languageService.SetLanguage(language);
+        }
 
         public void SaveChanges()
         {
@@ -67,6 +72,7 @@ namespace CoffeeShop.ViewModels
             string filePath = Path.Combine(appDirectory, "config.json");
             string json = JsonConvert.SerializeObject(EditedConfig, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText(filePath, json);
+            UpdateLanguage(EditedConfig.Language);
         }
 
         public static Config LoadSettings()
