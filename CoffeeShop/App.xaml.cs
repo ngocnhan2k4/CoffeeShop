@@ -48,7 +48,7 @@ namespace CoffeeShop
             // Add Syncfusion Community License
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzUzMTEwNkAzMjM3MmUzMDJlMzBSN1dwZm5TQ2xIdUgzMXZFbXV1Q01wQzJFRkdpVXo0SVh0MWo4cXJoYXA0PQ==");
             
-            ServiceFactory.Register(typeof(IDao), typeof(SqlServerDao));
+            ServiceFactory.Register(typeof(IDao), typeof(MockDao));
             ConfigureServices();
 
             // Loading env 
@@ -65,26 +65,6 @@ namespace CoffeeShop
             MainWindow = new Window();
             m_window.Activate();
 
-
-/*            // Set the window to full screen with close and minimize buttons
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
-            var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
-            var appWindow = AppWindow.GetFromWindowId(windowId);
-            appWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
-
-            // Get the display area size
-            var displayArea = DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Primary);
-            var displayAreaWorkArea = displayArea.WorkArea;
-            var displayAreaWidth = displayAreaWorkArea.Width;
-            var displayAreaHeight = displayAreaWorkArea.Height;
-
-            // Set the window size to the display area size
-            appWindow.Resize(new SizeInt32(displayAreaWidth, displayAreaHeight));
-
-            // Center the window on the screen
-            var displayAreaX = displayAreaWorkArea.X;
-            var displayAreaY = displayAreaWorkArea.Y;
-            appWindow.Move(new PointInt32(displayAreaX, displayAreaY));*/
 
             // Maximize the window
             // Assuming you have a reference to your window (currentWindow)

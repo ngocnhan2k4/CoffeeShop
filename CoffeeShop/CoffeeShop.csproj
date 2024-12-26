@@ -16,10 +16,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\backgroundaboutus.jpg" />
+    <Content Remove="Assets\placeholder.jpg" />
     <Content Remove="Assets\profile1.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove=".env" />
+    <None Remove="Views\CustomerPage.xaml" />
     <None Remove="Views\DashboardPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\InvoicePage.xaml" />
@@ -91,9 +93,15 @@
     <Content Update="Assets\default.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Update="Assets\placeholder.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\profile1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\CustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Settings\ChangeLanguagePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,7 +12,9 @@
 
     <UserControl.Resources>
         <converters:TotalPriceConverter x:Key="TotalPriceConverter"/>
-
+        <converters:IntToVnCurrencyConverter x:Key="currency"/>
+        <converters:IntToVnCurrencyNoDConverter x:Key="currencyNoD"/>
+        <converters:CurrencyConverter x:Key="CurrencyConverter"/>
 
         <DataTemplate x:Key="ItemOrder" x:DataType="model:DetailInvoice">
             <Grid Margin="10" Padding="10" CornerRadius="5" Background="{ThemeResource ItemBackground}">
@@ -38,7 +40,7 @@
                  SpinButtonPlacementMode="Compact"
                  SmallChange="1"/>
                     </Grid>
-                    <TextBox PlaceholderText="Order Note..." FontSize="12" Margin="0,5,0,0" HorizontalAlignment="Stretch" />
+                    <TextBox Text="{x:Bind Note, Mode=TwoWay}" PlaceholderText="Order Note..." FontSize="12" Margin="0,5,0,0" HorizontalAlignment="Stretch" MaxLength="99" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding Converter={StaticResource TotalPriceConverter}}" Foreground="Gray" FontSize="12" HorizontalTextAlignment="Center" Margin="0,20,0,0"/>
@@ -79,9 +81,9 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Name"  FontSize="14" />
-                <TextBlock Grid.Column="1"  HorizontalAlignment="Right" Text="Quantity"  FontSize="14" />
+                <TextBlock Grid.Column="1"  HorizontalAlignment="Right" Text="Quantity"  FontSize="14" Padding="0,0,15,0" />
             </Grid>
-            <TextBlock  Grid.Column="1" Text="Price" Foreground="Gray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock  Grid.Column="1" Text="Price" Foreground="Gray" FontSize="14" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Grid>
 
         <Grid  Grid.Column="0" Grid.Row="2">
@@ -97,7 +99,7 @@
         <!-- Add the TextBlock for Total Price -->
         <StackPanel Grid.Column="0" Grid.Row="3"  Padding="10">
             <TextBlock Text="Total Price:" FontWeight="Bold" FontSize="16" />
-            <TextBlock Text="{x:Bind ViewModel.TotalPrice, Mode=OneWay}" FontSize="16" Foreground="Gray" />
+            <TextBlock Text="{x:Bind ViewModel.TotalPrice, Mode=OneWay, Converter={StaticResource currency}}" FontSize="16" Foreground="Gray" />
         </StackPanel>
 
         <!-- Add the Button to print content -->
@@ -149,7 +151,22 @@
                     <TextBlock Text="Email customer: " Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
                     <TextBox x:Name="emailTextBox" Grid.Column="1" PlaceholderText="Enter email" IsEnabled="False" LostFocus="EmailTextBox_LostFocus"/>
                 </Grid>
+
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Apply Member" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <ToggleSwitch x:Name="applyMemberInfoSwitch" Grid.Column="1" Toggled="ApplyMemberInfoSwitch_Toggled" />
+                    <TextBlock Text="ID customer: " Grid.Column="2" VerticalAlignment="Center" />
+                    <TextBox x:Name="idTextBox" Grid.Column="3" PlaceholderText="Enter ID" TextChanged="IdTextBox_TextChanged" IsEnabled="False"/>
+                </Grid>
+
                 
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
                     <ComboBox PlaceholderText="Shipping Method" Width="180" x:Name="shippingMethodComboBox" SelectionChanged="ShippingMethodComboBox_SelectionChanged">
                         <x:String>Inplace</x:String>
@@ -193,15 +210,18 @@
                                     <TextBlock Grid.Column="0" Text="{x:Bind NameDrink}"/>
                                     <TextBlock Grid.Column="1" Text="{x:Bind Size}" HorizontalAlignment="Center"/>
                                     <TextBlock Grid.Column="2" Text="{x:Bind Quantity}" HorizontalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="{x:Bind Price}" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="{x:Bind Price, Converter={StaticResource currencyNoD}}" HorizontalAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                 </ScrollViewer>
                 <TextBlock Text="Total Price:" FontWeight="Bold" FontSize="16" Margin="0 10 0 0"/>
-                <TextBlock x:Name="totalPriceTextBlock" FontSize="16" Foreground="Gray" />
-                <TextBlock x:Name="errorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Error..." />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="totalPriceTextBlock" FontSize="16" Foreground="Gray"/>
+                    <TextBlock x:Name="discountTextBlock" FontSize="16" Foreground="Red" Text="{x:Bind ViewModel.TotalPriceAfterDiscount, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" Margin="10 0 0 0" Visibility="Collapsed"/>
+                </StackPanel>
+                <TextBlock x:Name="errorTextBlock" Foreground="Red" Visibility="Collapsed"/>
             </StackPanel>
         </ContentDialog>
         <!--Error Dialog-->
