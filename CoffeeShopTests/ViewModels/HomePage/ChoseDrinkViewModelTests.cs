@@ -97,6 +97,26 @@ namespace CoffeeShop.ViewModels.HomePage.Tests
             Assert.AreEqual(0, viewModel.TotalPrice);
         }
 
+        
+        [TestMethod()]
+        public void GetMemberCards_ReturnValidNumberMemberCards()
+        {
+            var viewModel = new ChoseDrinkViewModel();
+            var num = viewModel.GetMemberCards().Count;
+            Assert.AreEqual(3, num);
+        }
+
+        
+        [TestMethod()]
+        public void GetCustomers_ReturnValidCustomers()
+        {
+            var viewModel = new ChoseDrinkViewModel();
+            var customers = viewModel.GetCustomers();
+            Assert.IsTrue(customers.Count > 0);
+        }
+
+       
+
         [TestMethod()]
         public void CalcTotal_WithMultipleDrinks_CalculatesCorrectTotal()
         {
@@ -114,7 +134,9 @@ namespace CoffeeShop.ViewModels.HomePage.Tests
             Assert.AreEqual(11000, viewModel.TotalPrice);
         }
 
+        
 
+        
     }
 
 }

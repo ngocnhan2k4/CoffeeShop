@@ -16,12 +16,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\backgroundaboutus.jpg" />
+    <Content Remove="Assets\placeholder.jpg" />
     <Content Remove="Assets\profile1.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove=".env" />
-    <None Remove="Resources\Strings.en-US.xaml" />
+     <None Remove="Resources\Strings.en-US.xaml" />
     <None Remove="Resources\Strings.vi-VN.xaml" />
+    <None Remove="Views\CustomerPage.xaml" />
     <None Remove="Views\DashboardPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\InvoicePage.xaml" />
@@ -94,6 +96,9 @@
     <Content Update="Assets\default.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Update="Assets\placeholder.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\profile1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -103,7 +108,10 @@
     <Page Update="Resources\Strings.vi-VN.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Resources\Strings.en-US.xaml">
+    <Page Update="Resources\Strings.en-US.xaml"> 
+	  <Generator>MSBuild:Compile</Generator>
+		</Page>
+    <Page Update="Views\CustomerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Settings\ChangeLanguagePage.xaml">

@@ -11,21 +11,26 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
+        <converters:IntToVnCurrencyConverter x:Key="currency"/>
+        <converters:IntToVnCurrencyNoDConverter x:Key="currencyNoD"/>
         <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
         <converters:TotalPriceConverter x:Key="TotalPriceConverter"/>
+        <converters:NameNoteDrinkConverter x:Key="NameNoteDrinkConverter"/>
         <DataTemplate x:Name="ItemDetail" x:DataType="model:DetailInvoice">
-            <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,0,1" BorderBrush="Black">
+            <Border  BorderThickness="0,0,0,1" BorderBrush="Black">
                 <Grid  Padding="20,15,0,15">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="55*"/>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="44*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="14*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0"  Text="{Binding NameDrink}" FontSize="15" />
-                    <TextBlock Grid.Column="1"  Text="{Binding Quantity}" FontSize="15"  HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="2"  Text="{Binding Price}" FontSize="15" HorizontalAlignment="Center" />
-                    <TextBlock Grid.Column="3"  Text="{Binding Converter={StaticResource TotalPriceConverter}}" FontSize="15"  HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="0"  TextWrapping="Wrap" Text="{Binding Converter={StaticResource NameNoteDrinkConverter}}"  FontSize="15" />
+                    <TextBlock Grid.Column="1"  Text="{Binding Size}" FontSize="15"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2"  Text="{Binding Quantity}" FontSize="15"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="3"  Text="{Binding Price, Converter={StaticResource currencyNoD}}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="4"  Text="{Binding Converter={StaticResource TotalPriceConverter}}" FontSize="15"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -99,15 +104,17 @@
         <Border Grid.Row="3" Grid.Column="0" Margin="50,0,50,0" BorderThickness="0,1,0,1" BorderBrush="Black">
             <Grid  Padding="20,15,0,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="55*"/>
-                    <ColumnDefinition Width="15*"/>
-                    <ColumnDefinition Width="15*"/>
-                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="44*"/>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="14*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" FontWeight="SemiBold" Text="Item" FontSize="15" />
-                <TextBlock Grid.Column="1" FontWeight="SemiBold"  Text="Quantity" FontSize="15"  HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="2" FontWeight="SemiBold" Text="Unit Price" FontSize="15" HorizontalAlignment="Center" />
-                <TextBlock Grid.Column="3" FontWeight="SemiBold" Text="Total" FontSize="15"  HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="1" FontWeight="SemiBold"  Text="Size" FontSize="15"  HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="2" FontWeight="SemiBold"  Text="Quantity" FontSize="15"  HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="3" FontWeight="SemiBold" Text="Unit Price" FontSize="15" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="4" FontWeight="SemiBold" Text="Total" FontSize="15"  HorizontalAlignment="Center"/>
             </Grid>
         </Border>
 
@@ -128,22 +135,23 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="55*"/>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="44*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="14*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="2" FontWeight="SemiBold" Text="{StaticResource Subtotal}" FontSize="15" HorizontalAlignment="Center" />
-            <TextBlock Grid.Column="3" Text="{x:Bind ViewModel._invoice.TotalAmount, Mode=OneWay}" FontSize="15"  HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="3" FontWeight="SemiBold" Text="{StaticResource Subtotal}" FontSize="15" HorizontalAlignment="Center" />
+            <TextBlock Grid.Column="4" Text="{x:Bind ViewModel._invoice.TotalAmount, Mode=OneWay, Converter={StaticResource currencyNoD}}" FontSize="15"  HorizontalAlignment="Center"/>
 
-            <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="2" FontWeight="SemiBold" Text="{StaticResource ShipFee}" FontSize="15" HorizontalAlignment="Center" />
-            <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="3" Text="{x:Bind ViewModel.deliveryInvoice.ShippingFee, Mode=OneWay}" FontSize="15"  HorizontalAlignment="Center"/>
+            <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="3" FontWeight="SemiBold" Text="{StaticResource ShipFee}" FontSize="15" HorizontalAlignment="Center" />
+            <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="4" Text="{x:Bind ViewModel.deliveryInvoice.ShippingFee, Mode=OneWay, Converter={StaticResource currencyNoD}}" FontSize="15"  HorizontalAlignment="Center"/>
 
-            <Border Padding="0,10,0,0" Grid.Row="2" Grid.Column="2" BorderThickness="0,1,0,0" BorderBrush="Black">
+            <Border Padding="0,10,0,0" Grid.Row="2" Grid.Column="3" BorderThickness="0,1,0,0" BorderBrush="Black">
                 <TextBlock FontWeight="SemiBold" Text="{StaticResource Total}" FontSize="25" HorizontalAlignment="Center" />
             </Border>
-            <Border Padding="0,10,0,0" Grid.Row="2" Grid.Column="3" BorderThickness="0,1,0,0" BorderBrush="Black">
-                <TextBlock Text="{x:Bind ViewModel.totalAmount, Mode=OneWay}" FontSize="25" HorizontalAlignment="Center" />
+            <Border Padding="0,10,0,0" Grid.Row="2" Grid.Column="4" BorderThickness="0,1,0,0" BorderBrush="Black">
+                <TextBlock Text="{x:Bind ViewModel.totalAmount, Mode=OneWay, Converter={StaticResource currency}}" FontSize="25" HorizontalAlignment="Center" />
             </Border>
         </Grid>
         <StackPanel VerticalAlignment="Bottom" Margin="0,0,50,0"  Grid.Row="6" Grid.Column="0" Orientation="Horizontal" Visibility="{x:Bind ViewModel.ButtonVisibility, Mode=OneWay}" HorizontalAlignment="Right">
