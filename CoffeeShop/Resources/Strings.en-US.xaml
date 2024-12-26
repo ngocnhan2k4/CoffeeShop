@@ -34,6 +34,12 @@
     <x:String x:Key="Invoices">Invoices</x:String>
     <x:String x:Key="InvoiceDetails">Invoice Details</x:String>
     <x:String x:Key="OrderDate">Order Date</x:String>
+    <x:String x:Key="OrderNote">Order Note</x:String>
+    <x:String x:Key="Delivery">Delivery</x:String>
+    <x:String x:Key="Cash">Cash</x:String>
+    <x:String x:Key="Bank">Bank</x:String>
+    <x:String x:Key="Inplace">Inplace</x:String>
+    <x:String x:Key="Error">Error</x:String>
 
     <!-- Settings -->
     <x:String x:Key="Settings">Settings</x:String>
@@ -77,5 +83,29 @@
     <x:String x:Key="Contact">Contact</x:String>
     <x:String x:Key="ContactDesc">For any inquiries about the application, please contact nhan@gmail.com.</x:String>
     <x:String x:Key="OpenSource">Open Source</x:String>
+ <!-- Choose Drink User Control -->
+    <x:String x:Key="TotalPrice">Total Price</x:String>
+    <x:String x:Key="Name">Name</x:String>
+    <x:String x:Key="EnterName">Enter name</x:String>
+    <x:String x:Key="PhoneNumber">Phone Number</x:String>
+    <x:String x:Key="EnterPhoneNumber">Enter phone number</x:String>
+     <x:String x:Key="Address">Address</x:String>
+    <x:String x:Key="EnterAddress">Enter address</x:String>
+     <x:String x:Key="EmailCustomer">Email Customer</x:String>
+    <x:String x:Key="EnterEmailCustomer">Enter email customer</x:String>
+    <x:String x:Key="ShippingMethod">Shipping Method</x:String>
+    <x:String x:Key="PaymentMethod">Payment Method</x:String>
+    <x:String x:Key="OrderDetail">Order Detail</x:String>
+    <x:String x:Key="Quantity">Quantity</x:String>
+    <x:String x:Key="OrderError">Order Error</x:String>
+    <x:String x:Key="OrderErrorContent">Please choose drink before ordering</x:String>
+<!-- Drink List User Control -->
+    <x:String x:Key="Add">Add</x:String>
+    <x:String x:Key="Unsort">Unsort</x:String>
+    <x:String x:Key="PriceIncrease">Price: Increase</x:String>
+    <x:String x:Key="PriceDecrease">Price: Decrease</x:String>
+    <x:String x:Key="Subtotal">Subtotal</x:String>
+    <x:String x:Key="ShipFee">Shipping Fee</x:String>
+    <x:String x:Key="Complete">Complete</x:String>
 
 </ResourceDictionary>
