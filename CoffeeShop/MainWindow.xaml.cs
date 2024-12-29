@@ -65,6 +65,7 @@ namespace CoffeeShop
             this.products.Tag = typeof(HomePage);
             this.settings.Tag = typeof(SettingsPage);
             this.invoices.Tag = typeof(InvoicePage);
+            this.customer.Tag = typeof(CustomerPage);
             NavView.SelectedItem = NavView.MenuItems[1];
         }
 
@@ -77,6 +78,7 @@ namespace CoffeeShop
                 case "products":
                 case "settings":
                 case "invoices":
+                case "customer":
                     var type = (Type)(selectedItem).Tag;
 
                     content.Navigate(type);
@@ -108,6 +110,9 @@ namespace CoffeeShop
                         break;
                     case "invoices":
                         item.Content = resources["Invoices"];
+                        break;
+                    case "customer":
+                        item.Content = resources["Customer"];
                         break;
                 }
             }
