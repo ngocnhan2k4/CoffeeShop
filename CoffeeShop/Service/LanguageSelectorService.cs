@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Data;
 
 namespace CoffeeShop.Service
 {
@@ -12,6 +14,7 @@ namespace CoffeeShop.Service
     {
         void SetLanguage(string languageCode);
         string GetCurrentLanguage();
+        event EventHandler LanguageChanged;
     }
 
     public class LanguageSelectorService : ILanguageSelectorService
@@ -21,6 +24,8 @@ namespace CoffeeShop.Service
             { "English", "en-US" },
             { "Vietnamese", "vi-VN" }
         };
+
+        public event EventHandler LanguageChanged;
 
         public void SetLanguage(string language)
         {
@@ -49,31 +54,46 @@ namespace CoffeeShop.Service
             }
             
             resources.Add(resourceDictionary);
+            
+            LanguageChanged?.Invoke(this, EventArgs.Empty);
 
             // Force UI update
             var app = Application.Current as App;
-            if (app?.MainWindow?.Content is NavigationView navView)
+            if (app?.MainWindow?.Content is Frame rootFrame)
             {
-                var frame = navView.Content as Frame;
-                if (frame != null)
+                var currentPage = rootFrame.Content;
+                if (currentPage != null)
                 {
-                    var currentPage = frame.Content;
                     var pageType = currentPage.GetType();
-                    frame.Navigate(pageType); // Navigate to the same page type to force refresh
-                    frame.NavigationFailed += (s, e) =>
+                    
+                    // Store current state if needed
+                    var currentState = new Dictionary<string, object>();
+                    if (currentPage is FrameworkElement element)
                     {
-                        // If navigation fails, try to recreate the page
-                        var newPage = Activator.CreateInstance(pageType);
-                        frame.Content = newPage;
-                    };
-                }
+                        foreach (var property in element.GetType().GetProperties())
+                        {
+                            if (property.CanRead && property.CanWrite)
+                            {
+                                currentState[property.Name] = property.GetValue(element);
+                            }
+                        }
+                    }
 
-                // Update NavigationView items
-                foreach (var item in navView.MenuItems)
-                {
-                    if (item is NavigationViewItem navItem)
+                    // Navigate to force refresh
+                    rootFrame.Navigate(pageType);
+
+                    // Restore state if needed
+                    if (rootFrame.Content is FrameworkElement newElement)
                     {
-                        navItem.UpdateLayout();
+                        foreach (var pair in currentState)
+                        {
+                            var property = newElement.GetType().GetProperty(pair.Key);
+                            if (property?.CanWrite == true)
+                            {
+                                property.SetValue(newElement, pair.Value);
+                            }
+                        }
+                        newElement.UpdateLayout();
                     }
                 }
             }

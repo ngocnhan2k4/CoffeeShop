@@ -19,9 +19,16 @@ namespace CoffeeShop.ViewModels
  
     public class AppearanceViewModel : INotifyPropertyChanged
     {
-        public Config EditedConfig { get; set; }
-        public double PreviewFontSize { get; set; } = 16;
-        public string SelectedLanguage { get; set; } = "English";
+        public Config EditedConfig 
+        { 
+            get => _editedConfig;
+            set
+            {
+                _editedConfig = value;
+                OnPropertyChanged(nameof(EditedConfig));
+            }
+        }
+        private Config _editedConfig;
 
         public ObservableCollection<string> AvailableLanguages { get; } =
             new ObservableCollection<string> { "English", "Vietnamese" };
@@ -29,6 +36,7 @@ namespace CoffeeShop.ViewModels
         private readonly IThemeSelectorService _themeSelectorService;
         private readonly ILanguageSelectorService _languageService;
         public ICommand SetThemeCommand { get; }
+        //public ICommand SetLanguageCommand { get; }
 
         public AppearanceViewModel(IThemeSelectorService themeSelectorService, ILanguageSelectorService languageService)
         {
@@ -37,9 +45,31 @@ namespace CoffeeShop.ViewModels
                   EditedConfig.Theme = value; 
                   UpdateTheme(value);
               });
+
+              //SetLanguageCommand = new RelayCommand<string>(value =>
+              //{
+              //    EditedConfig.Language = value;
+              //    UpdateLanguage(value);
+              //});
+
             _themeSelectorService = themeSelectorService;
             _languageService = languageService;
             EditedConfig = LoadSettings();
+
+            // Subscribe to language changes from ComboBox
+            PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(EditedConfig))
+                {
+                    UpdateLanguage(EditedConfig.Language);
+                }
+            };
+
+            // Subscribe to language service changes
+            _languageService.LanguageChanged += (s, e) =>
+            {
+                OnPropertyChanged(nameof(EditedConfig));
+            };
         }
 
         public void ResetSettings()
@@ -63,7 +93,10 @@ namespace CoffeeShop.ViewModels
         }
         private void UpdateLanguage(string language)
         {
-            _languageService.SetLanguage(language);
+            if (language != null && language != _languageService.GetCurrentLanguage())
+            {
+                _languageService.SetLanguage(language);
+            }
         }
 
         public void SaveChanges()
@@ -72,7 +105,11 @@ namespace CoffeeShop.ViewModels
             string filePath = Path.Combine(appDirectory, "config.json");
             string json = JsonConvert.SerializeObject(EditedConfig, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText(filePath, json);
+            
+            // Update UI with saved settings
+            UpdateTheme(EditedConfig.Theme);
             UpdateLanguage(EditedConfig.Language);
+            OnPropertyChanged(nameof(EditedConfig));
         }
 
         public static Config LoadSettings()
@@ -89,5 +126,10 @@ namespace CoffeeShop.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
