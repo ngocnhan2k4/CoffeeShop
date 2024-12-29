@@ -76,7 +76,6 @@ namespace CoffeeShop.ViewModels
         {
             EditedConfig.Theme = "Light";
             EditedConfig.Language = "English";
-            EditedConfig.FontSize = 16;
             UpdateTheme(EditedConfig.Theme);
         }
 
