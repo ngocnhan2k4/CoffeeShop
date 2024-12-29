@@ -59,15 +59,16 @@ namespace CoffeeShop.Views.Settings
                 Frame.Navigate(pageType);
 
                 // Show success dialog after navigation
+                var resources = Application.Current.Resources;
                 await new ContentDialog()
                 {
                     XamlRoot = XamlRoot,
                     Content = new TextBlock()
                     {
-                        Text = "Save changes successfully",
+                        Text = resources["SaveChangesSuccess"]?.ToString() ?? "Save changes successfully",
                         FontSize = 20
                     },
-                    CloseButtonText = "Close"
+                    CloseButtonText = resources["Close"]?.ToString() ?? "Close"
                 }.ShowAsync();
             }
         }

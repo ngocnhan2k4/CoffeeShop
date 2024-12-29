@@ -103,6 +103,9 @@
     <x:String x:Key="OrderErrorContent">Hãy chọn nước uống trước khi đặt hàng</x:String>
     <x:String x:Key="Active">Kích hoạt</x:String>
     <x:String x:Key="Inactive">Vô hiệu hoá</x:String>
+    <x:String x:Key="SaveChangesSuccess">Lưu thay đổi thành công</x:String>
+    <x:String x:Key="SaveChangesFail">Lưu thay đổi thất bại</x:String>
+    <x:String x:Key="Close">Đóng</x:String>
 
 <!-- Drink List User Control -->
     <x:String x:Key="Add">Thêm</x:String>
