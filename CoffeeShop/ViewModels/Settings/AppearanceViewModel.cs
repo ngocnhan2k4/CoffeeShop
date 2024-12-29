@@ -43,7 +43,7 @@ namespace CoffeeShop.ViewModels
               SetThemeCommand = new RelayCommand<string>(value =>
               {
                   EditedConfig.Theme = value; 
-                  UpdateTheme(value);
+
               });
 
               //SetLanguageCommand = new RelayCommand<string>(value =>

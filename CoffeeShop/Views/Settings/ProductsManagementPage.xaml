@@ -248,7 +248,7 @@
                 <!-- Add new category -->
                 <TextBlock Text="{StaticResource AddCategory}" FontWeight="Bold" Margin="0,16,0,0"/>
                 <TextBox x:Name="NewCategoryNameTextBox" PlaceholderText="{StaticResource EnterCategoryName}" />
-                <Button Content="{StaticResource AddCategory}" Click="AddCategoryButton_Click" Background="Green" Foreground="White" Margin="0,8,0,0"/>
+                <Button Content="{StaticResource Add}" Click="AddCategoryButton_Click" Background="Green" Foreground="White" Margin="0,8,0,0"/>
 
                 <!-- Error message display -->
                 <TextBlock Text="{x:Bind ViewModel.Error, Mode=OneWay}" Foreground="Red"/>
@@ -296,7 +296,7 @@
                                 <Grid ColumnSpacing="8">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="120"/>
+                                         <ColumnDefinition Width="140"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
@@ -321,8 +321,8 @@
                                         
                                     <ToggleSwitch Grid.Column="1" 
                                                 IsOn="{Binding IsActive, Mode=TwoWay}"
-                                                OnContent="Active"
-                                                OffContent="Inactive">
+                                                OnContent="{StaticResource Active}"
+                                                OffContent="{StaticResource Inactive}">
                                         <ToggleSwitch.Resources>
                                             <ResourceDictionary>
                                                 <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#9747FF"/>

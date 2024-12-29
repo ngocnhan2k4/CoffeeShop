@@ -101,6 +101,9 @@
     <x:String x:Key="OrderError">Lỗi đặt hàng</x:String>
     <x:String x:Key="Error">Lỗi</x:String>
     <x:String x:Key="OrderErrorContent">Hãy chọn nước uống trước khi đặt hàng</x:String>
+    <x:String x:Key="Active">Kích hoạt</x:String>
+    <x:String x:Key="Inactive">Vô hiệu hoá</x:String>
+
 <!-- Drink List User Control -->
     <x:String x:Key="Add">Thêm</x:String>
     <x:String x:Key="Unsort">Không sắp xếp</x:String>
