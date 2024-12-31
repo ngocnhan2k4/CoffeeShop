@@ -37,9 +37,9 @@ namespace CoffeeShop.Views
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.Search(searchBox.Text);
-            if (pagesComboBox != null)
+            if (pagesTextBlock != null)
             {
-                pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
+                pagesTextBlock.Text = Convert.ToString(ViewModel.SelectedPageIndexPlusOne);
             }
         }
 
@@ -53,14 +53,14 @@ namespace CoffeeShop.Views
             ViewModel.GoToNextPage();
         }
 
-        private void pagesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (pagesComboBox.SelectedIndex >= 0 && pagesComboBox.SelectedIndex != ViewModel.SelectedPageIndex)
-            {
-                var item = pagesComboBox.SelectedItem as PageInfo;
-                ViewModel.GoToPage(item.Page);
-            }
-        }
+        //private void pagesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (pagesComboBox.SelectedIndex >= 0 && pagesComboBox.SelectedIndex != ViewModel.SelectedPageIndex)
+        //    {
+        //        var item = pagesComboBox.SelectedItem as PageInfo;
+        //        ViewModel.GoToPage(item.Page);
+        //    }
+        //}
 
         private async void addButton_Click(object sender, RoutedEventArgs e)
         {
