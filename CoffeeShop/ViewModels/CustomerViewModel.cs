@@ -48,6 +48,7 @@ namespace CoffeeShop.ViewModels
         }
         public ObservableCollection<PageInfo> PageInfos { get; set; }
         public int SelectedPageIndex { get; set; } = 0;
+        public int SelectedPageIndexPlusOne { get; set; }
         public string Keyword { get; set; } = "";
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
@@ -76,6 +77,7 @@ namespace CoffeeShop.ViewModels
             }
 
             SelectedPageIndex = CurrentPage - 1;
+            SelectedPageIndexPlusOne= SelectedPageIndex + 1;
         }
         public void GoToPage(int page)
         {

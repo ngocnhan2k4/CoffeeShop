@@ -146,12 +146,15 @@
         Width="40" Height="40" Margin="5" 
         ToolTipService.ToolTip="Previous Page" Click="previousButton_Click" />
 
-            <ComboBox x:Name="pagesComboBox" Width="100" Height="40" 
+            <!--<ComboBox x:Name="pagesComboBox" Width="100" Height="40" 
         ItemsSource="{x:Bind ViewModel.PageInfos}" 
         DisplayMemberPath="Page" 
         SelectedIndex="{x:Bind ViewModel.SelectedPageIndex, Mode=TwoWay}" 
         SelectionChanged="pagesComboBox_SelectionChanged" 
-        VerticalAlignment="Center" Margin="10"/>
+        VerticalAlignment="Center" Margin="10" IsEnabled="False"/>-->
+            <TextBlock x:Name="pagesTextBlock" FontSize="18"
+           Text="{x:Bind ViewModel.SelectedPageIndexPlusOne, Mode=OneWay}" 
+           VerticalAlignment="Center" Margin="10" />
 
             <TextBlock Text="of" FontSize="18" VerticalAlignment="Center" Margin="5"/>
             <TextBlock Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5"/>
