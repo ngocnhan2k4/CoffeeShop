@@ -71,11 +71,11 @@
 
                     <TextBlock HorizontalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}"
                     Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">
-                    <Run x:Name="StockTextBlock" Text="{Binding Sizes[0].Stock}"/><Run Text=" available"/>
+                    <Run x:Name="StockTextBlock" Text="{Binding Sizes[0].Stock}"/><Run Text=" "/><Run Text="{StaticResource Available}"/>
                     </TextBlock>
 
                         <!-- Button to trigger item click behavior -->
-                    <Button Content="Add" Click="Button_Click" HorizontalAlignment="Center" Margin="5"/>
+                        <Button Content="{StaticResource Add}" Click="Button_Click" HorizontalAlignment="Center" Margin="5"/>
                 </StackPanel>
                 </StackPanel>
             </Canvas>
@@ -125,7 +125,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <SelectorBar x:Name="SelectorBar" Grid.Column="0" SelectionChanged="SelectorBar_SelectionChanged">
-                    <SelectorBarItem Text="All" Tag="-1" IsSelected="True" />
+                    <SelectorBarItem Text="{StaticResource AllCategory}" Tag="-1" IsSelected="True" />
                 </SelectorBar>
 
                 <ComboBox x:Name="SortComboBox" Grid.Column="1" SelectionChanged="SortComboBox_SelectionChanged" SelectedIndex="0" >

@@ -15,7 +15,7 @@
 
         <DataTemplate x:Name="ItemList" x:DataType="model:Invoice">
             <StackPanel    Padding="10" >
-                <TextBlock FontWeight="SemiBold" > <Run Text="Hoá đơn #"/>   <Run Text="{Binding InvoiceID}"/></TextBlock>
+                <TextBlock FontWeight="SemiBold" > <Run Text="{StaticResource Invoice}"/> <Run Text=" #"/>   <Run Text="{Binding InvoiceID}"/></TextBlock>
                 <Border Width="70" HorizontalAlignment="Left"
                 BorderBrush="Black"
                 Background="{Binding Status, Mode=OneWay, Converter={StaticResource StatusToColorConverter}}"

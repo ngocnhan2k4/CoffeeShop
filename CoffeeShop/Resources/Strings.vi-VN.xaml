@@ -42,9 +42,6 @@
     <x:String x:Key="Cash">Tiền mật</x:String>
     <x:String x:Key="Bank">Ngân hàng</x:String>
     <x:String x:Key="Inplace">Tại chỗ</x:String>
-    <x:String x:Key="ApplyMem">Thành viên</x:String>
-    <x:String x:Key="IDCus">ID khách hàng:</x:String>
-    <x:String x:Key="EnterID">Nhập ID</x:String>
 
     <!-- Settings -->
     <x:String x:Key="Settings">Cài đặt</x:String>

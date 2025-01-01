@@ -64,9 +64,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel  Grid.Column="0" Grid.Row="0"  Padding="10">
-            <TextBlock Margin="10" FontSize="20" FontWeight="SemiBold">
-              Order
-            </TextBlock>
+            <TextBlock Margin="10" FontSize="20" FontWeight="SemiBold" Text="{StaticResource Order}"/> 
         </StackPanel>
 
         <Grid Grid.Column="0" Grid.Row="1" Margin="10" Padding="10" CornerRadius="5">
@@ -80,10 +78,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Name"  FontSize="14" />
-                <TextBlock Grid.Column="1"  HorizontalAlignment="Right" Text="Quantity"  FontSize="14" Padding="0,0,15,0" />
+                <TextBlock Text="{StaticResource Name}"  FontSize="14" />
+                <TextBlock Grid.Column="1"  HorizontalAlignment="Right" Text="{StaticResource Quantity}"  FontSize="14" Padding="0,0,15,0" />
             </Grid>
-            <TextBlock  Grid.Column="1" Text="Price" Foreground="Gray" FontSize="14" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
+            <TextBlock  Grid.Column="1" Text="{StaticResource Price}" Foreground="Gray" FontSize="14" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Grid>
 
         <Grid  Grid.Column="0" Grid.Row="2">
@@ -108,13 +106,13 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Content="Order" Grid.Column="1"  Width="100" Margin="10" Click="OrderButton_Click" HorizontalAlignment="Center"/>
+            <Button Content="{StaticResource OrderButton}" Grid.Column="1"  Width="100" Margin="10" Click="OrderButton_Click" HorizontalAlignment="Center"/>
         </Grid>
         
         <!--Delivery-->
         <ContentDialog x:Name="OrderDetailsDialog"
             Title="{StaticResource Delivery}"
-            CloseButtonText="Cancel" PrimaryButtonText="Send" IsPrimaryButtonEnabled="True" DefaultButton="Primary" PrimaryButtonClick="OrderDialog_PrimaryButtonClick" >
+            CloseButtonText="{StaticResource Cancel}" PrimaryButtonText="{StaticResource OrderButton}" IsPrimaryButtonEnabled="True" DefaultButton="Primary" PrimaryButtonClick="OrderDialog_PrimaryButtonClick" >
             <StackPanel Width="500"  Spacing="12">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -159,9 +157,9 @@
                         <ColumnDefinition Width="110"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Apply Member" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBlock Text="{StaticResource ApplyMember}" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
                     <ToggleSwitch x:Name="applyMemberInfoSwitch" Grid.Column="1" Toggled="ApplyMemberInfoSwitch_Toggled" />
-                    <TextBlock Text="ID customer: " Grid.Column="2" VerticalAlignment="Center" />
+                    <TextBlock Text="{StaticResource IdCustomer}" Grid.Column="2" VerticalAlignment="Center" />
                     <TextBox x:Name="idTextBox" Grid.Column="3" PlaceholderText="Enter ID" TextChanged="IdTextBox_TextChanged" IsEnabled="False"/>
                 </Grid>
 
@@ -169,13 +167,13 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
                     <ComboBox PlaceholderText="{StaticResource ShippingMethod}" Width="180" x:Name="shippingMethodComboBox" SelectionChanged="ShippingMethodComboBox_SelectionChanged">
-                        <x:String>{StaticResource Inplace}</x:String>
-                        <x:String>{StaticResource Delivery}</x:String>
+                        <ComboBoxItem Content="{StaticResource Inplace}" Tag="Inplace"/>
+                        <ComboBoxItem Content="{StaticResource Delivery}" Tag="Delivery"/>
                     </ComboBox>
 
                     <ComboBox PlaceholderText="{StaticResource PaymentMethod}" Width="180" x:Name="paymentMethodComboBox">
-                        <x:String>{StaticResource Cash}</x:String>
-                        <x:String>{StaticResource Bank}</x:String>
+                        <ComboBoxItem Content="{StaticResource Cash}" Tag="Cash"/>
+                        <ComboBoxItem Content="{StaticResource Bank}" Tag="Bank"/>
                     </ComboBox>
                 </StackPanel>
                 
@@ -189,10 +187,10 @@
                         <ColumnDefinition Width="20*"/>
                         <ColumnDefinition Width="20*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Name Drink" FontWeight="Bold" />
+                    <TextBlock Grid.Column="0" Text="{StaticResource Name}" FontWeight="Bold" />
                     <TextBlock Grid.Column="1" Text="Size"  FontWeight="Bold" HorizontalAlignment="Center" />
-                    <TextBlock Grid.Column="2" Text="Quantity"  FontWeight="Bold"  HorizontalAlignment="Center" />
-                    <TextBlock Grid.Column="3" Text="Price"  FontWeight="Bold" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Column="2" Text="{StaticResource Quantity}"  FontWeight="Bold"  HorizontalAlignment="Center" />
+                    <TextBlock Grid.Column="3" Text="{StaticResource Price}"  FontWeight="Bold" HorizontalAlignment="Center" />
                 </Grid>
    
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="100">

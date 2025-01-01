@@ -117,8 +117,12 @@ namespace CoffeeShop.Views
             {
                 EmailProgressRing.IsActive = false;
                 EmailProgressRing.Visibility = Visibility.Collapsed;
-                if(result) await ShowResultDialog("Success", "Order successfully.");
-                else await ShowResultDialog("Fail", "Order fail.");
+                string statusSuccess = Application.Current.Resources["Success"] as string;
+                string statusFail = Application.Current.Resources["Fail"] as string;
+                string orderSuccess = Application.Current.Resources["OrderSuccess"] as string;
+                string orderFail = Application.Current.Resources["OrderFail"] as string;
+                if (result) await ShowResultDialog(statusSuccess, orderSuccess);
+                else await ShowResultDialog(statusFail, orderFail);
             }
         }
 
@@ -126,16 +130,16 @@ namespace CoffeeShop.Views
         {
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer ZBBFN6V9OQ4Y1HPQUYDJHIPZC8RVE3X6MIU4LRCGKAV7XMW8WCK5CYTLRBSXDG0J");
-                Console.WriteLine("Polling for payment status...");
+                string token = Environment.GetEnvironmentVariable("TOKEN");
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
                 while (true)
                 {
                     int totalAmount = isDelivery ? invoice.TotalAmount + 10000 : invoice.TotalAmount;
                     try
                     {
                         //fake api
-                        var response = await client.GetAsync("http://localhost:3000");
-                        //var response = await client.GetAsync("https://my.sepay.vn/userapi/transactions/list?account_number=0915680152&limit=20");
+                        //var response = await client.GetAsync("http://localhost:3000");
+                        var response = await client.GetAsync("https://my.sepay.vn/userapi/transactions/list?account_number=0915680152&limit=20");
                         response.EnsureSuccessStatusCode();
                         var responseContent = await response.Content.ReadAsStringAsync();
                         var statusResult = JsonSerializer.Deserialize<TransactionRes>(responseContent);
@@ -148,14 +152,14 @@ namespace CoffeeShop.Views
                                 var transaction = new List<Transaction>(statusResult.transactions);
                                 statusResult.transactions.ToList().ForEach((transaction) =>
                                 {
-                                    if (transaction.transaction_content == content)
+                                    if (transaction.transaction_content.Contains(content))
                                     {           
                                        money_in += (int)Convert.ToDouble(transaction.amount_in);      
                                     }
                                 });
                                 if(money_in >= totalAmount)
                                 {
-                                    StatusMessage.Text = "Payment Success";
+                                    StatusMessage.Text = Application.Current.Resources["SuccessPayment"] as string;
                                     StatusMessage.Foreground = new SolidColorBrush(Colors.Green);
                                     has = true;
                                 }
@@ -182,7 +186,7 @@ namespace CoffeeShop.Views
                         else
                         {
                             StatusMessage.Foreground = new SolidColorBrush(Colors.Gray);
-                            StatusMessage.Text = "No Payment";
+                            StatusMessage.Text = Application.Current.Resources["NoPayment"] as string;
                         }
                     }
                     catch (HttpRequestException ex)
@@ -208,7 +212,7 @@ namespace CoffeeShop.Views
 
             ViewModel._dao.UpdateInvoiceStatus(ViewModel.invoice.InvoiceID, "Cancel");
             // Update the status message
-            StatusMessage.Text = "Canceling...";
+            StatusMessage.Text = Application.Current.Resources["Canceling"] as string;
             StatusMessage.Foreground = new SolidColorBrush(Colors.Red);
         }
         private void QrCodeDialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
