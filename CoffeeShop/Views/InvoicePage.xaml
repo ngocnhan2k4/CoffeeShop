@@ -21,7 +21,7 @@
         
         <StackPanel Orientation="Vertical" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <TextBlock FontWeight="Bold" Text="Invoices" FontSize="30" VerticalAlignment="Top"/>
+                <TextBlock FontWeight="Bold" Text="{StaticResource Invoices}" FontSize="30" VerticalAlignment="Top"/>
                 <TextBlock Text="POS" FontStyle="Oblique" VerticalAlignment="Top" Margin="5,8,0,0" FontWeight="SemiLight"/>
             </StackPanel>
         </StackPanel>

@@ -125,7 +125,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <SelectorBar x:Name="SelectorBar" Grid.Column="0" SelectionChanged="SelectorBar_SelectionChanged">
-                    <SelectorBarItem Text="{StaticResource AllCategory}" Tag="-1" IsSelected="True" />
+                    <SelectorBarItem Text="{StaticResource All}" Tag="-1" IsSelected="True" />
                 </SelectorBar>
 
                 <ComboBox x:Name="SortComboBox" Grid.Column="1" SelectionChanged="SortComboBox_SelectionChanged" SelectedIndex="0" >

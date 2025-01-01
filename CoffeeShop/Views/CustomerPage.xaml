@@ -181,7 +181,7 @@
             <StackPanel>
                 <TextBox x:Name="EditCustomerNameTextBox" Header="{StaticResource Cusname}"/>
                 <TextBlock x:Name="EditCustomerErrorTextBlock" Foreground="Red" Visibility="Collapsed" Text="{StaticResource ErrorEmptyName}"/>
-                <Button Content="{StaticResource CusDeleteButton}" Click="DeleteCustomerButton_Click" Foreground="Red" Margin="0 20 0 0"/>
+                <Button Content="{StaticResource CusDeleteButton}" Click="DeleteCustomerButton_Click" Margin="0 20 0 0"/>
             </StackPanel>
         </ContentDialog>
 
