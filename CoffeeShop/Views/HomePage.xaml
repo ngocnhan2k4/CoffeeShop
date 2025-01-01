@@ -26,19 +26,19 @@
         <user_control:ChoseDrinkUserControl Grid.Row="0" Grid.Column="1" x:Name="cart" DeliveryClick="cart_DeliveryClick" OrderClick="cart_OrderClick" />
         <ProgressRing x:Name="EmailProgressRing" IsActive="False" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100"/>
         <ContentDialog x:Name="ResultDialog"
-                       Title="Result"
+                       Title="{StaticResource Result}"
                        CloseButtonText="OK"
                        Closed="ResultDialog_Closed">
             <TextBlock x:Name="ResultDialogContent" />
         </ContentDialog>
 
-        <ContentDialog x:Name="QrCodeDialog" Title="Bank Payment"
-               PrimaryButtonText="Cancel"
+        <ContentDialog x:Name="QrCodeDialog" Title="{StaticResource BankPayment}"
+               PrimaryButtonText="{StaticResource Cancel}"
                PrimaryButtonClick="QrCodeDialog_CancelClick"
                Closing="QrCodeDialog_Closing">
             <StackPanel>
                 <Image x:Name="QRCodeImage" Width="450" Height="450" Source="ms-appx:///Assets/placeholder.jpg"/>
-                <TextBlock x:Name="StatusMessage" Text="Waiting for payment..." HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="16"
+                <TextBlock x:Name="StatusMessage" Text="{StaticResource WaitPayment}" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="16"
                            />
             </StackPanel>
         </ContentDialog>

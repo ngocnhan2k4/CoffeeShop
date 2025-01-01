@@ -29,9 +29,26 @@
     <x:String x:Key="AddToCart">Add to Cart</x:String>
     <x:String x:Key="Price">Price</x:String>
     <x:String x:Key="Category">Category</x:String>
+    <x:String x:Key="Result">Result</x:String>
+    <x:String x:Key="BankPayment">Bank payment</x:String>
+    <x:String x:Key="WaitPayment">Waiting for payment...</x:String>
+    <x:String x:Key="Canceling">Canceling...</x:String>
+    <x:String x:Key="SuccessPayment">Payment success</x:String>
+    <x:String x:Key="Success">Success</x:String>
+    <x:String x:Key="Fail">Fail</x:String>
+    <x:String x:Key="OrderSuccess">Order successfully.</x:String>
+    <x:String x:Key="OrderFail">Order failed.</x:String>
+    <x:String x:Key="NoPayment">No Payment</x:String>
+    <x:String x:Key="FailPayment">Payment failed</x:String>
+    <x:String x:Key="ErrorType">Please type and choose all fields.</x:String>
+    <x:String x:Key="ErrorEmail">Invalid email format.</x:String>
+    <x:String x:Key="ErrorPhone">Invalid phone number format.</x:String>
+    <x:String x:Key="ErrorID">Member ID must be an integer.</x:String>
+    <x:String x:Key="ErrorInvalidID">Invalid member ID.</x:String>
 
     <!-- Invoice -->
     <x:String x:Key="Invoices">Invoices</x:String>
+    <x:String x:Key="Invoice">Invoice</x:String>
     <x:String x:Key="InvoiceDetails">Invoice Details</x:String>
     <x:String x:Key="OrderDate">Order Date</x:String>
     <x:String x:Key="OrderNote">Order Note</x:String>
@@ -40,6 +57,9 @@
     <x:String x:Key="Bank">Bank</x:String>
     <x:String x:Key="Inplace">Inplace</x:String>
     <x:String x:Key="Error">Error</x:String>
+    <x:String x:Key="BillTo">Bill to:</x:String>
+    <x:String x:Key="ShipTo">Ship to:</x:String>
+    <x:String x:Key="InvoiceNo">Invoice No.</x:String>
 
     <!-- Settings -->
     <x:String x:Key="Settings">Settings</x:String>
@@ -83,7 +103,10 @@
     <x:String x:Key="Contact">Contact</x:String>
     <x:String x:Key="ContactDesc">For any inquiries about the application, please contact nhan@gmail.com.</x:String>
     <x:String x:Key="OpenSource">Open Source</x:String>
+    
  <!-- Choose Drink User Control -->
+    <x:String x:Key="Order">Order</x:String>
+    <x:String x:Key="OrderButton">Order</x:String>
     <x:String x:Key="TotalPrice">Total Price</x:String>
     <x:String x:Key="Name">Name</x:String>
     <x:String x:Key="EnterName">Enter name</x:String>
@@ -99,13 +122,16 @@
     <x:String x:Key="Quantity">Quantity</x:String>
     <x:String x:Key="OrderError">Order Error</x:String>
     <x:String x:Key="OrderErrorContent">Please choose drink before ordering</x:String>
-<!-- Drink List User Control -->
+    <x:String x:Key="ApplyMember">Apply member:</x:String>
+    <x:String x:Key="IdCustomer">ID customer:</x:String>
+    <!-- Drink List User Control -->
     <x:String x:Key="Add">Add</x:String>
     <x:String x:Key="Unsort">Unsort</x:String>
     <x:String x:Key="PriceIncrease">Price: Increase</x:String>
     <x:String x:Key="PriceDecrease">Price: Decrease</x:String>
-    <x:String x:Key="Subtotal">Subtotal</x:String>
+    <x:String x:Key="Subtotal">Total</x:String>
     <x:String x:Key="ShipFee">Shipping Fee</x:String>
     <x:String x:Key="Complete">Complete</x:String>
-
+    <x:String x:Key="AllCategory">All</x:String>
+    <x:String x:Key="Available">available</x:String>
 </ResourceDictionary>
