@@ -13,6 +13,7 @@
                 <ResourceDictionary>
                     <ResourceDictionary.ThemeDictionaries>
                         <ResourceDictionary x:Key="Light">
+                            <SolidColorBrush x:Key="DashboardBackground" Color="LightBlue" />
                             <SolidColorBrush x:Key="PageBackground" Color="#f3f4f6" />
                             <SolidColorBrush x:Key="PrimaryText" Color="#333333" />
                             <SolidColorBrush x:Key="SecondaryText" Color="#757575" />
@@ -47,6 +48,7 @@
 
                         <!-- Dark Mode Colors -->
                         <ResourceDictionary x:Key="Dark">
+                            <SolidColorBrush x:Key="DashboardBackground" Color="#333333" />
                             <SolidColorBrush x:Key="DiscountBadge" Color="#ed3124" />
                             <SolidColorBrush x:Key="PageBackground" Color="#333333" />
                             <SolidColorBrush x:Key="PrimaryText" Color="#ebe9fc" />

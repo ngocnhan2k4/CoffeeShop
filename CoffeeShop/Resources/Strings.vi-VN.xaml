@@ -15,13 +15,14 @@
     <!-- Dashboard -->
     <x:String x:Key="Dashboard">Bảng điều khiển</x:String>
     <x:String x:Key="Revenue">Doanh thu</x:String>
-    <x:String x:Key="Sales">Bán hàng</x:String>
+    <x:String x:Key="CategoryRevenue">Doanh thu theo loại</x:String>
+    <x:String x:Key="Sales">Số lượng đơn hàng</x:String>
     <x:String x:Key="Orders">Đơn hàng</x:String>
-    <x:String x:Key="TopProducts">Sản phẩm bán chạy</x:String>
+    <x:String x:Key="TopProducts">Top sản phẩm bán chạy</x:String>
     <x:String x:Key="RecentOrders">Đơn hàng gần đây</x:String>
     <x:String x:Key="Customer">Khách hàng</x:String>
     <x:String x:Key="Total">Tổng cộng</x:String>
-    <x:String x:Key="Subtotal">Tổng cộng</x:String>
+    <x:String x:Key="Subtotal">Tổng</x:String>
     <x:String x:Key="Status">Trạng thái</x:String>
     <x:String x:Key="ColMonth">Tháng</x:String>
     <x:String x:Key="ColRevenue">Doanh thu</x:String>
@@ -32,17 +33,35 @@
     <x:String x:Key="AddToCart">Thêm vào giỏ</x:String>
     <x:String x:Key="Price">Giá</x:String>
     <x:String x:Key="Category">Danh mục</x:String>
+    <x:String x:Key="Result">Kết quả</x:String>
+    <x:String x:Key="BankPayment">Thanh toán ngân hàng</x:String>
+    <x:String x:Key="WaitPayment">Chờ thanh toán...</x:String>
+    <x:String x:Key="Canceling">Đang huỷ...</x:String>
+    <x:String x:Key="SuccessPayment">Thanh toán thành công</x:String>
+    <x:String x:Key="Success">Thành công</x:String>
+    <x:String x:Key="Fail">Thất bại</x:String>
+    <x:String x:Key="OrderSuccess">Đặt hàng thành công.</x:String>
+    <x:String x:Key="OrderFail">Đặt hàng thất bại.</x:String>
+    <x:String x:Key="NoPayment">Chưa có thanh toán</x:String>
+    <x:String x:Key="FailPayment">Thanh toán thất bại</x:String>
+    <x:String x:Key="ErrorType">Hãy điền và chọn tất cả các ô.</x:String>
+    <x:String x:Key="ErrorEmail">Định dạng email không đúng</x:String>
+    <x:String x:Key="ErrorPhone">Định dạng số điện thoại không đúng</x:String>
+    <x:String x:Key="ErrorID">ID thành viên phải là số nguyên</x:String>
+    <x:String x:Key="ErrorInvalidID">ID thành viên không hợp lệ</x:String>
 
     <!-- Invoice -->
     <x:String x:Key="Invoices">Hóa đơn</x:String>
+    <x:String x:Key="Invoice">Hóa đơn</x:String>
     <x:String x:Key="InvoiceDetails">Chi tiết hóa đơn</x:String>
     <x:String x:Key="OrderDate">Ngày đặt</x:String>
     <x:String x:Key="OrderNote">Ghi chú</x:String>
     <x:String x:Key="Delivery">Giao hàng</x:String>
-    <x:String x:Key="Cash">Tiền mật</x:String>
+    <x:String x:Key="Cash">Tiền mặt</x:String>
     <x:String x:Key="Bank">Ngân hàng</x:String>
     <x:String x:Key="Inplace">Tại chỗ</x:String>
-
+    <x:String x:Key="BillTo">Hóa đơn của:</x:String>
+    <x:String x:Key="InvoiceNo">Hóa đơn số.</x:String>
     <!-- Settings -->
     <x:String x:Key="Settings">Cài đặt</x:String>
     <x:String x:Key="General">Chung</x:String>
@@ -87,31 +106,36 @@
     <x:String x:Key="ContactDesc">Mọi thắc mắc về ứng dụng, vui lòng liên hệ nhan@gmail.com.</x:String>
     <x:String x:Key="OpenSource">Mã nguồn mở</x:String>
  <!-- Choose Drink User Control -->
+    <x:String x:Key="Order">Đơn hàng</x:String>
+    <x:String x:Key="OrderButton">Đặt hàng</x:String>
     <x:String x:Key="TotalPrice">Tổng tiền</x:String>
     <x:String x:Key="Name">Tên</x:String>
     <x:String x:Key="EnterName">Nhập tên</x:String>
-    <x:String x:Key="PhoneNumber">Nhập số điện thoại</x:String>
+    <x:String x:Key="PhoneNumber">Số điện thoại</x:String>
     <x:String x:Key="EnterPhoneNumber">Nhập số điện thoại</x:String>
-    <x:String x:Key="Address">Nhập điểm giao hàng</x:String>
+    <x:String x:Key="Address">Địa chỉ</x:String>
     <x:String x:Key="EnterAddress">Nhập điểm giao hàng</x:String>
-     <x:String x:Key="EmailCustomer">Email khách hàng</x:String>
+     <x:String x:Key="EmailCustomer">Email</x:String>
     <x:String x:Key="EnterEmailCustomer">Nhập email khách hàng</x:String>
-    <x:String x:Key="ShippingMethod">Phương thức giao hàng</x:String>
-    <x:String x:Key="PaymentMethod">Phương thức thanh toán</x:String>
+    <x:String x:Key="ShippingMethod">Phương thức giao</x:String>
+    <x:String x:Key="PaymentMethod">Thanh toán</x:String>
     <x:String x:Key="OrderDetail">Chi tiết đơn hàng</x:String>
     <x:String x:Key="Quantity">Số lượng</x:String>
     <x:String x:Key="OrderError">Lỗi đặt hàng</x:String>
     <x:String x:Key="Error">Lỗi</x:String>
     <x:String x:Key="OrderErrorContent">Hãy chọn nước uống trước khi đặt hàng</x:String>
+    <x:String x:Key="ApplyMember">Thành viên:</x:String>
+    <x:String x:Key="IdCustomer">Nhập ID:</x:String>
     <x:String x:Key="Active">Kích hoạt</x:String>
     <x:String x:Key="Inactive">Vô hiệu hoá</x:String>
     <x:String x:Key="SaveChangesSuccess">Lưu thay đổi thành công</x:String>
     <x:String x:Key="SaveChangesFail">Lưu thay đổi thất bại</x:String>
     <x:String x:Key="Close">Đóng</x:String>
+    <x:String x:Key="EmailSentSuccess">Gửi email thành công.</x:String>
 
-<!-- Drink List User Control -->
+    <!-- Drink List User Control -->
     <x:String x:Key="Add">Thêm</x:String>
-    <x:String x:Key="Unsort">Không sắp xếp</x:String>
+    <x:String x:Key="Unsort">Mặc định</x:String>
     <x:String x:Key="PriceIncrease">Giá: tăng</x:String>
     <x:String x:Key="PriceDecrease">Giá: giảm</x:String>
     <x:String x:Key="ShipFee">Phí giao hàng</x:String>
@@ -139,4 +163,6 @@
     <x:String x:Key="SilverCardDis">Chiết khấu thẻ bạc (%)</x:String>
     <x:String x:Key="GoldCardDis">Chiết khấu thẻ vàng (%)</x:String>
     <x:String x:Key="ErrorPer">Vui lòng nhập tỷ lệ chiết khấu hợp lệ.</x:String>
+    <x:String x:Key="All">Tất cả</x:String>
+    <x:String x:Key="Available">có sẵn</x:String>
 </ResourceDictionary>

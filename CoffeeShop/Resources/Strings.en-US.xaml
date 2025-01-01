@@ -15,7 +15,8 @@
     <!-- Dashboard -->
     <x:String x:Key="Dashboard">Dashboard</x:String>
     <x:String x:Key="Revenue">Revenue</x:String>
-    <x:String x:Key="Sales">Sales</x:String>
+    <x:String x:Key="Sales">Number Orders</x:String>
+    <x:String x:Key="CategoryRevenue">Category Revenue</x:String>
     <x:String x:Key="Orders">Orders</x:String>
     <x:String x:Key="TopProducts">Top Products</x:String>
     <x:String x:Key="RecentOrders">Recent Orders</x:String>
@@ -131,9 +132,10 @@
     <x:String x:Key="OrderErrorContent">Please choose drink before ordering</x:String>
     <x:String x:Key="ApplyMember">Apply member:</x:String>
     <x:String x:Key="IdCustomer">ID customer:</x:String>
+    <x:String x:Key="EmailSentSuccess">Email sent successfully.</x:String>
     <!-- Drink List User Control -->
     <x:String x:Key="Add">Add</x:String>
-    <x:String x:Key="Unsort">Unsort</x:String>
+    <x:String x:Key="Unsort">Default</x:String>
     <x:String x:Key="PriceIncrease">Price: Increase</x:String>
     <x:String x:Key="PriceDecrease">Price: Decrease</x:String>
     <x:String x:Key="Subtotal">Total</x:String>
@@ -164,6 +166,6 @@
     <x:String x:Key="SilverCardDis">Silver Card Discount (%)</x:String>
     <x:String x:Key="GoldCardDis">Gold Card Discount (%)</x:String>
     <x:String x:Key="ErrorPer">Please enter valid discount percentages.</x:String>
-    <x:String x:Key="AllCategory">All</x:String>
+    <x:String x:Key="All">All</x:String>
     <x:String x:Key="Available">available</x:String>
 </ResourceDictionary>

@@ -642,8 +642,13 @@ namespace CoffeeShop.Service.DataAccess
 
                 CultureInfo provider = new CultureInfo("vi-VN");
 
-                DateTime.TryParseExact(invoice.CreatedAt, format, provider, DateTimeStyles.None, out dateTime);
-
+                //      DateTime.TryParseExact(invoice.CreatedAt, format, provider, DateTimeStyles.None, out dateTime);
+                string[] formats = { "dd/MM/yyyy hh:mm:ss tt", "dd/MM/yyyy HH:mm:ss", "MM/dd/yyyy hh:mm:ss tt" };
+                bool success = DateTime.TryParseExact(invoice.CreatedAt, formats, provider, DateTimeStyles.None, out dateTime);
+                if (!success)
+                {
+                    Console.WriteLine($"Failed to parse date: {invoice.CreatedAt}");
+                }
                 invoiceCmd.Parameters.AddWithValue("@created_at", dateTime);
                 invoiceCmd.Parameters.AddWithValue("@total", invoice.TotalAmount);
                 invoiceCmd.Parameters.AddWithValue("@method", invoice.PaymentMethod);

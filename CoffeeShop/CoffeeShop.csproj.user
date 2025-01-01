@@ -41,9 +41,6 @@
     <Page Update="Views\Settings\AboutUsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Settings\PaymentSettingsPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\HomePage.xaml">
       <SubType>Designer</SubType>
     </Page>

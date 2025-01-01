@@ -220,7 +220,9 @@ namespace CoffeeShop.Views.UserControls.HomePage
         {
             if (shippingMethodComboBox.SelectedItem != null)
             {
-                bool isDelivery = shippingMethodComboBox.SelectedItem.ToString() == "Delivery";
+                var selectedShippingMethodItem = shippingMethodComboBox.SelectedItem as ComboBoxItem;
+                string shippingMethod = selectedShippingMethodItem?.Tag as string;
+                bool isDelivery = shippingMethod == "Delivery";
                 emailTextBox.IsEnabled = isDelivery;
                 addressTextBox.IsEnabled = isDelivery;
                 phoneTextBox.IsEnabled = isDelivery;

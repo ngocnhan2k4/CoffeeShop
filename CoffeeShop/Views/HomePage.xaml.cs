@@ -89,7 +89,9 @@ namespace CoffeeShop.Views
             {
                 EmailProgressRing.IsActive = false;
                 EmailProgressRing.Visibility = Visibility.Collapsed;
-                await ShowResultDialog("Success", "Email sent successfully.");
+                string statusSuccess = Application.Current.Resources["Success"] as string;
+                string emailSuccess = Application.Current.Resources["EmailSentSuccess"] as string;
+                await ShowResultDialog(statusSuccess, emailSuccess);
             }
         }
         
@@ -152,7 +154,7 @@ namespace CoffeeShop.Views
                                 var transaction = new List<Transaction>(statusResult.transactions);
                                 statusResult.transactions.ToList().ForEach((transaction) =>
                                 {
-                                    if (transaction.transaction_content.Contains(content))
+                                    if (transaction.transaction_content.ToLower().Contains(content.ToLower()))
                                     {           
                                        money_in += (int)Convert.ToDouble(transaction.amount_in);      
                                     }

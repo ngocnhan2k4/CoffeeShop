@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid  Margin="0,0,0,20" Background="LightBlue" Grid.Row="0">
+        <Grid  Margin="0,0,0,20" Background="{ThemeResource DashboardBackground}" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -146,7 +146,7 @@
                         </LinearGradientBrush>
 
                     </StackPanel.Background>
-                    <TextBlock Text="{StaticResource Orders}" 
+                    <TextBlock Text="{StaticResource TopProducts}" 
               FontWeight="Bold" 
               FontSize="25" 
               HorizontalAlignment="Center"/>
@@ -186,7 +186,7 @@
             </Border>
 
             <Border Grid.Row="2" Grid.Column="2" Background="LightPink" Margin="10" CornerRadius="15" BorderThickness="3" BorderBrush="Black">
-                <chart:SfCircularChart Header="{StaticResource TopProducts}" x:Name="CategoryRevenueChart">
+                <chart:SfCircularChart Header="{StaticResource CategoryRevenue}" x:Name="CategoryRevenueChart">
                     <chart:SfCircularChart.Legend>
                         <chart:ChartLegend/>
                     </chart:SfCircularChart.Legend>

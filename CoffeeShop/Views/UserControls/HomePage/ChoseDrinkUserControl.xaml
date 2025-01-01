@@ -154,7 +154,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="110"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{StaticResource ApplyMember}" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0" />
