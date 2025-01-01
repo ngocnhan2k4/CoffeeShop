@@ -1,3 +1,4 @@
+using CoffeeShop.Service;
 using CoffeeShop.ViewModels;
 using CoffeeShop.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -35,6 +36,8 @@ namespace CoffeeShop
             this.InitializeComponent();
             this.Activated += MainWindow_Activated;
             this.Closed += MainWindow_Closed;
+            var languageService = Ioc.Default.GetService<ILanguageSelectorService>();
+            languageService.LanguageChanged += (s, e) => UpdateNavigationViewContent();
             config();
         }
 
@@ -42,6 +45,7 @@ namespace CoffeeShop
         {
             ViewModel.ApplyTheme();
             ViewModel.ApplyLanguage();
+            UpdateNavigationViewContent();
         }
 
         private void MainWindow_Closed(object sender, WindowEventArgs args)
@@ -61,6 +65,7 @@ namespace CoffeeShop
             this.products.Tag = typeof(HomePage);
             this.settings.Tag = typeof(SettingsPage);
             this.invoices.Tag = typeof(InvoicePage);
+            this.customer.Tag = typeof(CustomerPage);
             NavView.SelectedItem = NavView.MenuItems[1];
         }
 
@@ -73,6 +78,7 @@ namespace CoffeeShop
                 case "products":
                 case "settings":
                 case "invoices":
+                case "customer":
                     var type = (Type)(selectedItem).Tag;
 
                     content.Navigate(type);
@@ -84,6 +90,32 @@ namespace CoffeeShop
             NavView.SelectedItem = NavView.MenuItems
                 .OfType<NavigationViewItem>()
                 .FirstOrDefault(item => item.Name.ToString() == pageName);
+        }
+
+        private void UpdateNavigationViewContent()
+        {
+            var resources = Application.Current.Resources;
+            foreach (NavigationViewItem item in NavView.MenuItems)
+            {
+                switch (item.Name)
+                {
+                    case "dashboard":
+                        item.Content = resources["Dashboard"];
+                        break;
+                    case "products":
+                        item.Content = resources["Products"];
+                        break;
+                    case "settings":
+                        item.Content = resources["Settings"];
+                        break;
+                    case "invoices":
+                        item.Content = resources["Invoices"];
+                        break;
+                    case "customer":
+                        item.Content = resources["Customer"];
+                        break;
+                }
+            }
         }
     }
 }

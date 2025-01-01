@@ -19,6 +19,7 @@
             <NavigationViewItem Content="{StaticResource Products}" Icon="Manage" Name="products" />
             <NavigationViewItem Content="{StaticResource Settings}" Icon="Setting" Name="settings" />
             <NavigationViewItem Content="{StaticResource Invoices}" Icon="Admin" Name="invoices" />
+            <NavigationViewItem Content="{StaticResource Customer}" Icon="People" Name="customer" />
         </NavigationView.MenuItems>
         <Frame Name="content"/>
     </NavigationView>

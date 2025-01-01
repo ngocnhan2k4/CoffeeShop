@@ -56,15 +56,16 @@ namespace CoffeeShop.Views.Settings
         private async void SaveChanges_ButtonClick(object sender, RoutedEventArgs e)
         {
             bool result = ViewModel.UpdateDrinksAndCategoriesIntoDB();
+            var resources = Application.Current.Resources;
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
                 Content = new TextBlock()
                 {
-                    Text = result ? "Save changes successfully" : "Save changes failed", 
+                    Text = result ? resources["SaveChangesSuccess"]?.ToString() : resources["SaveChangesFail"]?.ToString(), 
                     FontSize = 20
                 },
-                CloseButtonText = "Close"
+                CloseButtonText = resources["Close"]?.ToString()
             }.ShowAsync();
         }
 

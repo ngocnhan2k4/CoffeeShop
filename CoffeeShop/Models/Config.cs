@@ -17,7 +17,6 @@ namespace CoffeeShop.Models
     {
         public string Theme { get; set; }
         public string Language { get; set; }
-        public int FontSize { get; set; }
 
         public Config()
         {
@@ -30,7 +29,6 @@ namespace CoffeeShop.Models
         {
             this.Theme = other.Theme;
             this.Language = other.Language;
-            this.FontSize = other.FontSize;
         }
 
         public Config CopyFrom(Config source)
@@ -39,7 +37,6 @@ namespace CoffeeShop.Models
             {
                 this.Theme = source.Theme;
                 this.Language = source.Language;
-                this.FontSize = source.FontSize;
             }
             return this;
         }

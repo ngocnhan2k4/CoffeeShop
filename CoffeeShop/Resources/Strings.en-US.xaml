@@ -95,6 +95,11 @@
     <x:String x:Key="DiscountPercentage">Discount Percentage</x:String>
     <x:String x:Key="ValidUntil">Valid Until</x:String>
     <x:String x:Key="ApplyToCategory">Apply to Category</x:String>
+    <x:String x:Key="Active">Active</x:String>
+    <x:String x:Key="Inactive">Inactive</x:String>
+    <x:String x:Key="SaveChangesSuccess">Save changes successfully</x:String>
+    <x:String x:Key="SaveChangesFail">Save changes failed</x:String>
+    <x:String x:Key="Close">Close</x:String>
     <!-- About  -->
     <x:String x:Key="COFFEESHOPPOSSYSTEM">Coffee Shop POS System</x:String>
     <x:String x:Key="DescCoffeePos">Coffee shop POS system is an application developed using Microsoft's WINUI3 technology that helps you easily manage sales and track the store's profit statistics.</x:String>

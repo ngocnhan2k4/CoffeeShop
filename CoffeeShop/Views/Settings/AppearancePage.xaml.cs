@@ -47,16 +47,38 @@ namespace CoffeeShop.Views.Settings
         private async void ButtonSaveChanges_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.SaveChanges();
-            await new ContentDialog()
+            UpdateUI();
+
+            // Force refresh current page with delay to ensure resource loading
+            if (Frame != null)
             {
-                XamlRoot = XamlRoot,
-                Content = new TextBlock()
+                var currentPage = Frame.Content;
+                var pageType = currentPage.GetType();
+                
+                // Navigate to the same page to force a complete refresh
+                Frame.Navigate(pageType);
+
+                // Show success dialog after navigation
+                var resources = Application.Current.Resources;
+                await new ContentDialog()
                 {
-                    Text = "Save changes successfully",
-                    FontSize = 20
-                },
-                CloseButtonText = "Close"
-            }.ShowAsync();
+                    XamlRoot = XamlRoot,
+                    Content = new TextBlock()
+                    {
+                        Text = resources["SaveChangesSuccess"]?.ToString() ?? "Save changes successfully",
+                        FontSize = 20
+                    },
+                    CloseButtonText = resources["Close"]?.ToString() ?? "Close"
+                }.ShowAsync();
+            }
         }
+
+        //private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (sender is ComboBox comboBox && comboBox.SelectedItem is string selectedLanguage)
+        //    {
+        //        ViewModel.SetLanguageCommand.Execute(selectedLanguage);
+        //    }
+        //}
     }
 }
