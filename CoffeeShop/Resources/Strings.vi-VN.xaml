@@ -23,6 +23,8 @@
     <x:String x:Key="Total">Tổng cộng</x:String>
     <x:String x:Key="Subtotal">Tổng cộng</x:String>
     <x:String x:Key="Status">Trạng thái</x:String>
+    <x:String x:Key="ColMonth">Tháng</x:String>
+    <x:String x:Key="ColRevenue">Doanh thu</x:String>
 
     <!-- Home/Products -->
     <x:String x:Key="Products">Sản phẩm</x:String>
@@ -40,6 +42,9 @@
     <x:String x:Key="Cash">Tiền mật</x:String>
     <x:String x:Key="Bank">Ngân hàng</x:String>
     <x:String x:Key="Inplace">Tại chỗ</x:String>
+    <x:String x:Key="ApplyMem">Thành viên</x:String>
+    <x:String x:Key="IDCus">ID khách hàng:</x:String>
+    <x:String x:Key="EnterID">Nhập ID</x:String>
 
     <!-- Settings -->
     <x:String x:Key="Settings">Cài đặt</x:String>
@@ -114,4 +119,27 @@
     <x:String x:Key="PriceDecrease">Giá: giảm</x:String>
     <x:String x:Key="ShipFee">Phí giao hàng</x:String>
 
+    <!--Customer Page-->
+    <x:String x:Key="CustomerPage">Khách Hàng</x:String>
+    <x:String x:Key="AddCustomer">Thêm khách hàng</x:String>
+    <x:String x:Key="EditCustomer">Chỉnh sửa khách hàng</x:String>
+    <x:String x:Key="DiscountSetting">Chỉnh sửa giảm giá</x:String>
+    <x:String x:Key="Cusid">Mã thẻ</x:String>
+    <x:String x:Key="Cusname">Tên khách hàng</x:String>
+    <x:String x:Key="TotalPoint">Tổng điểm tích lũy</x:String>
+    <x:String x:Key="TotalMoney">Tổng tiền tích lũy</x:String>
+    <x:String x:Key="TypeCard">Loại thẻ</x:String>
+    <x:String x:Key="Action">Hành động</x:String>
+    <x:String x:Key="Edit">Chỉnh sửa</x:String>
+    <x:String x:Key="SearchCus">Tìm kiếm...</x:String>
+    <x:String x:Key="CusAddButton">Thêm</x:String>
+    <x:String x:Key="CusCancelButton">Hủy</x:String>
+    <x:String x:Key="CusSaveButton">Lưu</x:String>
+    <x:String x:Key="CusDeleteButton">Xóa</x:String>
+    <x:String x:Key="CusUpdateButton">Cập nhật</x:String>
+    <x:String x:Key="ErrorEmptyName">Tên khách hàng không được để trống.</x:String>
+    <x:String x:Key="MemberCardDis">Chiết khấu thành viên (%)</x:String>
+    <x:String x:Key="SilverCardDis">Chiết khấu thẻ bạc (%)</x:String>
+    <x:String x:Key="GoldCardDis">Chiết khấu thẻ vàng (%)</x:String>
+    <x:String x:Key="ErrorPer">Vui lòng nhập tỷ lệ chiết khấu hợp lệ.</x:String>
 </ResourceDictionary>

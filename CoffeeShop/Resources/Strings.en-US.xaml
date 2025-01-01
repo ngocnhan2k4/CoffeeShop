@@ -22,6 +22,8 @@
     <x:String x:Key="Customer">Customer</x:String>
     <x:String x:Key="Total">Total</x:String>
     <x:String x:Key="Status">Status</x:String>
+    <x:String x:Key="ColMonth">Month</x:String>
+    <x:String x:Key="ColRevenue">Revenue</x:String>
 
     <!-- Home/Products -->
     <x:String x:Key="Products">Products</x:String>
@@ -40,6 +42,9 @@
     <x:String x:Key="Bank">Bank</x:String>
     <x:String x:Key="Inplace">Inplace</x:String>
     <x:String x:Key="Error">Error</x:String>
+    <x:String x:Key="ApplyMem">Member</x:String>
+    <x:String x:Key="IDCus">ID customer:</x:String>
+    <x:String x:Key="EnterID">Enter ID</x:String>
 
     <!-- Settings -->
     <x:String x:Key="Settings">Settings</x:String>
@@ -113,4 +118,28 @@
     <x:String x:Key="ShipFee">Shipping Fee</x:String>
     <x:String x:Key="Complete">Complete</x:String>
 
+
+    <!--Customer Page-->
+    <x:String x:Key="CustomerPage">Customers</x:String>
+    <x:String x:Key="AddCustomer">Add Customer</x:String>
+    <x:String x:Key="EditCustomer">EditCustomer</x:String>
+    <x:String x:Key="DiscountSetting">Discount Setting</x:String>
+    <x:String x:Key="Cusid">ID</x:String>
+    <x:String x:Key="Cusname">Customer Name</x:String>
+    <x:String x:Key="TotalPoint">Total Point</x:String>
+    <x:String x:Key="TotalMoney">Total Money</x:String>
+    <x:String x:Key="TypeCard">Type Card</x:String>
+    <x:String x:Key="Action">Action</x:String>
+    <x:String x:Key="Edit">Edit</x:String>
+    <x:String x:Key="SearchCus">Search...</x:String>
+    <x:String x:Key="CusAddButton">Add</x:String>
+    <x:String x:Key="CusCancelButton">Cancel</x:String>
+    <x:String x:Key="CusSaveButton">Save</x:String>
+    <x:String x:Key="CusDeleteButton">Delete</x:String>
+    <x:String x:Key="CusUpdateButton">Update</x:String>
+    <x:String x:Key="ErrorEmptyName">Customer name cannot be empty.</x:String>
+    <x:String x:Key="MemberCardDis">Member Card Discount (%)</x:String>
+    <x:String x:Key="SilverCardDis">Silver Card Discount (%)</x:String>
+    <x:String x:Key="GoldCardDis">Gold Card Discount (%)</x:String>
+    <x:String x:Key="ErrorPer">Please enter valid discount percentages.</x:String>
 </ResourceDictionary>

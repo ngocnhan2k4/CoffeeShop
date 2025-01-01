@@ -25,7 +25,7 @@
 
         <StackPanel Orientation="Vertical" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <TextBlock FontWeight="Bold" Text="Customers" FontSize="30" VerticalAlignment="Top"/>
+                <TextBlock FontWeight="Bold" Text="{StaticResource CustomerPage}" FontSize="30" VerticalAlignment="Top"/>
                 <TextBlock Text="POS" FontStyle="Oblique" VerticalAlignment="Top" Margin="5,8,0,0" FontWeight="SemiLight"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -38,15 +38,15 @@
 
                 <!-- Search TextBox -->
                 <TextBox Width="500" Height="40" 
-             PlaceholderText="Tìm kiếm..." Margin="0" VerticalAlignment="Center" x:Name="searchBox" />
+             PlaceholderText="{StaticResource SearchCus}" Margin="0" VerticalAlignment="Center" x:Name="searchBox" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
-                    <Button Content="Add Customer" Width="Auto" Foreground="White" Click="addButton_Click"/>
+                    <Button Content="{StaticResource AddCustomer}" Width="Auto" Foreground="White" Click="addButton_Click"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
-                    <Button Content="Discount Setting" Width="Auto" Foreground="White" Click="discountButton_Click"/>
+                    <Button Content="{StaticResource DiscountSetting}" Width="Auto" Foreground="White" Click="discountButton_Click"/>
                 </StackPanel>
             </StackPanel>
 
@@ -62,12 +62,12 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Mã thẻ" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Center" />
-            <TextBlock Text="Tên khách hàng" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Center" />
-            <TextBlock Text="Tổng tiền tích lũy" Grid.Column="2" FontWeight="Bold" HorizontalAlignment="Center" />
-            <TextBlock Text="Tổng điểm tích lũy" Grid.Column="3" FontWeight="Bold" HorizontalAlignment="Center" />
-            <TextBlock Text="Loại thẻ" Grid.Column="4" FontWeight="Bold" HorizontalAlignment="Center" />
-            <TextBlock Text="Action" Grid.Column="5" FontWeight="Bold" HorizontalAlignment="Center" />
+            <TextBlock Text="{StaticResource Cusid}" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Center" />
+            <TextBlock Text="{StaticResource Cusname}" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Center" />
+            <TextBlock Text="{StaticResource TotalMoney}" Grid.Column="2" FontWeight="Bold" HorizontalAlignment="Center" />
+            <TextBlock Text="{StaticResource TotalPoint}" Grid.Column="3" FontWeight="Bold" HorizontalAlignment="Center" />
+            <TextBlock Text="{StaticResource TypeCard}" Grid.Column="4" FontWeight="Bold" HorizontalAlignment="Center" />
+            <TextBlock Text="{StaticResource Action}" Grid.Column="5" FontWeight="Bold" HorizontalAlignment="Center" />
         </Grid>
 
         <ListView Grid.Row="1" Margin="0,50,0,0" ItemsSource="{x:Bind ViewModel.Customers,Mode=OneWay}">
@@ -129,7 +129,7 @@
                             <TextBlock Text="{x:Bind type}" HorizontalAlignment="Center" Margin="10 8 0 0"/>
                         </Border>
                         <Border Grid.Column="5" BorderBrush="LightGray" BorderThickness="1,0,0,0">
-                            <Button Content="Edit" HorizontalAlignment="Center" Margin="20 0 15 0" Click="editButton_Click"/>
+                            <Button Content="{StaticResource Edit}" HorizontalAlignment="Center" Margin="20 0 15 0" Click="editButton_Click"/>
                         </Border>
                     </Grid>
                 </DataTemplate>
@@ -153,7 +153,7 @@
         SelectionChanged="pagesComboBox_SelectionChanged" 
         VerticalAlignment="Center" Margin="10"/>
 
-            <TextBlock Text="of" FontSize="18" VerticalAlignment="Center" Margin="5"/>
+            <TextBlock Text="/" FontSize="18" VerticalAlignment="Center" Margin="5"/>
             <TextBlock Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5"/>
 
             <Button Content="&#xE72A;" FontFamily="Segoe MDL2 Assets" 
@@ -162,33 +162,33 @@
         </StackPanel>
 
         <ContentDialog x:Name="AddCustomerDialog"
-               Title="Add Customer"
-               PrimaryButtonText="Add"
-               SecondaryButtonText="Cancel"
+               Title="{StaticResource AddCustomer}"
+               PrimaryButtonText="{StaticResource CusAddButton}"
+               SecondaryButtonText="{StaticResource CusCancelButton}"
                PrimaryButtonClick="AddCustomerDialog_PrimaryButtonClick"
                >
             <StackPanel>
-                <TextBox x:Name="CustomerNameTextBox" Header="Customer Name" TextChanged="CustomerNameTextBox_TextChanged"/>
-                <TextBlock x:Name="CustomerNameErrorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Customer name cannot be empty."/>
+                <TextBox x:Name="CustomerNameTextBox" Header="{StaticResource Cusname}" TextChanged="CustomerNameTextBox_TextChanged"/>
+                <TextBlock x:Name="CustomerNameErrorTextBlock" Foreground="Red" Visibility="Collapsed" Text="{StaticResource ErrorEmptyName}"/>
             </StackPanel>
         </ContentDialog>
 
         <ContentDialog x:Name="EditCustomerDialog"
-               Title="Edit Customer"
-               PrimaryButtonText="Update"
-               SecondaryButtonText="Cancel"
+               Title="{StaticResource EditCustomer}"
+               PrimaryButtonText="{StaticResource CusUpdateButton}"
+               SecondaryButtonText="{StaticResource CusCancelButton}"
                PrimaryButtonClick="EditCustomerDialog_PrimaryButtonClick">
             <StackPanel>
-                <TextBox x:Name="EditCustomerNameTextBox" Header="Customer Name"/>
-                <TextBlock x:Name="EditCustomerErrorTextBlock" Foreground="Red" Visibility="Collapsed" Text="Customer name cannot be empty."/>
-                <Button Content="Delete" Click="DeleteCustomerButton_Click" Foreground="Red" Margin="0 20 0 0"/>
+                <TextBox x:Name="EditCustomerNameTextBox" Header="{StaticResource Cusname}"/>
+                <TextBlock x:Name="EditCustomerErrorTextBlock" Foreground="Red" Visibility="Collapsed" Text="{StaticResource ErrorEmptyName}"/>
+                <Button Content="{StaticResource CusDeleteButton}" Click="DeleteCustomerButton_Click" Foreground="Red" Margin="0 20 0 0"/>
             </StackPanel>
         </ContentDialog>
 
         <ContentDialog x:Name="DiscountSettingDialog"
-                Title="Discount Setting"
-                PrimaryButtonText="Save"
-                SecondaryButtonText="Cancel"
+                Title="{StaticResource DiscountSetting}"
+                PrimaryButtonText="{StaticResource CusSaveButton}"
+                SecondaryButtonText="{StaticResource CusCancelButton}"
                 PrimaryButtonClick="DiscountSettingDialog_PrimaryButtonClick">
             <StackPanel>
                 <Grid Margin="0,0,0,10">
@@ -196,7 +196,7 @@
                         <ColumnDefinition Width="178px"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Member Card Discount (%)" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="{StaticResource MemberCardDis}" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <TextBox x:Name="MemberCardDiscountTextBox" Text="{x:Bind ViewModel.MemberCardDiscount, Mode=OneWay}" Grid.Column="1"/>
                 </Grid>
 
@@ -205,7 +205,7 @@
                         <ColumnDefinition Width="178px"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Silver Card Discount (%)" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="{StaticResource SilverCardDis}" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <TextBox x:Name="SilverCardDiscountTextBox" Text="{x:Bind ViewModel.SilverCardDiscount, Mode=OneWay}" Grid.Column="1"/>
                 </Grid>
 
@@ -214,7 +214,7 @@
                         <ColumnDefinition Width="178px"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Gold Card Discount (%)" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="{StaticResource GoldCardDis}" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <TextBox x:Name="GoldCardDiscountTextBox" Text="{x:Bind ViewModel.GoldCardDiscount, Mode=OneWay}" Grid.Column="1"/>
                 </Grid>
                 <TextBlock x:Name="ErrorTextBlock" Foreground="Red" Margin="0,10,0,0" Text="" Visibility="Collapsed"/>
