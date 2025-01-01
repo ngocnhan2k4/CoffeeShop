@@ -112,13 +112,15 @@ namespace CoffeeShop.Views.UserControls.HomePage
             string name = nameTextBox.Text;
             string phone = phoneTextBox.Text;
             string address = addressTextBox.Text;
-            string paymentMethod = paymentMethodComboBox.SelectedItem as string;
-            string shippingMethod = shippingMethodComboBox.SelectedItem as string;
+            var selectedPaymentMethodItem = paymentMethodComboBox.SelectedItem as ComboBoxItem;
+            string paymentMethod = selectedPaymentMethodItem?.Tag.ToString();
+            var selectedShippingMethodItem = shippingMethodComboBox.SelectedItem as ComboBoxItem;
+            string shippingMethod = selectedShippingMethodItem?.Tag as string;
             string memberID = idTextBox.Text;
 
             if (string.IsNullOrWhiteSpace(name) || paymentMethod == null || shippingMethod == null || memberID==null)
             {
-                errorTextBlock.Text = "Please type and choose all fields.";
+                errorTextBlock.Text = Application.Current.Resources["ErrorType"] as string;
                 errorTextBlock.Visibility = Visibility.Visible;
                 args.Cancel = true;
                 return;
@@ -128,7 +130,7 @@ namespace CoffeeShop.Views.UserControls.HomePage
             {
                 if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(address))
                 {
-                    errorTextBlock.Text = "Please type and choose all fields.";
+                    errorTextBlock.Text = Application.Current.Resources["ErrorType"] as string;
                     errorTextBlock.Visibility = Visibility.Visible;
                     args.Cancel = true;
                     return;
@@ -136,7 +138,7 @@ namespace CoffeeShop.Views.UserControls.HomePage
                 // Validate email and phone number formats
                 if (!IsValidEmail(email))
                 {
-                    errorTextBlock.Text = "Invalid email format.";
+                    errorTextBlock.Text = Application.Current.Resources["ErrorEmail"] as string;
                     errorTextBlock.Visibility = Visibility.Visible;
                     args.Cancel = true;
                     return;
@@ -144,7 +146,7 @@ namespace CoffeeShop.Views.UserControls.HomePage
 
                 if (!IsValidPhone(phone))
                 {
-                    errorTextBlock.Text = "Invalid phone number format.";
+                    errorTextBlock.Text = Application.Current.Resources["ErrorPhone"] as string;
                     errorTextBlock.Visibility = Visibility.Visible;
                     args.Cancel = true;
                     return;
@@ -153,7 +155,7 @@ namespace CoffeeShop.Views.UserControls.HomePage
 
             if (!int.TryParse(memberID, out int memberId) && applyMemberInfoSwitch.IsOn)
             {
-                errorTextBlock.Text = "Member ID must be an integer.";
+                errorTextBlock.Text = Application.Current.Resources["ErrorID"] as string;
                 errorTextBlock.Visibility = Visibility.Visible;
                 args.Cancel = true;
                 return;
@@ -164,7 +166,7 @@ namespace CoffeeShop.Views.UserControls.HomePage
 
             if (!validMemberIds.Contains(memberId) && applyMemberInfoSwitch.IsOn)
             {
-                errorTextBlock.Text = "Invalid member ID.";
+                errorTextBlock.Text = Application.Current.Resources["ErrorInvalidID"] as string;
                 errorTextBlock.Visibility = Visibility.Visible;
                 args.Cancel = true;
                 return;
@@ -218,7 +220,9 @@ namespace CoffeeShop.Views.UserControls.HomePage
         {
             if (shippingMethodComboBox.SelectedItem != null)
             {
-                bool isDelivery = shippingMethodComboBox.SelectedItem.ToString() == "Delivery";
+                var selectedShippingMethodItem = shippingMethodComboBox.SelectedItem as ComboBoxItem;
+                string shippingMethod = selectedShippingMethodItem?.Tag as string;
+                bool isDelivery = shippingMethod == "Delivery";
                 emailTextBox.IsEnabled = isDelivery;
                 addressTextBox.IsEnabled = isDelivery;
                 phoneTextBox.IsEnabled = isDelivery;

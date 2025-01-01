@@ -5,7 +5,10 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
-    <Page Update="Views\CustomerPage.xaml">
+    <Page Update="Resources\Strings.vi-VN.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Strings.en-US.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UserControls\HomePage\DrinkListUserControl.xaml">
@@ -36,9 +39,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Settings\AboutUsPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Settings\PaymentSettingsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomePage.xaml">

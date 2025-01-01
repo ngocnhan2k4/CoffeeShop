@@ -71,11 +71,11 @@
 
                     <TextBlock HorizontalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}"
                     Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">
-                    <Run x:Name="StockTextBlock" Text="{Binding Sizes[0].Stock}"/><Run Text=" available"/>
+                    <Run x:Name="StockTextBlock" Text="{Binding Sizes[0].Stock}"/><Run Text=" "/><Run Text="{StaticResource Available}"/>
                     </TextBlock>
 
                         <!-- Button to trigger item click behavior -->
-                    <Button Content="Add" Click="Button_Click" HorizontalAlignment="Center" Margin="5"/>
+                        <Button Content="{StaticResource Add}" Click="Button_Click" HorizontalAlignment="Center" Margin="5"/>
                 </StackPanel>
                 </StackPanel>
             </Canvas>
@@ -108,7 +108,7 @@
 
                 <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">
                     <Grid>
-                        <TextBox x:Name="SearchTextBox" Width="300" PlaceholderText="Search..." Background="Transparent" Padding="50,5,0,5"/>
+                        <TextBox x:Name="SearchTextBox" Width="300" PlaceholderText="{StaticResource Search}" Background="Transparent" Padding="50,5,0,5"/>
                         <!--Text="{x:Bind ViewModel.Keyword, 
                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
                         <Button Content="&#xE721;" FontFamily="Segoe MDL2 Assets"   Width="50" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Background="Transparent" BorderThickness="0" Click="Search_Click"
@@ -125,14 +125,14 @@
                 </Grid.ColumnDefinitions>
                 
                 <SelectorBar x:Name="SelectorBar" Grid.Column="0" SelectionChanged="SelectorBar_SelectionChanged">
-                    <SelectorBarItem Text="All" Tag="-1" IsSelected="True" />
+                    <SelectorBarItem Text="{StaticResource All}" Tag="-1" IsSelected="True" />
                 </SelectorBar>
 
                 <ComboBox x:Name="SortComboBox" Grid.Column="1" SelectionChanged="SortComboBox_SelectionChanged" SelectedIndex="0" >
-                    <ComboBoxItem Content="Unsort" Tag="Normal"/>
-                    <ComboBoxItem Content="Stock" Tag="Stock"/>
-                    <ComboBoxItem Content="Price: Increase" Tag="PriceIncrease"/>
-                    <ComboBoxItem Content="Price: Decrease" Tag="PriceDecrease"/>
+                    <ComboBoxItem Content="{StaticResource Unsort}" Tag="Normal"/>
+                    <ComboBoxItem Content="{StaticResource Stock}" Tag="Stock"/>
+                    <ComboBoxItem Content="{StaticResource PriceIncrease}" Tag="PriceIncrease"/>
+                    <ComboBoxItem Content="{StaticResource PriceDecrease}" Tag="PriceDecrease"/>
                 </ComboBox>
             </Grid>
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center">

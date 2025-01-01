@@ -152,7 +152,7 @@ namespace CoffeeShop.Views
 
             if (int.TryParse(MemberCardDiscountTextBox.Text, out int memberCardDiscount) &&
                 int.TryParse(SilverCardDiscountTextBox.Text, out int silverCardDiscount) &&
-                int.TryParse(GoldCardDiscountTextBox.Text, out int goldCardDiscount))
+                int.TryParse(GoldCardDiscountTextBox.Text, out int goldCardDiscount) && memberCardDiscount >= 0 && memberCardDiscount <= 100 && silverCardDiscount >= 0 && silverCardDiscount <= 100 && goldCardDiscount >= 0 && goldCardDiscount <= 100)
             {
                 
                 ViewModel.MemberCardDiscount = memberCardDiscount;
@@ -164,7 +164,7 @@ namespace CoffeeShop.Views
             else
             {
                 args.Cancel = true;
-                ErrorTextBlock.Text = "Please enter valid discount percentages.";
+                ErrorTextBlock.Text = Application.Current.Resources["ErrorPer"] as string;
                 ErrorTextBlock.Visibility = Visibility.Visible;
                
             }

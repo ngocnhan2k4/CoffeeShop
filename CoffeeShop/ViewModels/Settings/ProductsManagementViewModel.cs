@@ -56,8 +56,8 @@ namespace CoffeeShop.ViewModels.Settings
         {
             _selectedCategoryIndex = 0;
             NameSizes = ["S", "M", "L"];
-            _dao = new SqlServerDao();
-             //_dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
+            //_dao = new SqlServerDao();
+             _dao = ServiceFactory.GetChildOf(typeof(IDao)) as IDao;
             Drinks = _dao.GetDrinks();
             Categories = new (_dao.GetCategories());
             NewDrinks = [];

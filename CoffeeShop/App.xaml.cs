@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Windowing;
+using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -79,6 +79,8 @@ namespace CoffeeShop
         {
             var services = new ServiceCollection();
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            services.AddSingleton<ILanguageSelectorService, LanguageSelectorService>();
+            services.AddSingleton<AppearanceViewModel>();
             services.AddSingleton<MainViewModel>();
             return services.BuildServiceProvider();
         }

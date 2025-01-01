@@ -25,18 +25,60 @@ namespace CoffeeShop.Views.Settings
     /// </summary>
     public sealed partial class AppearancePage : Page
     {
-        public MainViewModel ViewModel { get; set; }
+        public AppearanceViewModel ViewModel { get; set; }
         public AppearancePage()
         {
-            ViewModel = Ioc.Default.GetService<MainViewModel>();
+            ViewModel = Ioc.Default.GetService<AppearanceViewModel>();
             this.InitializeComponent();
-            if(ViewModel.GetTheme() == ElementTheme.Dark) {
-                DarkThemeRadioButton.IsChecked = true;
-            }
-            else
+            UpdateUI();
+        }
+        public void UpdateUI()
+        {
+            LightThemeRadioButton.IsChecked = (ViewModel.GetTheme() == ElementTheme.Light);
+            DarkThemeRadioButton.IsChecked = (ViewModel.GetTheme() == ElementTheme.Dark);
+        }
+
+        private void ButtonReset_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ResetSettings();
+            UpdateUI();
+        }
+
+        private async void ButtonSaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SaveChanges();
+            UpdateUI();
+
+            // Force refresh current page with delay to ensure resource loading
+            if (Frame != null)
             {
-                LightThemeRadioButton.IsChecked = true;
+                var currentPage = Frame.Content;
+                var pageType = currentPage.GetType();
+                
+                // Navigate to the same page to force a complete refresh
+                Frame.Navigate(pageType);
+
+                // Show success dialog after navigation
+                var resources = Application.Current.Resources;
+                await new ContentDialog()
+                {
+                    XamlRoot = XamlRoot,
+                    Content = new TextBlock()
+                    {
+                        Text = resources["SaveChangesSuccess"]?.ToString() ?? "Save changes successfully",
+                        FontSize = 20
+                    },
+                    CloseButtonText = resources["Close"]?.ToString() ?? "Close"
+                }.ShowAsync();
             }
         }
+
+        //private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (sender is ComboBox comboBox && comboBox.SelectedItem is string selectedLanguage)
+        //    {
+        //        ViewModel.SetLanguageCommand.Execute(selectedLanguage);
+        //    }
+        //}
     }
 }

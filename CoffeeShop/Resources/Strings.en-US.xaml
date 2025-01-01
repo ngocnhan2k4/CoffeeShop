@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Common -->
+    <x:String x:Key="AppearanceSettings">Appearance Settings</x:String>
+    <x:String x:Key="Theme">Theme</x:String>
+    <x:String x:Key="Light">Light</x:String>
+    <x:String x:Key="Dark">Dark</x:String>
+    <x:String x:Key="FontSize">Font Size</x:String>
+    <x:String x:Key="SampleText">Sample Text</x:String>
+    <x:String x:Key="Language">Language</x:String>
+    <x:String x:Key="SelectLanguage">Select Language</x:String>
+    <x:String x:Key="SaveChanges">Save Changes</x:String>
+    <x:String x:Key="Reset">Reset</x:String>
+
+    <!-- Dashboard -->
+    <x:String x:Key="Dashboard">Dashboard</x:String>
+    <x:String x:Key="Revenue">Revenue</x:String>
+    <x:String x:Key="Sales">Number Orders</x:String>
+    <x:String x:Key="CategoryRevenue">Category Revenue</x:String>
+    <x:String x:Key="Orders">Orders</x:String>
+    <x:String x:Key="TopProducts">Top Products</x:String>
+    <x:String x:Key="RecentOrders">Recent Orders</x:String>
+    <x:String x:Key="Customer">Customer</x:String>
+    <x:String x:Key="Total">Total</x:String>
+    <x:String x:Key="Status">Status</x:String>
+    <x:String x:Key="ColMonth">Month</x:String>
+    <x:String x:Key="ColRevenue">Revenue</x:String>
+
+    <!-- Home/Products -->
+    <x:String x:Key="Products">Products</x:String>
+    <x:String x:Key="Search">Search</x:String>
+    <x:String x:Key="AddToCart">Add to Cart</x:String>
+    <x:String x:Key="Price">Price</x:String>
+    <x:String x:Key="Category">Category</x:String>
+    <x:String x:Key="Result">Result</x:String>
+    <x:String x:Key="BankPayment">Bank payment</x:String>
+    <x:String x:Key="WaitPayment">Waiting for payment...</x:String>
+    <x:String x:Key="Canceling">Canceling...</x:String>
+    <x:String x:Key="SuccessPayment">Payment success</x:String>
+    <x:String x:Key="Success">Success</x:String>
+    <x:String x:Key="Fail">Fail</x:String>
+    <x:String x:Key="OrderSuccess">Order successfully.</x:String>
+    <x:String x:Key="OrderFail">Order failed.</x:String>
+    <x:String x:Key="NoPayment">No Payment</x:String>
+    <x:String x:Key="FailPayment">Payment failed</x:String>
+    <x:String x:Key="ErrorType">Please type and choose all fields.</x:String>
+    <x:String x:Key="ErrorEmail">Invalid email format.</x:String>
+    <x:String x:Key="ErrorPhone">Invalid phone number format.</x:String>
+    <x:String x:Key="ErrorID">Member ID must be an integer.</x:String>
+    <x:String x:Key="ErrorInvalidID">Invalid member ID.</x:String>
+
+    <!-- Invoice -->
+    <x:String x:Key="Invoices">Invoices</x:String>
+    <x:String x:Key="Invoice">Invoice</x:String>
+    <x:String x:Key="InvoiceDetails">Invoice Details</x:String>
+    <x:String x:Key="OrderDate">Order Date</x:String>
+    <x:String x:Key="OrderNote">Order Note</x:String>
+    <x:String x:Key="Delivery">Delivery</x:String>
+    <x:String x:Key="Cash">Cash</x:String>
+    <x:String x:Key="Bank">Bank</x:String>
+    <x:String x:Key="Inplace">Inplace</x:String>
+    <x:String x:Key="Error">Error</x:String>
+    <x:String x:Key="BillTo">Bill to:</x:String>
+    <x:String x:Key="ShipTo">Ship to:</x:String>
+    <x:String x:Key="InvoiceNo">Invoice No.</x:String>
+
+    <!-- Settings -->
+    <x:String x:Key="Settings">Settings</x:String>
+    <x:String x:Key="General">General</x:String>
+    <x:String x:Key="Appearance">Appearance</x:String>
+    <x:String x:Key="AppearanceTag">Dark and Light mode, Font size</x:String>
+    <x:String x:Key="ProductsManagement">Products Management</x:String>
+    <x:String x:Key="ProductsManagementTag">Manage your product, pricing, etc</x:String>
+    <x:String x:Key="PaymentSettings">Payment Settings</x:String>
+    <x:String x:Key="PaymentSettingsTag">Payment gateways</x:String>
+    <x:String x:Key="AboutUs">About Us</x:String>
+    <x:String x:Key="AboutUsTag">Find out more about Mono, Visa, etc</x:String>
+    <x:String x:Key="EditDish">Edit Dish</x:String>
+    <x:String x:Key="ManageCategories">Manage Categories</x:String>
+    <x:String x:Key="ManageDiscounts">Manage Discounts</x:String>
+    <x:String x:Key="AddDrink">Add Drink</x:String>
+    <x:String x:Key="Cups">Cups</x:String>
+    <x:String x:Key="DiscardChanges">Discard Changes</x:String>
+    <x:String x:Key="EditDrink">Edit Drink</x:String>
+    <x:String x:Key="Save">Save</x:String>
+    <x:String x:Key="Cancel">Cancel</x:String>
+    <x:String x:Key="NameDrink">Name Drink</x:String>
+    <x:String x:Key="Description">Description</x:String>
+    <x:String x:Key="Sizes">Sizes</x:String>
+    <x:String x:Key="Stock">Stock</x:String>
+    <x:String x:Key="ChooseImage">Choose Image</x:String>
+    <x:String x:Key="ExistingCategories">Existing Categories</x:String>
+    <x:String x:Key="AddCategory">Add Category</x:String>
+    <x:String x:Key="EnterCategoryName">Enter category name</x:String>
+    <x:String x:Key="ActiveDiscounts">Active Discounts</x:String>
+    <x:String x:Key="AddDiscount">Add Discount</x:String>
+    <x:String x:Key="NameDiscount">Discount Name</x:String>
+    <x:String x:Key="DiscountPercentage">Discount Percentage</x:String>
+    <x:String x:Key="ValidUntil">Valid Until</x:String>
+    <x:String x:Key="ApplyToCategory">Apply to Category</x:String>
+    <x:String x:Key="Active">Active</x:String>
+    <x:String x:Key="Inactive">Inactive</x:String>
+    <x:String x:Key="SaveChangesSuccess">Save changes successfully</x:String>
+    <x:String x:Key="SaveChangesFail">Save changes failed</x:String>
+    <x:String x:Key="Close">Close</x:String>
+    <!-- About  -->
+    <x:String x:Key="COFFEESHOPPOSSYSTEM">Coffee Shop POS System</x:String>
+    <x:String x:Key="DescCoffeePos">Coffee shop POS system is an application developed using Microsoft's WINUI3 technology that helps you easily manage sales and track the store's profit statistics.</x:String>
+    <x:String x:Key="AboutUsDesc">We are studying the Windows Programming course taught by Trần Duy Quang, in the Faculty of Information Technology at the University of Science,
+        Vietnam National University, Ho Chi Minh City.</x:String>
+    <x:String x:Key="Contact">Contact</x:String>
+    <x:String x:Key="ContactDesc">For any inquiries about the application, please contact nhan@gmail.com.</x:String>
+    <x:String x:Key="OpenSource">Open Source</x:String>
+    
+ <!-- Choose Drink User Control -->
+    <x:String x:Key="Order">Order</x:String>
+    <x:String x:Key="OrderButton">Order</x:String>
+    <x:String x:Key="TotalPrice">Total Price</x:String>
+    <x:String x:Key="Name">Name</x:String>
+    <x:String x:Key="EnterName">Enter name</x:String>
+    <x:String x:Key="PhoneNumber">Phone Number</x:String>
+    <x:String x:Key="EnterPhoneNumber">Enter phone number</x:String>
+     <x:String x:Key="Address">Address</x:String>
+    <x:String x:Key="EnterAddress">Enter address</x:String>
+     <x:String x:Key="EmailCustomer">Email Customer</x:String>
+    <x:String x:Key="EnterEmailCustomer">Enter email customer</x:String>
+    <x:String x:Key="ShippingMethod">Shipping Method</x:String>
+    <x:String x:Key="PaymentMethod">Payment Method</x:String>
+    <x:String x:Key="OrderDetail">Order Detail</x:String>
+    <x:String x:Key="Quantity">Quantity</x:String>
+    <x:String x:Key="OrderError">Order Error</x:String>
+    <x:String x:Key="OrderErrorContent">Please choose drink before ordering</x:String>
+    <x:String x:Key="ApplyMember">Apply member:</x:String>
+    <x:String x:Key="IdCustomer">ID customer:</x:String>
+    <x:String x:Key="EmailSentSuccess">Email sent successfully.</x:String>
+    <!-- Drink List User Control -->
+    <x:String x:Key="Add">Add</x:String>
+    <x:String x:Key="Unsort">Default</x:String>
+    <x:String x:Key="PriceIncrease">Price: Increase</x:String>
+    <x:String x:Key="PriceDecrease">Price: Decrease</x:String>
+    <x:String x:Key="Subtotal">Total</x:String>
+    <x:String x:Key="ShipFee">Shipping Fee</x:String>
+    <x:String x:Key="Complete">Complete</x:String>
+
+
+    <!--Customer Page-->
+    <x:String x:Key="CustomerPage">Customers</x:String>
+    <x:String x:Key="AddCustomer">Add Customer</x:String>
+    <x:String x:Key="EditCustomer">EditCustomer</x:String>
+    <x:String x:Key="DiscountSetting">Discount Setting</x:String>
+    <x:String x:Key="Cusid">ID</x:String>
+    <x:String x:Key="Cusname">Customer Name</x:String>
+    <x:String x:Key="TotalPoint">Total Point</x:String>
+    <x:String x:Key="TotalMoney">Total Money</x:String>
+    <x:String x:Key="TypeCard">Type Card</x:String>
+    <x:String x:Key="Action">Action</x:String>
+    <x:String x:Key="Edit">Edit</x:String>
+    <x:String x:Key="SearchCus">Search...</x:String>
+    <x:String x:Key="CusAddButton">Add</x:String>
+    <x:String x:Key="CusCancelButton">Cancel</x:String>
+    <x:String x:Key="CusSaveButton">Save</x:String>
+    <x:String x:Key="CusDeleteButton">Delete</x:String>
+    <x:String x:Key="CusUpdateButton">Update</x:String>
+    <x:String x:Key="ErrorEmptyName">Customer name cannot be empty.</x:String>
+    <x:String x:Key="MemberCardDis">Member Card Discount (%)</x:String>
+    <x:String x:Key="SilverCardDis">Silver Card Discount (%)</x:String>
+    <x:String x:Key="GoldCardDis">Gold Card Discount (%)</x:String>
+    <x:String x:Key="ErrorPer">Please enter valid discount percentages.</x:String>
+    <x:String x:Key="All">All</x:String>
+    <x:String x:Key="Available">available</x:String>
+</ResourceDictionary>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using static CoffeeShop.Service.DataAccess.IDao;
 using dotenv.net;
+using System.Globalization;
 namespace CoffeeShop.Service.DataAccess
 {
 
@@ -395,10 +396,17 @@ namespace CoffeeShop.Service.DataAccess
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = new SqlCommand("""
-                SELECT SUM(total) FROM Invoice WHERE YEAR(Created_At) = @Year and status != 'Cancel'
-                """, conn);
+        SELECT SUM(total) FROM Invoice WHERE YEAR(Created_At) = @Year and status != 'Cancel'
+        """, conn);
             cmd.Parameters.AddWithValue("@Year", year);
-            result = (int)cmd.ExecuteScalar();
+            var queryResult = cmd.ExecuteScalar();
+
+
+            if (queryResult != null && queryResult != DBNull.Value)
+            {
+                result = Convert.ToInt32(queryResult);
+            }
+
             return result;
         }
 
@@ -628,7 +636,20 @@ namespace CoffeeShop.Service.DataAccess
                 VALUES (@created_at, @total, @method, @status, @customer_name, @has_delivery, @member_card_id);
                 SELECT SCOPE_IDENTITY();
                 """, conn, transaction);
-                invoiceCmd.Parameters.AddWithValue("@created_at", invoice.CreatedAt);
+                DateTime dateTime;
+
+                string format = "dd/MM/yyyy hh:mm:ss tt";
+
+                CultureInfo provider = new CultureInfo("vi-VN");
+
+                //      DateTime.TryParseExact(invoice.CreatedAt, format, provider, DateTimeStyles.None, out dateTime);
+                string[] formats = { "dd/MM/yyyy hh:mm:ss tt", "dd/MM/yyyy HH:mm:ss", "MM/dd/yyyy hh:mm:ss tt" };
+                bool success = DateTime.TryParseExact(invoice.CreatedAt, formats, provider, DateTimeStyles.None, out dateTime);
+                if (!success)
+                {
+                    Console.WriteLine($"Failed to parse date: {invoice.CreatedAt}");
+                }
+                invoiceCmd.Parameters.AddWithValue("@created_at", dateTime);
                 invoiceCmd.Parameters.AddWithValue("@total", invoice.TotalAmount);
                 invoiceCmd.Parameters.AddWithValue("@method", invoice.PaymentMethod);
                 invoiceCmd.Parameters.AddWithValue("@status", invoice.Status);
