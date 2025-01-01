@@ -396,10 +396,17 @@ namespace CoffeeShop.Service.DataAccess
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = new SqlCommand("""
-                SELECT SUM(total) FROM Invoice WHERE YEAR(Created_At) = @Year and status != 'Cancel'
-                """, conn);
+        SELECT SUM(total) FROM Invoice WHERE YEAR(Created_At) = @Year and status != 'Cancel'
+        """, conn);
             cmd.Parameters.AddWithValue("@Year", year);
-            result = (int)cmd.ExecuteScalar();
+            var queryResult = cmd.ExecuteScalar();
+
+
+            if (queryResult != null && queryResult != DBNull.Value)
+            {
+                result = Convert.ToInt32(queryResult);
+            }
+
             return result;
         }
 
