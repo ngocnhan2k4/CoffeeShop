@@ -649,7 +649,7 @@ namespace CoffeeShop.Service.DataAccess
                 {
                     Console.WriteLine($"Failed to parse date: {invoice.CreatedAt}");
                 }
-                invoiceCmd.Parameters.AddWithValue("@created_at", dateTime);
+                invoiceCmd.Parameters.AddWithValue("@created_at", invoice.CreatedAt);
                 invoiceCmd.Parameters.AddWithValue("@total", invoice.TotalAmount);
                 invoiceCmd.Parameters.AddWithValue("@method", invoice.PaymentMethod);
                 invoiceCmd.Parameters.AddWithValue("@status", invoice.Status);
