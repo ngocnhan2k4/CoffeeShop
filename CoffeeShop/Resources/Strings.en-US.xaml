@@ -68,7 +68,7 @@
     <x:String x:Key="Settings">Settings</x:String>
     <x:String x:Key="General">General</x:String>
     <x:String x:Key="Appearance">Appearance</x:String>
-    <x:String x:Key="AppearanceTag">Dark and Light mode, Font size</x:String>
+    <x:String x:Key="AppearanceTag">Dark and Light mode, Languages</x:String>
     <x:String x:Key="ProductsManagement">Products Management</x:String>
     <x:String x:Key="ProductsManagementTag">Manage your product, pricing, etc</x:String>
     <x:String x:Key="PaymentSettings">Payment Settings</x:String>
@@ -103,6 +103,14 @@
     <x:String x:Key="SaveChangesSuccess">Save changes successfully</x:String>
     <x:String x:Key="SaveChangesFail">Save changes failed</x:String>
     <x:String x:Key="Close">Close</x:String>
+    <x:String x:Key="AccountNumber">Account Number:</x:String>
+    <x:String x:Key="AccountName">Account Name:</x:String>
+    <x:String x:Key="Token">Api Token:</x:String>
+    <x:String x:Key="BankCode">Bank Code:</x:String>
+    <x:String x:Key="TokenInfo">To add your Bank Account and create Token, visit</x:String>
+    <x:String x:Key="ThisLink">this link</x:String>
+    <x:String x:Key="CustomBankCodePlaceholder">Enter custom bank code</x:String>
+    <x:String x:Key="MoreInfo">For more information, visit</x:String>
     <!-- About  -->
     <x:String x:Key="COFFEESHOPPOSSYSTEM">Coffee Shop POS System</x:String>
     <x:String x:Key="DescCoffeePos">Coffee shop POS system is an application developed using Microsoft's WINUI3 technology that helps you easily manage sales and track the store's profit statistics.</x:String>

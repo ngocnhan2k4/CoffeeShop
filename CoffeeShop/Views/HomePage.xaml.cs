@@ -44,7 +44,7 @@ namespace CoffeeShop.Views
     public sealed partial class HomePage : Page
     {
         public HomeViewModel ViewModel { get; set; }
-
+        string ErrorApi = "";
 
         public HomePage()
         {  
@@ -124,7 +124,12 @@ namespace CoffeeShop.Views
                 string orderSuccess = Application.Current.Resources["OrderSuccess"] as string;
                 string orderFail = Application.Current.Resources["OrderFail"] as string;
                 if (result) await ShowResultDialog(statusSuccess, orderSuccess);
-                else await ShowResultDialog(statusFail, orderFail);
+                else
+                {
+                  if(ErrorApi=="")  await ShowResultDialog(statusFail, orderFail);
+                  else await ShowResultDialog(statusFail, ErrorApi);
+                  ErrorApi = "";
+                }
             }
         }
 
@@ -132,7 +137,7 @@ namespace CoffeeShop.Views
         {
             using (HttpClient client = new HttpClient())
             {
-                string token = Environment.GetEnvironmentVariable("TOKEN");
+                string token = ViewModel._accountSettings.Token;
                 client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
                 while (true)
                 {
@@ -141,7 +146,7 @@ namespace CoffeeShop.Views
                     {
                         //fake api
                         //var response = await client.GetAsync("http://localhost:3000");
-                        var response = await client.GetAsync("https://my.sepay.vn/userapi/transactions/list?account_number=0915680152&limit=20");
+                        var response = await client.GetAsync($"https://my.sepay.vn/userapi/transactions/list?account_number={ViewModel._accountSettings.AccountNo}&limit=20");
                         response.EnsureSuccessStatusCode();
                         var responseContent = await response.Content.ReadAsStringAsync();
                         var statusResult = JsonSerializer.Deserialize<TransactionRes>(responseContent);
@@ -180,7 +185,9 @@ namespace CoffeeShop.Views
                                 }
                             }catch (Exception ex)
                             {
-                                StatusMessage.Text = $"Error: {ex.Message}";
+                                QrCodeDialog.Closing -= QrCodeDialog_Closing;
+                                QrCodeDialog.Hide();
+                                ErrorApi = $"Error: {ex.Message}";
                                 return false;
                             }
 
@@ -193,7 +200,9 @@ namespace CoffeeShop.Views
                     }
                     catch (HttpRequestException ex)
                     {
-                        StatusMessage.Text = $"Error: {ex.Message}";
+                        QrCodeDialog.Closing -= QrCodeDialog_Closing;
+                        QrCodeDialog.Hide();
+                        ErrorApi = $"Error: {ex.Message}";
                         return false;
                     }
 

@@ -66,7 +66,7 @@
     <x:String x:Key="Settings">Cài đặt</x:String>
     <x:String x:Key="General">Chung</x:String>
     <x:String x:Key="Appearance">Giao diện</x:String>
-    <x:String x:Key="AppearanceTag">Chế độ tối và sáng, cỡ chữ</x:String>
+    <x:String x:Key="AppearanceTag">Chế độ tối và sáng, ngôn ngữ</x:String>
     <x:String x:Key="ProductsManagement">Quản lý sản phẩm</x:String>
     <x:String x:Key="ProductsManagementTag">Quản lý sản phẩm, giá cả, v.v. của bạn</x:String>
     <x:String x:Key="PaymentSettings">Cài đặt thanh toán</x:String>
@@ -97,6 +97,14 @@
     <x:String x:Key="DiscountPercentage">Phân trăm giảm giá</x:String>
     <x:String x:Key="ValidUntil">Thời hạn</x:String>
     <x:String x:Key="ApplyToCategory">Áp dụng cho loại món</x:String>
+    <x:String x:Key="AccountNumber">Số tài khoản:</x:String>
+    <x:String x:Key="AccountName">Tên tài khoản:</x:String>
+    <x:String x:Key="Token">Mã Token:</x:String>
+    <x:String x:Key="BankCode">Mã ngân hàng:</x:String>
+    <x:String x:Key="TokenInfo">Để thêm tài khoản ngân hàng và tạo mã Token, hãy truy cập</x:String>
+    <x:String x:Key="ThisLink">liên kết này</x:String>
+    <x:String x:Key="CustomBankCodePlaceholder">Nhập mã ngân hàng tùy chỉnh</x:String>
+    <x:String x:Key="MoreInfo">Để biết thêm thông tin, hãy truy cập</x:String>
     <!-- About -->
     <x:String x:Key="COFFEESHOPPOSSYSTEM">Cafe Shop POS System</x:String>
     <x:String x:Key="DescCoffeePos">Hệ thống POS cho quán cà phê là ứng dụng được phát triển bằng công nghệ WINUI3 của Microsoft giúp bạn dễ dàng quản lý doanh số và theo dõi số liệu thống kê lợi nhuận của cửa hàng.</x:String>
