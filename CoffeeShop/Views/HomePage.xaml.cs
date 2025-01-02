@@ -196,6 +196,12 @@ namespace CoffeeShop.Views
                         {
                             StatusMessage.Foreground = new SolidColorBrush(Colors.Gray);
                             StatusMessage.Text = Application.Current.Resources["NoPayment"] as string;
+                            if(ViewModel.checkTThai(invoice.InvoiceID))
+                            {
+                                QrCodeDialog.Closing -= QrCodeDialog_Closing;
+                                QrCodeDialog.Hide();
+                                return false;
+                            }
                         }
                     }
                     catch (HttpRequestException ex)
