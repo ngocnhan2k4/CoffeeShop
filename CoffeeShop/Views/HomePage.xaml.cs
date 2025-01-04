@@ -11,12 +11,27 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Size = CoffeeShop.Models.Size;
+using System.Threading.Tasks;
+using CoffeeShop.Helper;
+using CoffeeShop.ViewModels.HomePage;
+using System.Net.Http;
+using System.Text.Json;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Storage.Streams;
+using CoffeeShop.Service.DataAccess;
+using CoffeeShop.Service;
+using System.Reflection;
+using Microsoft.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,218 +44,217 @@ namespace CoffeeShop.Views
     public sealed partial class HomePage : Page
     {
         public HomeViewModel ViewModel { get; set; }
+        string ErrorApi = "";
+
         public HomePage()
         {  
             ViewModel = new HomeViewModel();
-            this.InitializeComponent();        
-            DateText.Text = DateTime.Now.ToString("dddd, d MMMM yyyy");
-            // SamplePage1Item.IsSelected = true;
-            LoadCategories();
-        }
-        private void LoadCategories()
-        {
-            var categories = ViewModel.Categories;
-            foreach (var category in categories)
-            {
-                SelectorBar.Items.Add(new SelectorBarItem
-                {
-                    Text = category.CategoryName,
-                    Tag = category.CategoryID
-                });
-            }
-        }
-        private void previousButton_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.GoToPreviousPage();
+            this.InitializeComponent();
         }
 
-        private void nextButton_Click(object sender, RoutedEventArgs e)
+        private void DrinkListUserControl_ItemClick(Drink drink, Size size)
         {
-            ViewModel.GoToNextPage();
+            cart.AddDrink(drink, size);
         }
 
-        private void pagesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cart_DeliveryClick(string recipientEmail, string message)
         {
-            if (pagesComboBox.SelectedIndex >= 0 && pagesComboBox.SelectedIndex != ViewModel.SelectedPageIndex)
-            {
-                var item = pagesComboBox.SelectedItem as PageInfo;
-                ViewModel.GoToPage(item.Page);
-            }
-        }
-        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedItem = (ComboBoxItem)SortComboBox.SelectedItem;
-            if (selectedItem != null)
-            {
-                var tag = selectedItem.Tag.ToString();
-                ViewModel.SortBy = tag;
-            }
-            // load lại chữ dưới page navigation
-            if(pagesComboBox!= null)
-            {
-                pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
-            }    
-            
-        }
-        private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs e)
-        {
-            var selectedItem = (SelectorBarItem)SelectorBar.SelectedItem;
-            if (selectedItem != null)
-            {
-                var selectedCategoryID = int.Parse(selectedItem.Tag.ToString());
-                Console.WriteLine(selectedCategoryID);
-                // Handle selection change based on selectedCategoryID
-                ViewModel.CategoryID = selectedCategoryID;
-            }
-            // load lại chữ dưới page navigation
-            if (pagesComboBox != null)
-            {
-                pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
-            }
-        }
-        private void Search_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.Search(SearchTextBox.Text);
-            // load lại chữ dưới page navigation
-            pagesComboBox.SelectedIndex = ViewModel.SelectedPageIndex;
-        }
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is not ToggleButton checkedToggleButton)
-            {
-                return;
-            }
-
-            foreach (ToggleButton toggleButton in ToggeButtons.Children.OfType<ToggleButton>())
-            {
-                toggleButton.IsChecked = toggleButton == checkedToggleButton;
-                toggleButton.IsHitTestVisible = toggleButton != checkedToggleButton;
-            }
-        }
-
-        private void BackgroundRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-
-
-        private void TrashButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var detailInvoice = button.DataContext as DetailInvoice;
-            if (detailInvoice != null)
-                ViewModel.RemoveDrink(detailInvoice);
-         }
-
-        private void SizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            var selectedSize = comboBox?.SelectedItem as Size;
-            if (comboBox != null && selectedSize != null)
-            {
-                var stackPanel = comboBox.Parent as StackPanel;
-                if (stackPanel != null)
-                {
-                    var priceTextBlock = stackPanel.FindName("PriceTextBlock") as TextBlock;
-                    var stockTextBlock = stackPanel.FindName("StockTextBlock") as Run;
-                    if (priceTextBlock != null)
-                    {
-                        priceTextBlock.Text = selectedSize.Price.ToString();
-                        stockTextBlock.Text = selectedSize.Stock.ToString();
-                    }
-                }
-            }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var drink = button.DataContext as Drink;
-            var stackPanel = button.Parent as StackPanel;
-            var sizeComboBox = stackPanel.FindName("SizeComboBox") as ComboBox;
-            var size = sizeComboBox.SelectedItem as Size;
-            ViewModel.AddDrink(drink, size);
-        }
-        /*    private void OrderButton_Click(object sender, RoutedEventArgs e)
-            {
-                // Get the checked ToggleButton content
-                var checkedToggleButton = ToggeButtons.Children.OfType<ToggleButton>().FirstOrDefault(tb => tb.IsChecked == true);
-                var checkedContent = checkedToggleButton?.Content.ToString();
-
-                // Get the total price
-                var totalPrice = ViewModel.TotalPrice;
-
-                // Order ...
-                var message = $"Order: {checkedContent}, Total Price: {totalPrice}";
-                var dialog = new ContentDialog
-                {
-                    XamlRoot = this.XamlRoot,
-                    Title = "Order Details",
-                    Content = message,
-                    CloseButtonText = "OK"
-                };
-                dialog.ShowAsync();
-            }*/
-        private async void OrderButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Get the checked ToggleButton content
-            var checkedToggleButton = ToggeButtons.Children.OfType<ToggleButton>().FirstOrDefault(tb => tb.IsChecked == true);
-            var checkedContent = checkedToggleButton?.Content.ToString();
-
-            // Get the total price
-            var totalPrice = ViewModel.TotalPrice;
-
-            // Order details message
-            var message = $"Order: {checkedContent}, Total Price: {totalPrice}";
-
-            // Update the ContentDialog content
-            OrderDetailsTextBlock.Text = message;
-
-            // Show the ContentDialog
-            await OrderDetailsDialog.ShowAsync();
-        }
-        private async void ThemeToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
+            //send email
             try
             {
-                if (Application.Current != null && Dispatcher != null)
+                string emailBody = message;
+                EmailProgressRing.IsActive = true;
+                EmailProgressRing.Visibility = Visibility.Visible;
+                ViewModel.invoice = cart.AddInvoice();
+                if (ViewModel.invoice.PaymentMethod == "Bank")
                 {
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        // Change to dark theme
-                        Application.Current.RequestedTheme = ApplicationTheme.Dark;
-                    });
+                    string qrCodeUrl = ViewModel.GetQrURL(true);
+                    PollPaymentStatus(ViewModel.apiRequest.addInfo, ViewModel.invoice, true);
+                    // Embed the QR code image in the email body
+                    emailBody = $@"
+                    <html>
+                    <body>
+                        <p style='color: black; font-size: 0.9rem;'>{message}</p>
+                        <img src='{qrCodeUrl}' alt='QR Code' />
+                    </body>
+                    </html>";
                 }
+                await Task.Run(() => SendEmailHelper.SendEmail(recipientEmail, emailBody));
             }
             catch (Exception ex)
             {
-                // Handle exception (e.g., log the error)
-                Debug.WriteLine($"Error setting theme: {ex.Message}");
+                Debug.WriteLine($"Error sending email: {ex.Message}");
+            }
+            finally
+            {
+                EmailProgressRing.IsActive = false;
+                EmailProgressRing.Visibility = Visibility.Collapsed;
+                string statusSuccess = Application.Current.Resources["Success"] as string;
+                string emailSuccess = Application.Current.Resources["EmailSentSuccess"] as string;
+                await ShowResultDialog(statusSuccess, emailSuccess);
+            }
+        }
+        
+
+        private async void cart_OrderClick()
+        {
+            bool result = false;
+            try
+            {
+                EmailProgressRing.IsActive = true;
+                EmailProgressRing.Visibility = Visibility.Visible;
+                ViewModel.invoice =cart.AddInvoice();
+                if (ViewModel.invoice.PaymentMethod == "Bank")
+                {
+                    result = await ShowQrCodeDialog(ViewModel.invoice);
+                }
+                else result = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error: {ex.Message}");
+
+            }
+            finally
+            {
+                EmailProgressRing.IsActive = false;
+                EmailProgressRing.Visibility = Visibility.Collapsed;
+                string statusSuccess = Application.Current.Resources["Success"] as string;
+                string statusFail = Application.Current.Resources["Fail"] as string;
+                string orderSuccess = Application.Current.Resources["OrderSuccess"] as string;
+                string orderFail = Application.Current.Resources["OrderFail"] as string;
+                if (result) await ShowResultDialog(statusSuccess, orderSuccess);
+                else
+                {
+                  if(ErrorApi=="")  await ShowResultDialog(statusFail, orderFail);
+                  else await ShowResultDialog(statusFail, ErrorApi);
+                  ErrorApi = "";
+                }
             }
         }
 
+        private async Task<bool> PollPaymentStatus(string content, Invoice invoice, bool isDelivery = false)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string token = ViewModel._accountSettings.Token;
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+                while (true)
+                {
+                    int totalAmount = isDelivery ? invoice.TotalAmount + 10000 : invoice.TotalAmount;
+                    try
+                    {
+                        //fake api
+                        //var response = await client.GetAsync("http://localhost:3000");
+                        var response = await client.GetAsync($"https://my.sepay.vn/userapi/transactions/list?account_number={ViewModel._accountSettings.AccountNo}&limit=20");
+                        response.EnsureSuccessStatusCode();
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        var statusResult = JsonSerializer.Deserialize<TransactionRes>(responseContent);
+                        if (statusResult.transactions.Count != 0)
+                        {
+                            bool has = false;
+                            try
+                            {
+                                int money_in = 0;
+                                var transaction = new List<Transaction>(statusResult.transactions);
+                                statusResult.transactions.ToList().ForEach((transaction) =>
+                                {
+                                    if (transaction.transaction_content.ToLower().Contains(content.ToLower()))
+                                    {           
+                                       money_in += (int)Convert.ToDouble(transaction.amount_in);      
+                                    }
+                                });
+                                if(money_in >= totalAmount)
+                                {
+                                    StatusMessage.Text = Application.Current.Resources["SuccessPayment"] as string;
+                                    StatusMessage.Foreground = new SolidColorBrush(Colors.Green);
+                                    has = true;
+                                }
+                                if (has)
+                                {
+                                    ViewModel.changeTThai(invoice);
+                                    QrCodeDialog.Closing -= QrCodeDialog_Closing;
+                                    QrCodeDialog.Hide();
+                                    return true;
+                                }
+                                else if (!has && ViewModel.checkTThai(invoice.InvoiceID))
+                                {
+                                    QrCodeDialog.Closing -= QrCodeDialog_Closing;
+                                    QrCodeDialog.Hide();
+                                    return false;
+                                }
+                            }catch (Exception ex)
+                            {
+                                QrCodeDialog.Closing -= QrCodeDialog_Closing;
+                                QrCodeDialog.Hide();
+                                ErrorApi = $"Error: {ex.Message}";
+                                return false;
+                            }
+
+                        }
+                        else
+                        {
+                            StatusMessage.Foreground = new SolidColorBrush(Colors.Gray);
+                            StatusMessage.Text = Application.Current.Resources["NoPayment"] as string;
+                            if(ViewModel.checkTThai(invoice.InvoiceID))
+                            {
+                                QrCodeDialog.Closing -= QrCodeDialog_Closing;
+                                QrCodeDialog.Hide();
+                                return false;
+                            }
+                        }
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        QrCodeDialog.Closing -= QrCodeDialog_Closing;
+                        QrCodeDialog.Hide();
+                        ErrorApi = $"Error: {ex.Message}";
+                        return false;
+                    }
+
+                    await Task.Delay(10000); // Wait for 10 seconds before polling again
+                }
+            }
+        }
+        private async Task ShowResultDialog(string title, string content)
+        {
+            ResultDialog.Title = title;
+            ResultDialogContent.Text = content;
+            await ResultDialog.ShowAsync();
+        }
+        private void QrCodeDialog_CancelClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            // Disable the primary buttons
+            sender.IsPrimaryButtonEnabled = false;
+
+            ViewModel._dao.UpdateInvoiceStatus(ViewModel.invoice.InvoiceID, "Cancel");
+            // Update the status message
+            StatusMessage.Text = Application.Current.Resources["Canceling"] as string;
+            StatusMessage.Foreground = new SolidColorBrush(Colors.Red);
+        }
+        private void QrCodeDialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        {
+            // Prevent the dialog from closing
+            args.Cancel = true;
+        }
+        private async Task<bool> ShowQrCodeDialog(Invoice invoice)
+        {
+            QRCodeImage.Source = new BitmapImage(new Uri(ViewModel.GetQrURL()));
+            // Start polling for payment status
+            var pollingTask = PollPaymentStatus(ViewModel.apiRequest.addInfo, invoice);
+            // Show the dialog
+            await QrCodeDialog.ShowAsync();
+            bool res = await pollingTask;
+            return res;
+        }
+        private void ResultDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            // Navigate to the Invoice page
+            this.Frame.Navigate(typeof(InvoicePage));
+            var mainWindow = App.m_window;
+            mainWindow.UpdateNavigationBar("invoices");
+        }
 
     }
 
-    //private void StyledGrid_ItemClick(object sender, ItemClickEventArgs e)
-    //{
-    //    //var clickedDrink = e.ClickedItem as Drink;
-    //    //if (clickedDrink != null)
-    //    //{
-    //    //    ViewModel.AddDrink(clickedDrink);
-    //    //}
-    //}
-
-
-    //private void AddButton_Click(object sender, RoutedEventArgs e)
-    //    {
-    //        var button = sender as Button;
-    //        var drink = button.DataContext as Drink;
-    //        var stackPanel = button.Parent as StackPanel;
-    //        var sizeComboBox = stackPanel.FindName("SizeComboBox") as ComboBox;
-    //        var size = sizeComboBox.SelectedItem as Size;
-    //        ViewModel.AddDrink(drink, size);
-    //    }
-    //}
 }

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="CoffeeShop.Views.UserControls.InvoicePage.InvoiceDetailUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CoffeeShop.Views.UserControls.InvoicePage"
+    xmlns:model="using:CoffeeShop.Models"
+    xmlns:converters="using:CoffeeShop.Helper"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:IntToVnCurrencyConverter x:Key="currency"/>
+        <converters:IntToVnCurrencyNoDConverter x:Key="currencyNoD"/>
+        <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+        <converters:TotalPriceConverter x:Key="TotalPriceConverter"/>
+        <converters:NameNoteDrinkConverter x:Key="NameNoteDrinkConverter"/>
+        <DataTemplate x:Name="ItemDetail" x:DataType="model:DetailInvoice">
+            <Border  BorderThickness="0,0,0,1" BorderBrush="Black">
+                <Grid  Padding="20,15,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="44*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="14*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"  TextWrapping="Wrap" Text="{Binding Converter={StaticResource NameNoteDrinkConverter}}"  FontSize="15" />
+                    <TextBlock Grid.Column="1"  Text="{Binding Size}" FontSize="15"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2"  Text="{Binding Quantity}" FontSize="15"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="3"  Text="{Binding Price, Converter={StaticResource currencyNoD}}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="4"  Text="{Binding Converter={StaticResource TotalPriceConverter}}" FontSize="15"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Background="{ThemeResource BorderContactColor}" Grid.Column="0" Grid.Row="0" Height="20"/>
+        <Grid Grid.Row="1" Grid.Column="0" Background="{ThemeResource InvoiceContactColor}" Padding="50,20,50,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" >
+                <Border CornerRadius="100" Width="68" Height="68" BorderBrush="Black" BorderThickness="1" Margin="0,0,10,0">
+                    <Image Source="ms-appx:///Assets/images.jpeg"  HorizontalAlignment="Center"/>
+                </Border>
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Coffee Shop" FontSize="20" Margin="3,0,3,2"/>
+                    <TextBlock Text="123 HTH, TP.HCM" FontSize="12" FontWeight="SemiLight" Margin="3,0,3,5"  />
+                    <TextBlock Text="0123456789" FontSize="12" FontWeight="SemiLight" Margin="3,0,3,5" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Text="{StaticResource Invoice}" FontSize="30"/>
+            </StackPanel>
+        </Grid>
+       
+        <Grid Grid.Row="2" Grid.Column="0"  Padding="50,20,50,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <TextBlock Text="{StaticResource BillTo}" FontSize="20" FontWeight="SemiBold"/>
+                <TextBlock Text="{x:Bind ViewModel._invoice.CustomerName , Mode=OneWay}" FontSize="15"/>
+                <TextBlock Text="{x:Bind ViewModel.deliveryInvoice.Address, Mode=OneWay }" FontSize="15"  />
+                <TextBlock Text="{x:Bind ViewModel.deliveryInvoice.PhoneNumber, Mode=OneWay }" FontSize="15"   />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,5,0,0" >
+                <TextBlock  FontSize="15">
+                    <Run Text="{StaticResource InvoiceNo}"/> <Run Text="{x:Bind ViewModel._invoice.InvoiceID, Mode=OneWay}"></Run>
+                </TextBlock>
+                <TextBlock Text="{x:Bind ViewModel._invoice.CreatedAt, Mode=OneWay}" FontSize="15" HorizontalAlignment="Right"/>
+            </StackPanel>
+
+        </Grid>
+
+        <Border Grid.Row="3" Grid.Column="0" Margin="50,0,50,0" BorderThickness="0,1,0,1" BorderBrush="Black">
+            <Grid  Padding="20,15,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="44*"/>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="14*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" FontWeight="SemiBold" Text="{StaticResource NameDrink}" FontSize="15" />
+                <TextBlock Grid.Column="1" FontWeight="SemiBold"  Text="Size" FontSize="15"  HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="2" FontWeight="SemiBold"  Text="{StaticResource Quantity}" FontSize="15"  HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="3" FontWeight="SemiBold" Text="{StaticResource Price}" FontSize="15" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="4" FontWeight="SemiBold" Text="{StaticResource Subtotal}" FontSize="15"  HorizontalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <Grid  Grid.Row="4" Grid.Column="0" MaxHeight="230">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="50,0,50,0" >
+                <ItemsControl ItemsSource="{x:Bind ViewModel.detailInvoices, Mode=OneWay}" 
+                    ItemTemplate="{StaticResource ItemDetail}"
+                    HorizontalAlignment="Stretch">
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+
+
+        <Grid  Grid.Row="5" Grid.Column="0" Padding="20,15,0,15" Margin="50,0,50,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="44*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="14*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="3" FontWeight="SemiBold" Text="{StaticResource Subtotal}" FontSize="15" HorizontalAlignment="Center" />
+            <TextBlock Grid.Column="4" Text="{x:Bind ViewModel._invoice.TotalAmount, Mode=OneWay, Converter={StaticResource currencyNoD}}" FontSize="15"  HorizontalAlignment="Center"/>
+
+            <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="3" FontWeight="SemiBold" Text="{StaticResource ShipFee}" FontSize="15" HorizontalAlignment="Center" />
+            <TextBlock Margin="0,10,0,10" Grid.Row="1" Grid.Column="4" Text="{x:Bind ViewModel.deliveryInvoice.ShippingFee, Mode=OneWay, Converter={StaticResource currencyNoD}}" FontSize="15"  HorizontalAlignment="Center"/>
+
+            <Border Padding="0,10,0,0" Grid.Row="2" Grid.Column="3" BorderThickness="0,1,0,0" BorderBrush="Black">
+                <TextBlock FontWeight="SemiBold" Text="{StaticResource Total}" FontSize="22" HorizontalAlignment="Center" />
+            </Border>
+            <Border Padding="0,10,0,0" Grid.Row="2" Grid.Column="4" BorderThickness="0,1,0,0" BorderBrush="Black">
+                <TextBlock Text="{x:Bind ViewModel.totalAmount, Mode=OneWay, Converter={StaticResource currency}}" FontSize="22" HorizontalAlignment="Center" />
+            </Border>
+        </Grid>
+        <StackPanel VerticalAlignment="Bottom" Margin="0,0,50,0"  Grid.Row="6" Grid.Column="0" Orientation="Horizontal" Visibility="{x:Bind ViewModel.ButtonVisibility, Mode=OneWay}" HorizontalAlignment="Right">
+            <Button Content="{StaticResource Cancel}" Click="CancelButton_Click" Width="120" Padding="0,8,0,8" />
+            <Button Content="{StaticResource Complete}" Click="CompleteButton_Click" Width="120"  Padding="0,8,0,8" Margin="15,0,0,0"/>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

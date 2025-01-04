@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Windowing;
+using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -23,7 +23,8 @@ using CoffeeShop.ViewModels;
 using CoffeeShop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using CoffeeShop.Service;
-using CommunityToolkit.Mvvm.DependencyInjection; 
+using CommunityToolkit.Mvvm.DependencyInjection;
+using dotenv.net;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -49,6 +50,9 @@ namespace CoffeeShop
             
             ServiceFactory.Register(typeof(IDao), typeof(MockDao));
             ConfigureServices();
+
+            // Loading env 
+            DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
         }
 
         /// <summary>
@@ -62,26 +66,6 @@ namespace CoffeeShop
             m_window.Activate();
 
 
-/*            // Set the window to full screen with close and minimize buttons
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
-            var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
-            var appWindow = AppWindow.GetFromWindowId(windowId);
-            appWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
-
-            // Get the display area size
-            var displayArea = DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Primary);
-            var displayAreaWorkArea = displayArea.WorkArea;
-            var displayAreaWidth = displayAreaWorkArea.Width;
-            var displayAreaHeight = displayAreaWorkArea.Height;
-
-            // Set the window size to the display area size
-            appWindow.Resize(new SizeInt32(displayAreaWidth, displayAreaHeight));
-
-            // Center the window on the screen
-            var displayAreaX = displayAreaWorkArea.X;
-            var displayAreaY = displayAreaWorkArea.Y;
-            appWindow.Move(new PointInt32(displayAreaX, displayAreaY));*/
-
             // Maximize the window
             // Assuming you have a reference to your window (currentWindow)
             if (m_window.AppWindow.Presenter is OverlappedPresenter presenter)
@@ -90,11 +74,13 @@ namespace CoffeeShop
             }
         }
         public Window MainWindow { get; private set; }
-        public static Window?  m_window { get; set; }
+        public static MainWindow m_window { get; set; }
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            services.AddSingleton<ILanguageSelectorService, LanguageSelectorService>();
+            services.AddSingleton<AppearanceViewModel>();
             services.AddSingleton<MainViewModel>();
             return services.BuildServiceProvider();
         }

@@ -1,4 +1,6 @@
 using CoffeeShop.Views.Settings;
+using CoffeeShop.Service;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -24,23 +26,16 @@ namespace CoffeeShop.Views
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        private readonly ILanguageSelectorService _languageService;
+
         public SettingsPage()
         {
             this.InitializeComponent();
+            _languageService = Ioc.Default.GetService<ILanguageSelectorService>();
+            _languageService.LanguageChanged += (s, e) => UpdateNavigationViewContent();
             NavView.SelectedItem = NavView.MenuItems[0];
-            //Config();
+            UpdateNavigationViewContent();
         }
-
-        //private void Config()
-        //{
-        //    this.appearance.Tag = typeof(Settings.AppearancePage);
-        //    this.paymentSettings.Tag = typeof(Settings.PaymentSettingsPage);
-        //    this.productsManagement.Tag = typeof(Settings.ProductsManagementPage);
-        //    this.aboutUs.Tag = typeof(Settings.AboutUsPage);
-        //    this.helpDesk.Tag = typeof(Settings.HelpDeskPage);
-
-        //    NavView.SelectedItem = NavView.MenuItems[0];
-        //}
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
@@ -60,9 +55,33 @@ namespace CoffeeShop.Views
                 case "aboutUs":
                     content.Navigate(typeof(Settings.AboutUsPage));
                     break;
-                case "helpDesk":
-                    content.Navigate(typeof(Settings.HelpDeskPage));
-                    break;
+            }
+        }
+
+        private void UpdateNavigationViewContent()
+        {
+            var resources = Application.Current.Resources;
+            foreach (NavigationViewItem item in NavView.MenuItems)
+            {
+                switch (item.Name)
+                {
+                    case "appearance":
+                        item.Content = resources["Appearance"];
+                        item.Tag = resources["AppearanceTag"];
+                        break;
+                    case "paymentSettings":
+                        item.Content = resources["PaymentSettings"];
+                        item.Tag = resources["PaymentSettingsTag"];
+                        break;
+                    case "productsManagement":
+                        item.Content = resources["ProductsManagement"];
+                        item.Tag = resources["ProductsManagementTag"];
+                        break;
+                    case "aboutUs":
+                        item.Content = resources["AboutUs"];
+                        item.Tag = resources["AboutUsTag"];
+                        break;
+                }
             }
         }
     }

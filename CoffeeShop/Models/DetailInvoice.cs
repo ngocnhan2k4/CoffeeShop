@@ -13,11 +13,13 @@ namespace CoffeeShop.Models
     public class DetailInvoice : INotifyPropertyChanged
     {
         public int InvoiceID { get; set; }
+        public int DrinkId { get; set; }
         public string NameDrink { get; set; }
         public int Quantity { get; set; }
         public string Size { get; set; }
-
+        public int MaxQuantity { get; set; }
         public int Price { get; set; }
+        public string Note { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

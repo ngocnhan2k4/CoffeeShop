@@ -10,6 +10,8 @@ using WinRT.Interop;
 using System.Collections.Generic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -51,9 +53,20 @@ namespace CoffeeShop.Views.Settings
             await ManageCategoriesDialog.ShowAsync();
         }
 
-        private void SaveChanges_ButtonClick(object sender, RoutedEventArgs e)
+        private async void SaveChanges_ButtonClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.UpdateDrinksIntoDB();
+            bool result = ViewModel.UpdateDrinksAndCategoriesIntoDB();
+            var resources = Application.Current.Resources;
+            await new ContentDialog()
+            {
+                XamlRoot = XamlRoot,
+                Content = new TextBlock()
+                {
+                    Text = result ? resources["SaveChangesSuccess"]?.ToString() : resources["SaveChangesFail"]?.ToString(), 
+                    FontSize = 20
+                },
+                CloseButtonText = resources["Close"]?.ToString()
+            }.ShowAsync();
         }
 
         private void DiscardChanges_ButtonClick(object sender, RoutedEventArgs e)
@@ -91,7 +104,17 @@ namespace CoffeeShop.Views.Settings
 
         private void ManageCategoriesDialog_SaveButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            ViewModel.Categories = new(ViewModel.NewCategories.Select(c => new Category(c)));
+            List<Category> categories = new();
+            foreach (Category category in ViewModel.NewCategories)
+            {
+                if(ViewModel.Categories.FirstOrDefault(c => c.CategoryID == category.CategoryID) == null)
+                {
+                    categories.Add(category);
+                    ViewModel.Categories.Add(category);
+                }
+            }
+            ViewModel.NewCategories.Clear();
+            ViewModel.NewCategories = new(categories); // mảng NewCategories sẽ lưu những category mới được thêm vào
         }
 
         private void AddCategoryButton_Click(object sender, RoutedEventArgs e)
@@ -163,6 +186,37 @@ namespace CoffeeShop.Views.Settings
                     }
                 }
             }
+        }
+
+        private async void ShowDiscountDialog_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            await ManageDiscountsDialog.ShowAsync();
+        }
+
+        private void ManageDiscountsDialog_SaveButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            args.Cancel = !ViewModel.ApplyDiscounts();
+        }
+
+        private void ManageDiscountsDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+
+        }
+
+        private void DeleteDiscount_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button?.Tag is Discount discountToDelete)
+            {
+                // Gọi hàm xóa trong ViewModel
+                ViewModel.DeleteDiscount(discountToDelete);
+            }
+        }
+
+        private void AddDiscount_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AddDiscount();
         }
     }
 

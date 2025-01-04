@@ -4,79 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CoffeeShop.Views"
     xmlns:model="using:CoffeeShop.Models"
+    xmlns:user_control="using:CoffeeShop.Views.UserControls.HomePage"
     xmlns:converters="using:CoffeeShop.Helper"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    
+    Background="{ThemeResource PageBackground}">
 
-    <Page.Resources>
-        <converters:TotalPriceConverter x:Key="TotalPriceConverter"/>
-        <DataTemplate x:Key="ChooseDrink" x:DataType="model:Drink">
-            <StackPanel Width="180" Padding="20,10,20,10" Background="{ThemeResource ItemBackground}">
-                <Image Source="{Binding Image}" Stretch="Fill" Width="100" Height="100"/>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Padding="5,10,5,1">
-                    <TextBlock TextWrapping="Wrap" Height="38" MaxLines="2" TextTrimming="CharacterEllipsis" Text="{x:Bind Name}" HorizontalAlignment="Center"/>
-
-                    <!-- ComboBox for selecting size -->
-                    <ComboBox x:Name="SizeComboBox" SelectedIndex="0" 
-                      ItemsSource="{x:Bind Sizes}"
-                      SelectionChanged="SizeComboBox_SelectionChanged" HorizontalAlignment="Center">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="model:Size">
-                                <TextBlock Text="{x:Bind Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-
-
-                    <!-- TextBlock to display the price based on selected size -->
-                    <TextBlock x:Name="PriceTextBlock" Text="{x:Bind Sizes[0].Price}" HorizontalAlignment="Center" Margin="0,0,0,3"/>
-
-                    <TextBlock HorizontalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}"
-                Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">
-                <Run x:Name="StockTextBlock" Text="{Binding Sizes[0].Stock}"/><Run Text=" available"/>
-                    </TextBlock>
-
-                    <!-- Button to trigger item click behavior -->
-                    <Button Content="Add" Click="Button_Click" HorizontalAlignment="Center" Margin="5"/>
-                </StackPanel>
-            </StackPanel>
-        </DataTemplate>
-
-        <DataTemplate x:Key="ItemOrder" x:DataType="model:DetailInvoice">
-            <Grid Margin="10" Padding="10" CornerRadius="5" Background="{ThemeResource ItemBackground}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="85*" />
-                    <ColumnDefinition Width="15*" />
-                </Grid.ColumnDefinitions>
-
-                <!-- Item Image and Details -->
-                <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="{Binding NameDrink}"  />
-                
-                        </StackPanel>
-                        <NumberBox Grid.Column="1" x:Name="NumberBoxSpinButtonPlacementExample" HorizontalAlignment="Right"
-                   Value="{x:Bind Quantity, Mode=TwoWay}"
-                   Minimum="1"
-                   SpinButtonPlacementMode="Compact"
-                   SmallChange="1"/>
-                    </Grid>
-                    <TextBox PlaceholderText="Order Note..." FontSize="12" Margin="0,5,0,0" HorizontalAlignment="Stretch" />
-                </StackPanel>
-                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Converter={StaticResource TotalPriceConverter}}" Foreground="Gray" FontSize="12" HorizontalTextAlignment="Center" Margin="0,20,0,0"/>
-                    <Button Content="&#xE74D;" FontFamily="Segoe MDL2 Assets"  Background="Transparent" Width="40" Height="32" Margin="0,12,0,0"
-                    Click="TrashButton_Click"  Foreground="{ThemeResource PrimaryText}"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-    </Page.Resources>
 
     <Grid >
         <Grid.ColumnDefinitions>
@@ -87,193 +22,24 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border CornerRadius="10" Background="Transparent" Grid.Column="0">
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+        <user_control:DrinkListUserControl Grid.Row="0" Grid.Column="0" ItemClick="DrinkListUserControl_ItemClick"/>
+        <user_control:ChoseDrinkUserControl Grid.Row="0" Grid.Column="1" x:Name="cart" DeliveryClick="cart_DeliveryClick" OrderClick="cart_OrderClick" />
+        <ProgressRing x:Name="EmailProgressRing" IsActive="False" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100"/>
+        <ContentDialog x:Name="ResultDialog"
+                       Title="{StaticResource Result}"
+                       CloseButtonText="OK"
+                       Closed="ResultDialog_Closed">
+            <TextBlock x:Name="ResultDialogContent" />
+        </ContentDialog>
 
-                <Grid  Padding="10,0,10,0" Grid.Column="0" Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Orientation="Vertical" Grid.Column="0">
-                      
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontWeight="SemiBold" Text="Coffee Shop" FontSize="30" VerticalAlignment="Top"/>
-                            <TextBlock Text="POS" FontStyle="Oblique" VerticalAlignment="Top" Margin="5,8,0,0" FontWeight="SemiLight"/>
-                        </StackPanel>
-                        <TextBlock Name="DateText" Text="CurDate" Margin="0,0,0,10"/>
-                    </StackPanel>
-
-                    <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">
-                        <Grid>
-                            <TextBox x:Name="SearchTextBox" Width="300" PlaceholderText="Search..." Background="Transparent" Padding="50,5,0,5"/>
-                             <!--Text="{x:Bind ViewModel.Keyword, 
-                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
-                            <Button Content="&#xE721;" FontFamily="Segoe MDL2 Assets"   Width="50" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Background="Transparent" BorderThickness="0" Click="Search_Click"
-                                    Foreground="{ThemeResource PrimaryText}"/>
-
-                        </Grid>
-                    </Grid>
-                </Grid>
-
-                <Grid Padding="10,0,10,0" Grid.Column="0" Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <!--<SelectorBar x:Name="SelectorBar1" Grid.Column="0" Background="Aquamarine">
-                        <SelectorBarItem Text="Hot Sale" x:Name="SamplePage1Item" />
-                        <SelectorBarItem Text="Coffee" x:Name="SamplePage2Item" />
-                        <SelectorBarItem Text="Tea" x:Name="SamplePage3Item" />
-                        <SelectorBarItem Text="Smoothies" x:Name="SamplePage4Item" />
-                        <SelectorBarItem Text="Juices" x:Name="SamplePage5Item" />
-                        <SelectorBarItem Text="Milkshakes" x:Name="SamplePage6Item" />
-                    </SelectorBar>-->
-                    <SelectorBar x:Name="SelectorBar" Grid.Column="0" SelectionChanged="SelectorBar_SelectionChanged">
-                        <SelectorBarItem Text="All" Tag="-1" IsSelected="True" />
-                    </SelectorBar>
-
-                    <ComboBox x:Name="SortComboBox" Grid.Column="1" SelectionChanged="SortComboBox_SelectionChanged" SelectedIndex="0" >
-                        <ComboBoxItem Content="Unsort" Tag="Normal"/>
-                        <ComboBoxItem Content="Stock" Tag="Stock"/>
-                        <ComboBoxItem Content="Price: Increase" Tag="PriceIncrease"/>
-                        <ComboBoxItem Content="Price: Decrease" Tag="PriceDecrease"/>
-                    </ComboBox>
-                </Grid>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2">
-                    <GridView HorizontalAlignment="Center"
-                       x:Name="StyledGrid"
-                       ItemTemplate="{StaticResource ChooseDrink}"
-                       ItemsSource="{x:Bind ViewModel.Drinks, Mode=OneWay}"
-                       IsItemClickEnabled="True"
-                       SelectionMode="None">
-                        <GridView.ItemContainerStyle>
-                            <Style TargetType="GridViewItem" BasedOn="{StaticResource DefaultGridViewItemStyle}">
-                                <Setter Property="Margin" Value="5, 5, 5, 5"/>
-                            </Style>
-                        </GridView.ItemContainerStyle>
-
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsWrapGrid x:Name="MaxItemsWrapGrid"
-                                MaximumRowsOrColumns="4"
-                                Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                    </GridView>
-                </ScrollViewer>
-                <Grid  Padding="10,0,10,0" Grid.Column="0" Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Previous Page Button -->
-                    <Button Grid.Column="0" Content="&#xE72B;" FontFamily="Segoe MDL2 Assets" Click="previousButton_Click" />
-
-                    <!-- ComboBox to show current page / total pages -->
-                    <ComboBox  HorizontalAlignment="Center" ItemsSource="{x:Bind ViewModel.PageInfos, Mode=OneWay}"
-                       SelectedIndex="{x:Bind ViewModel.SelectedPageIndex, Mode=OneWay}"
-                       SelectionChanged="pagesComboBox_SelectionChanged"
-                       Margin="5" Name="pagesComboBox" Width="100" Height="35" Grid.Column="1">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock >
-                             <Run Text="{Binding Page}"/>/<Run Text="{Binding Total}"/>
-                                            </TextBlock>
-                                        </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-
-                    <!-- Next Page Button -->
-                    <Button Grid.Column="2" Content="&#xE72A;" FontFamily="Segoe MDL2 Assets" Click="nextButton_Click" />
-                </Grid>
-            </Grid>
-        </Border>
-        
-        
-        <Grid x:Name="StyledStackPanel2"  Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel  Grid.Column="0" Grid.Row="0"  Padding="10">
-                <TextBlock Margin="10">
-                    Order
-                </TextBlock>
-                <StackPanel x:Name="ToggeButtons" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <ToggleButton Margin="0,0,20,0"
-                    IsChecked="True"
-                    Checked="ToggleButton_Checked"
-                    Content="1" />
-                    <ToggleButton Margin="0,0,20,0"
-                    Checked="ToggleButton_Checked"
-                    Content="2" />
-                    <ToggleButton 
-                    Checked="ToggleButton_Checked"
-                    Content="3" />
-                </StackPanel>
-            </StackPanel>
-
-            <Grid Grid.Column="0" Grid.Row="1" Margin="10" Padding="10" CornerRadius="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="85*" />
-                    <ColumnDefinition Width="15*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid  Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Name" Foreground="White" FontSize="14" />
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Right" Text="Quantity" Foreground="White" FontSize="14" />
-                </Grid>
-                <TextBlock  Grid.Column="1" Text="Price" Foreground="Gray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Grid>
-            
-            <Grid  Grid.Column="0" Grid.Row="2">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.ChosenDrinks}" 
-                                  ItemTemplate="{StaticResource ItemOrder}"
-                                  HorizontalAlignment="Stretch">
-                        <!--<ItemsControl.ItemTemplate>
-                        </ItemsControl.ItemTemplate>-->
-                    </ItemsControl>
-                </ScrollViewer>
-            </Grid>
-            <!-- Add the TextBlock for Total Price -->
-            <StackPanel Grid.Column="0" Grid.Row="3"  Padding="10">
-                <TextBlock Text="Total Price:" FontWeight="Bold" FontSize="16" />
-                <TextBlock Text="{x:Bind ViewModel.TotalPrice, Mode=OneWay}" FontSize="16" Foreground="Gray" />
-            </StackPanel>
-
-            <!-- Add the Button to print content -->
-            <Button Grid.Column="0" Grid.Row="4" Content="Order" Click="OrderButton_Click" HorizontalAlignment="Center" Margin="10"/>
-        </Grid>
-        <ContentDialog x:Name="OrderDetailsDialog"
-               Title="Order Details"
-               CloseButtonText="OK">
+        <ContentDialog x:Name="QrCodeDialog" Title="{StaticResource BankPayment}"
+               PrimaryButtonText="{StaticResource Cancel}"
+               PrimaryButtonClick="QrCodeDialog_CancelClick"
+               Closing="QrCodeDialog_Closing">
             <StackPanel>
-                <TextBlock x:Name="OrderDetailsTextBlock" Text="Order details" />
+                <Image x:Name="QRCodeImage" Width="450" Height="450" Source="ms-appx:///Assets/placeholder.jpg"/>
+                <TextBlock x:Name="StatusMessage" Text="{StaticResource WaitPayment}" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="16"
+                           />
             </StackPanel>
         </ContentDialog>
     </Grid>

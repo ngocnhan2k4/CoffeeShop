@@ -15,6 +15,10 @@ namespace CoffeeShop.Helper
             {
                 return ((double)value).ToString("C0", new CultureInfo("vi-VN"));
             }
+            else if(value is int)
+            {
+                return ((int)value).ToString("C0", new CultureInfo("vi-VN"));
+            }
             return value;
         }
 

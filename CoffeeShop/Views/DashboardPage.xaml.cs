@@ -21,6 +21,7 @@ using CoffeeShop.Service.BusinessLogic;
 using System.ComponentModel;
 using Microsoft.UI;
 using CoffeeShop.Service.DataAccess;
+using CoffeeShop.Views.Settings;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -47,8 +48,14 @@ namespace CoffeeShop.Views
             yearDatePicker.Date = new DateTimeOffset(new DateTime(DateTime.Now.Year, yearDatePicker.Date.Month, yearDatePicker.Date.Day));
            
             RefreshCharts();
-           
+
+            
+
+
         }
+        
+       
+
 
         private  void YearDatePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
         {
@@ -66,13 +73,18 @@ namespace CoffeeShop.Views
             
             RefreshCharts();
             SalesDashboard.TopDrink.Clear();
-        /*    foreach (var drink in SalesDashboard.SaleService.CalculateTopDrinks(SalesDashboard.SaleService.dao, selectedYear))
-            {
-                SalesDashboard.TopDrink.Add(drink); 
-            }*/
+            SalesDashboard.RecentInvoices.Clear();
+            /*    foreach (var drink in SalesDashboard.SaleService.CalculateTopDrinks(SalesDashboard.SaleService.dao, selectedYear))
+                {
+                    SalesDashboard.TopDrink.Add(drink); 
+                }*/
             foreach (var drink in SalesDashboard.SaleService.dao.CalculateTopDrinks( selectedYear))
             {
                 SalesDashboard.TopDrink.Add(drink);
+            }
+            foreach (var invoice in SalesDashboard.SaleService.dao.GetRecentInvoice(selectedYear))
+            {
+                SalesDashboard.RecentInvoices.Add(invoice);
             }
 
         }
