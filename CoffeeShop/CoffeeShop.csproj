@@ -30,8 +30,6 @@
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\Settings\AboutUsPage.xaml" />
     <None Remove="Views\Settings\AppearancePage.xaml" />
-    <None Remove="Views\Settings\ChangeLanguagePage.xaml" />
-    <None Remove="Views\Settings\HelpDeskPage.xaml" />
     <None Remove="Views\Settings\ProductsManagementPage.xaml" />
     <None Remove="Views\UserControls\HomePage\ChoseDrinkUserControl.xaml" />
     <None Remove="Views\UserControls\HomePage\DrinkListUserControl.xaml" />
@@ -116,9 +114,6 @@
     <Page Update="Views\CustomerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Settings\ChangeLanguagePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Views\UserControls\HomePage\DrinkListUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,11 +136,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\InvoicePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Settings\HelpDeskPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
