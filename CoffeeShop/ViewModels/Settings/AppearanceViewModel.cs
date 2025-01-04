@@ -19,16 +19,7 @@ namespace CoffeeShop.ViewModels
  
     public class AppearanceViewModel : INotifyPropertyChanged
     {
-        public Config EditedConfig 
-        { 
-            get => _editedConfig;
-            set
-            {
-                _editedConfig = value;
-                OnPropertyChanged(nameof(EditedConfig));
-            }
-        }
-        private Config _editedConfig;
+        public Config EditedConfig { get; set; }
 
         public ObservableCollection<string> AvailableLanguages { get; } =
             new ObservableCollection<string> { "English", "Vietnamese" };
@@ -36,21 +27,13 @@ namespace CoffeeShop.ViewModels
         private readonly IThemeSelectorService _themeSelectorService;
         private readonly ILanguageSelectorService _languageService;
         public ICommand SetThemeCommand { get; }
-        //public ICommand SetLanguageCommand { get; }
 
         public AppearanceViewModel(IThemeSelectorService themeSelectorService, ILanguageSelectorService languageService)
         {
               SetThemeCommand = new RelayCommand<string>(value =>
               {
                   EditedConfig.Theme = value; 
-
               });
-
-              //SetLanguageCommand = new RelayCommand<string>(value =>
-              //{
-              //    EditedConfig.Language = value;
-              //    UpdateLanguage(value);
-              //});
 
             _themeSelectorService = themeSelectorService;
             _languageService = languageService;
@@ -108,7 +91,6 @@ namespace CoffeeShop.ViewModels
             // Update UI with saved settings
             UpdateTheme(EditedConfig.Theme);
             UpdateLanguage(EditedConfig.Language);
-            OnPropertyChanged(nameof(EditedConfig));
         }
 
         public static Config LoadSettings()
