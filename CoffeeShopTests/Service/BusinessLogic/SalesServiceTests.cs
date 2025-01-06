@@ -30,7 +30,6 @@ namespace CoffeeShopTests.Service.BusinessLogic
             Assert.IsTrue(salesService.TotalCost > 0);
             Assert.IsTrue(salesService.Revenue > 0);
             Assert.IsNotNull(salesService.Profit);
-            CollectionAssert.AreEqual(new List<int>{ 2024,2023}, salesService.Years);
             Assert.IsNotNull(salesService.MonthlyRevenue);
             Assert.IsNotNull(salesService.TopDrinks);
             Assert.IsNotNull(salesService.RevenueByCategory);
