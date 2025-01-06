@@ -386,7 +386,8 @@ namespace CoffeeShop.Service.DataAccess
             using var cmd = new SqlCommand("""
                 SELECT SUM(price * stock) FROM Drink
                 """, conn);
-            result = (int)cmd.ExecuteScalar();
+            var queryResult = cmd.ExecuteScalar();
+            result = queryResult != DBNull.Value ? (int)queryResult : 0;
             return result;
         }
 
@@ -427,6 +428,10 @@ namespace CoffeeShop.Service.DataAccess
             while (reader.Read())
             {
                 years.Add(reader.GetInt32(0));
+            }
+            if (!years.Contains(DateTime.Now.Year))
+            {
+                years.Add(DateTime.Now.Year);
             }
             return new() { years.Max(), years.Min() };
         }

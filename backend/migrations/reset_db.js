@@ -6,6 +6,8 @@ exports.up = async function (knex) {
         DROP TABLE IF EXISTS drink;
         DROP TABLE IF EXISTS category;
 
+
+
         CREATE TABLE category(  
             id int not null primary key CHECK (id >= 0),
             name nvarchar(50) not null
@@ -32,12 +34,14 @@ exports.up = async function (knex) {
             customer_name nvarchar(50) not null,
             has_delivery char not null
         );
-
+        ALTER TABLE invoice
+        ADD member_card_id INT NULL;
         CREATE TABLE invoice_detail(
             invoice_id int not null,
             drink_id int not null,
             quantity int not null,
             price int not null,
+            note nvarchar(100),
             primary key(invoice_id, drink_id),
             foreign key(invoice_id) references invoice(id) on delete cascade ON UPDATE CASCADE,
             foreign key(drink_id) references drink(id) on delete cascade ON UPDATE CASCADE
