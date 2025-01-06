@@ -85,7 +85,7 @@ namespace CoffeeShopTests.ViewModels
             var count = _viewModel.Customers.Count;
 
             _viewModel.DeleteCustomer(id);
-            Assert.AreEqual(count, _viewModel.Customers.Count);
+            Assert.AreEqual(count-1, _viewModel.Customers.Count);
             Assert.IsNotNull(_viewModel.Customers);
 
         }

@@ -450,11 +450,8 @@ namespace CoffeeShopTests.ViewModels.Settings
         public void UpdateDrinksAndCategoriesIntoDB_FailedToAddDiscount_ReturnsFalse()
         {
             // Arrange
-            var discount = new Discount { Name="Test discount",DiscountPercent=50, CategoryID=-1,IsActive=true,ValidUntil=DateTime.Now.AddDays(10)  }; // Use MinValue instead of MaxValue+1
-            _viewModel.Discounts.Add(discount);
-
-            // Act
-            bool result = _viewModel.UpdateDrinksAndCategoriesIntoDB();
+            _viewModel.NewDiscount = new Discount { Name="Test discount",DiscountPercent=50, CategoryID=-1,IsActive=true,ValidUntil=DateTime.Now.AddDays(10)  }; // Use MinValue instead of MaxValue+1
+            bool result = _viewModel.AddDiscount();
 
             // Assert
             Assert.IsFalse(result);

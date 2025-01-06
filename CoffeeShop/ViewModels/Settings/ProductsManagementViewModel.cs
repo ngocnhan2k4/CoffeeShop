@@ -136,10 +136,9 @@ namespace CoffeeShop.ViewModels.Settings
 
         public bool UpdateDrinksAndCategoriesIntoDB()
         {
-            bool isAddedDrinks = _dao.AddDrinks(NewDrinks);
             bool isAddedCategories = _dao.AddCategories(NewCategories.ToList());
             bool isAddedDiscounts = _dao.AddDiscounts(Discounts.ToList());
-
+            bool isAddedDrinks = _dao.AddDrinks(NewDrinks);
             if (!isAddedDrinks)
             {
                 foreach (var drink in NewDrinks)

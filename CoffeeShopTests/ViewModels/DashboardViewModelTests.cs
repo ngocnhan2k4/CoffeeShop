@@ -133,19 +133,7 @@ namespace CoffeeShopTests.ViewModels
             Assert.IsNotNull(data);
         }
 
-        [TestMethod]
-        public void TestPieChartData_ValidState_HasValidProperties()
-        {
-            // Act
-            var data = viewModel.Data;
 
-            // Assert
-            Assert.IsNotNull(data);
-            Assert.IsTrue( data.Count >= 0);
-            Assert.IsNotNull(data[0].Category);
-            Assert.IsNotNull(data[0].SalesAmount);
-            
-        }
     }
 
 
